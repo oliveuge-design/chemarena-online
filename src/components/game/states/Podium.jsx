@@ -11,7 +11,7 @@ import { useEffect, useState } from "react"
 import ReactConfetti from "react-confetti"
 import useSound from "use-sound"
 
-export default function Podium({ data: { subject, top } }) {
+export default function Podium({ data: { subject, top }, manager = false }) {
   const [apparition, setApparition] = useState(0)
 
   const { width, height } = useScreenSize()
@@ -106,47 +106,49 @@ export default function Podium({ data: { subject, top } }) {
                   },
                 )}
               >
-                {top[1].username}
+                {top[1]?.username || "Giocatore 2"}
               </p>
               <div className="flex h-full w-full flex-col items-center gap-4 rounded-t-md bg-primary pt-6 text-center shadow-2xl">
                 <p className="flex aspect-square h-14 items-center justify-center rounded-full border-4 border-zinc-400 bg-zinc-500 text-3xl font-bold text-white drop-shadow-lg">
                   <span className="drop-shadow-md">2</span>
                 </p>
                 <p className="text-2xl font-bold text-white drop-shadow-lg">
-                  {top[1].points}
+                  {top[1]?.points || 0}
                 </p>
               </div>
             </div>
           )}
 
-          <div
-            className={clsx(
-              "z-30 flex h-[60%] w-full translate-y-full flex-col items-center gap-3 opacity-0 transition-all",
-              {
-                "!translate-y-0 opacity-100": apparition >= 3,
-              },
-              {
-                "md:min-w-64": top.length < 2,
-              },
-            )}
-          >
-            <p
+          {top.length > 0 && (
+            <div
               className={clsx(
-                "overflow-visible whitespace-nowrap text-center text-2xl font-bold text-white opacity-0 drop-shadow-lg md:text-4xl",
-                { "anim-balanced opacity-100": apparition >= 4 },
+                "z-30 flex h-[60%] w-full translate-y-full flex-col items-center gap-3 opacity-0 transition-all",
+                {
+                  "!translate-y-0 opacity-100": apparition >= 3,
+                },
+                {
+                  "md:min-w-64": top.length < 2,
+                },
               )}
             >
-              {top[0].username}
-            </p>
-            <div className="flex h-full w-full flex-col items-center gap-4 rounded-t-md bg-primary pt-6 text-center shadow-2xl">
-              <p className="flex aspect-square h-14 items-center justify-center rounded-full border-4 border-amber-400 bg-amber-300 text-3xl font-bold text-white drop-shadow-lg">
-                <span className="drop-shadow-md">1</span>
+              <p
+                className={clsx(
+                  "overflow-visible whitespace-nowrap text-center text-2xl font-bold text-white opacity-0 drop-shadow-lg md:text-4xl",
+                  { "anim-balanced opacity-100": apparition >= 4 },
+                )}
+              >
+                {top[0]?.username || "Giocatore 1"}
               </p>
-              <p className="text-2xl font-bold text-white drop-shadow-lg">
-                {top[0].points}
-              </p>
+              <div className="flex h-full w-full flex-col items-center gap-4 rounded-t-md bg-primary pt-6 text-center shadow-2xl">
+                <p className="flex aspect-square h-14 items-center justify-center rounded-full border-4 border-amber-400 bg-amber-300 text-3xl font-bold text-white drop-shadow-lg">
+                  <span className="drop-shadow-md">1</span>
+                </p>
+                <p className="text-2xl font-bold text-white drop-shadow-lg">
+                  {top[0]?.points || 0}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
 
           {top[2] && (
             <div
@@ -165,7 +167,7 @@ export default function Podium({ data: { subject, top } }) {
                   },
                 )}
               >
-                {top[2].username}
+                {top[2]?.username || "Giocatore 3"}
               </p>
               <div className="flex h-full w-full flex-col items-center gap-4 rounded-t-md bg-primary pt-6 text-center shadow-2xl">
                 <p className="flex aspect-square h-14 items-center justify-center rounded-full border-4 border-amber-800 bg-amber-700 text-3xl font-bold text-white drop-shadow-lg">
@@ -173,12 +175,22 @@ export default function Podium({ data: { subject, top } }) {
                 </p>
 
                 <p className="text-2xl font-bold text-white drop-shadow-lg">
-                  {top[2].points}
+                  {top[2]?.points || 0}
                 </p>
               </div>
             </div>
           )}
         </div>
+
+        {/* Messaggio per il manager */}
+        {manager && apparition >= 4 && (
+          <div className="anim-show absolute bottom-20 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-60 rounded-lg p-4 text-center backdrop-blur-sm">
+            <p className="text-white text-sm font-medium">
+              🏆 Quiz completato! <br />
+              Clicca su "🏠 Nuovo Quiz" in alto a destra per selezionare un nuovo quiz
+            </p>
+          </div>
+        )}
       </section>
     </>
   )

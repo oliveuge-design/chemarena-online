@@ -1,0 +1,36 @@
+{
+  "images": [
+    {
+      "id": "img_1",
+      "filename": "geografia_mondo.jpg",
+      "originalName": "mappa-mondo.jpg",
+      "path": "/uploads/images/geografia_mondo.jpg",
+      "url": "/api/images/geografia_mondo.jpg",
+      "uploadDate": "2025-01-09",
+      "size": 245760,
+      "mimetype": "image/jpeg",
+      "tags": ["geografia", "mondo", "mappa"],
+      "usedInQuestions": []
+    },
+    {
+      "id": "img_2", 
+      "filename": "arte_monalisa.jpg",
+      "originalName": "monna-lisa.jpg",
+      "path": "/uploads/images/arte_monalisa.jpg",
+      "url": "/api/images/arte_monalisa.jpg",
+      "uploadDate": "2025-01-09",
+      "size": 189432,
+      "mimetype": "image/jpeg",
+      "tags": ["arte", "leonardo", "pittura"],
+      "usedInQuestions": []
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "lastUpdate": "2025-01-09",
+    "totalImages": 2,
+    "uploadPath": "./public/uploads/images/",
+    "maxFileSize": 5242880,
+    "allowedTypes": ["image/jpeg", "image/png", "image/gif", "image/webp"]
+  }
+}

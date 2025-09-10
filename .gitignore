@@ -28,10 +28,24 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
+nul
 
 # vercel
 .vercel
 
+# railway
+.railway
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Backup files
+*.backup
+
+# Windows batch files
+*.bat
+
+# Claude
+.claude/

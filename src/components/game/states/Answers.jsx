@@ -156,18 +156,25 @@ export default function Answers({
         )}
 
         <div className="mx-auto mb-4 grid w-full max-w-7xl grid-cols-2 gap-1 rounded-full px-2 text-lg font-bold text-white md:text-xl">
-          {answers.map((answer, key) => (
-            <AnswerButton
-              key={key}
-              className={clsx(ANSWERS_COLORS[key], {
-                "opacity-65": responses && correct !== key,
-              })}
-              icon={ANSWERS_ICONS[key]}
-              onClick={() => handleAnswer(key)}
-            >
-              {answer}
-            </AnswerButton>
-          ))}
+          {answers.map((answer, key) => {
+            // Supporta sia il formato stringa che oggetto
+            const answerText = typeof answer === 'string' ? answer : (answer.text || '');
+            const answerImage = typeof answer === 'object' ? answer.image : '';
+            
+            return (
+              <AnswerButton
+                key={key}
+                className={clsx(ANSWERS_COLORS[key], {
+                  "opacity-65": responses && correct !== key,
+                })}
+                icon={ANSWERS_ICONS[key]}
+                answerImage={answerImage}
+                onClick={() => handleAnswer(key)}
+              >
+                {answerText}
+              </AnswerButton>
+            );
+          })}
         </div>
       </div>
     </div>

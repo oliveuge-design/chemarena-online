@@ -5,6 +5,7 @@ export default function AnswerButton({
   className,
   icon: Icon,
   children,
+  answerImage,
   ...otherProps
 }) {
   return (
@@ -16,7 +17,16 @@ export default function AnswerButton({
       {...otherProps}
     >
       <Icon className="h-6 w-6" />
-      <span className="drop-shadow-md">{children}</span>
+      <div className="flex-1 flex items-center gap-3">
+        {answerImage && (
+          <img 
+            src={answerImage} 
+            alt="Risposta" 
+            className="h-12 w-12 object-cover rounded"
+          />
+        )}
+        <span className="drop-shadow-md">{children}</span>
+      </div>
     </button>
   )
 }

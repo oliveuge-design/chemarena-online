@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'standalone',
   images: {
     remotePatterns: [
       {
@@ -10,6 +11,9 @@ const nextConfig = {
         pathname: "/**",
       },
     ],
+  },
+  env: {
+    WEBSOCKET_PUBLIC_URL: process.env.WEBSOCKET_PUBLIC_URL,
   },
 }
 

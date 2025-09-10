@@ -9,12 +9,15 @@
     "socket": "node ./socket/index.js",
     "all": "npm run build && concurrently --kill-others \"npm run start\" \"npm run socket\"",
     "all-dev": "concurrently --kill-others \"npm run dev\" \"npm run socket\"",
+    "rahoot": "node start.js",
     "lint": "next lint"
   },
   "dependencies": {
     "clsx": "^2.1.0",
     "concurrently": "^8.2.2",
+    "formidable": "^3.5.1",
     "next": "^14.2.32",
+    "qrcode": "^1.5.4",
     "react": "^18",
     "react-confetti": "^6.1.0",
     "react-dom": "^18",

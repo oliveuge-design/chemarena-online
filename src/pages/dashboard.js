@@ -1,0 +1,232 @@
+import { useState, useEffect } from "react"
+import Image from "next/image"
+import { useRouter } from "next/router"
+import logo from "@/assets/logo.svg"
+import Button from "@/components/Button"
+import QuizManager from "@/components/dashboard/QuizManager"
+import QuizCreator from "@/components/dashboard/QuizCreator"
+import QuizArchiveManager from "@/components/dashboard/QuizArchiveManager"
+import Statistics from "@/components/dashboard/Statistics"
+import GameLauncher from "@/components/dashboard/GameLauncher"
+import ServerControls from "@/components/dashboard/ServerControls"
+
+export default function Dashboard() {
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState('archive')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  const [editingQuiz, setEditingQuiz] = useState(null)
+
+  // Controlla se l'utente era già autenticato (per mantenere la sessione)
+  useEffect(() => {
+    const savedAuth = localStorage.getItem('dashboard-auth')
+    if (savedAuth === 'true') {
+      setIsAuthenticated(true)
+    }
+
+    // Controlla se c'è un tab specificato nella query string
+    const urlParams = new URLSearchParams(window.location.search)
+    const tabParam = urlParams.get('tab')
+    if (tabParam && ['archive', 'quizzes', 'create', 'launch', 'statistics', 'server'].includes(tabParam)) {
+      setActiveTab(tabParam)
+    }
+
+    // Event listener per cambiare tab da altri componenti
+    const handleTabChange = (event) => {
+      setActiveTab(event.detail)
+    }
+
+    window.addEventListener('setDashboardTab', handleTabChange)
+    return () => window.removeEventListener('setDashboardTab', handleTabChange)
+  }, [])
+
+  const handleAuth = async (e) => {
+    if (e) e.preventDefault()
+    setIsLoading(true)
+    
+    // Simula un piccolo delay per mostrare il loading
+    await new Promise(resolve => setTimeout(resolve, 500))
+    
+    console.log("Tentativo di accesso con password:", password) // Debug
+    
+    // Per ora usiamo una password semplice, in futuro si può implementare un sistema più robusto
+    if (password.trim() === "admin123") {
+      setIsAuthenticated(true)
+      localStorage.setItem('dashboard-auth', 'true')
+      console.log("Accesso autorizzato") // Debug
+    } else {
+      alert("Password non corretta. Usa: admin123")
+      console.log("Accesso negato") // Debug
+    }
+    
+    setIsLoading(false)
+  }
+
+  const handleGoHome = () => {
+    console.log("Reindirizzamento alla home") // Debug
+    router.push('/')
+  }
+
+  const quickRestartServer = async () => {
+    if (!confirm('Vuoi riavviare il server socket?\n\nQuesto applicherà tutte le modifiche ai quiz.')) return
+    
+    try {
+      const response = await fetch('/api/restart-server', { method: 'POST' })
+      const data = await response.json()
+      
+      if (data.success) {
+        alert('✅ Server riavviato con successo!')
+      } else {
+        alert('❌ Errore: ' + data.message)
+      }
+    } catch (error) {
+      alert('❌ Errore di connessione durante il riavvio.')
+    }
+  }
+
+  const handleEditQuiz = (quiz) => {
+    console.log("Modifica quiz:", quiz) // Debug
+    setEditingQuiz(quiz)
+    setActiveTab('create') // Passa al tab di creazione
+  }
+
+  const handleClearEdit = () => {
+    setEditingQuiz(null)
+  }
+
+  const tabs = [
+    { id: 'archive', name: 'Archivio Quiz', icon: '📚' },
+    { id: 'quizzes', name: 'I Miei Quiz', icon: '📝' },
+    { id: 'create', name: 'Crea Quiz', icon: '➕' },
+    { id: 'launch', name: 'Lancia Gioco', icon: '🚀' },
+    { id: 'statistics', name: 'Statistiche', icon: '📊' },
+    { id: 'server', name: 'Server', icon: '⚙️' }
+  ]
+
+  if (!isAuthenticated) {
+    return (
+      <section className="relative flex min-h-screen flex-col items-center justify-center">
+        <div className="absolute h-full w-full overflow-hidden">
+          <div className="absolute -left-[15vmin] -top-[15vmin] min-h-[75vmin] min-w-[75vmin] rounded-full bg-primary/15"></div>
+          <div className="absolute -bottom-[15vmin] -right-[15vmin] min-h-[75vmin] min-w-[75vmin] rotate-45 bg-primary/15"></div>
+        </div>
+
+        <Image src={logo} className="mb-6 h-32" alt="logo" />
+        <h1 className="mb-8 text-3xl font-bold text-gray-800">Dashboard Insegnanti</h1>
+        
+        <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative z-10">
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">Accesso Riservato</h2>
+          <form onSubmit={handleAuth}>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Inserisci la password (admin123)"
+              className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              onKeyDown={(e) => e.key === 'Enter' && handleAuth(e)}
+              autoFocus
+            />
+            <Button 
+              type="submit" 
+              onClick={handleAuth} 
+              className="w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? "🔄 Accesso..." : "Accedi alla Dashboard"}
+            </Button>
+          </form>
+          <div className="mt-4 text-center">
+            <button 
+              onClick={handleGoHome}
+              className="text-blue-500 hover:text-blue-700 underline text-sm font-medium transition-colors"
+              type="button"
+            >
+              ← Torna alla Home
+            </button>
+          </div>
+          <div className="mt-4 text-center text-xs text-gray-500">
+            <p>Password: <strong>admin123</strong></p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <Image src={logo} className="h-8 w-8 mr-3" alt="logo" />
+              <h1 className="text-xl font-semibold text-gray-900">Dashboard Rahoot</h1>
+            </div>
+            <div className="flex items-center space-x-3">
+              <button 
+                onClick={quickRestartServer}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                type="button"
+                title="Riavvia Server Socket"
+              >
+                🔄 Riavvia Server
+              </button>
+              <button 
+                onClick={handleGoHome}
+                className="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                type="button"
+              >
+                🎮 Vai al Gioco
+              </button>
+              <button 
+                onClick={() => {
+                  setIsAuthenticated(false)
+                  localStorage.removeItem('dashboard-auth')
+                }}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                type="button"
+              >
+                🚪 Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Navigation Tabs */}
+      <nav className="bg-white shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex space-x-8">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === tab.id
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <span className="mr-2">{tab.icon}</span>
+                {tab.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="px-4 py-6 sm:px-0">
+          {activeTab === 'archive' && <QuizArchiveManager />}
+          {activeTab === 'quizzes' && <QuizManager onEditQuiz={handleEditQuiz} />}
+          {activeTab === 'create' && <QuizCreator editingQuiz={editingQuiz} onClearEdit={handleClearEdit} />}
+          {activeTab === 'launch' && <GameLauncher />}
+          {activeTab === 'statistics' && <Statistics />}
+          {activeTab === 'server' && <ServerControls />}
+        </div>
+      </main>
+    </div>
+  )
+}

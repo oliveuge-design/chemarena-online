@@ -45,6 +45,8 @@ const Manager = {
     }
 
     game.started = true
+    game.gameStartTime = Date.now() // Registra l'inizio del gioco
+    
     io.to(game.room).emit("game:status", {
       name: "SHOW_START",
       data: {
@@ -91,6 +93,39 @@ const Manager = {
 
   showLoaderboard: (game, io, socket) => {
     if (!game.questions[game.currentQuestion + 1]) {
+      // Salva statistiche prima di finire il gioco
+      const gameEndTime = Date.now()
+      const gameStats = {
+        id: Date.now().toString(),
+        date: new Date().toISOString(),
+        quizSubject: game.subject,
+        duration: gameEndTime - (game.gameStartTime || gameEndTime),
+        questionsCount: game.questions.length,
+        players: game.players.map(player => ({
+          id: player.id || Date.now() + Math.random(),
+          name: player.username || player.name || 'Anonimo',
+          score: player.points || 0
+        })),
+        maxScore: game.questions.length * 1000,
+        questionStats: game.questions.map((question, index) => {
+          const totalAnswers = game.playersAnswer.filter(a => a.questionIndex === index).length
+          const correctAnswers = game.playersAnswer.filter(a => 
+            a.questionIndex === index && a.answerKey === question.solution
+          ).length
+          
+          return {
+            questionIndex: index,
+            question: question.question,
+            correct: correctAnswers,
+            total: totalAnswers,
+            percentage: totalAnswers > 0 ? Math.round((correctAnswers / totalAnswers) * 100) : 0
+          }
+        })
+      }
+
+      // Invia evento speciale per salvare le statistiche lato client
+      socket.emit("game:saveStats", gameStats)
+      
       socket.emit("game:status", {
         name: "FINISH",
         data: {

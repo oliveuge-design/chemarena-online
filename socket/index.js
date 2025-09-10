@@ -9,11 +9,18 @@ let gameState = deepClone(GAME_STATE_INIT)
 
 const io = new Server({
   cors: {
-    origin: "*",
+    origin: process.env.NODE_ENV === 'production' 
+      ? ["https://*.railway.app", "https://*.up.railway.app"] 
+      : "*",
+    credentials: true,
   },
 })
 
-console.log(`Server running on port ${WEBSOCKET_SERVER_PORT}`)
+console.log(`🚀 Socket Server running on port ${WEBSOCKET_SERVER_PORT}`)
+console.log(`🎮 Game URL: http://localhost:3000`)
+console.log(`👨‍🏫 Dashboard URL: http://localhost:3000/dashboard`)
+console.log(`📝 Password Dashboard: admin123`)
+console.log(`───────────────────────────────────────`)
 io.listen(WEBSOCKET_SERVER_PORT)
 
 io.on("connection", (socket) => {
@@ -49,6 +56,52 @@ io.on("connection", (socket) => {
   socket.on("manager:showLeaderboard", () =>
     Manager.showLoaderboard(gameState, io, socket),
   )
+
+  // Sistema automatico di aggiornamento password real-time
+  socket.on("admin:updateGameState", (updateData) => {
+    try {
+      console.log('🔄 Aggiornamento gameState in real-time...')
+      
+      if (updateData.password) {
+        gameState.password = updateData.password
+        console.log(`🔑 Password aggiornata: ${updateData.password}`)
+      }
+      
+      if (updateData.subject) {
+        gameState.subject = updateData.subject
+        console.log(`📚 Materia aggiornata: ${updateData.subject}`)
+      }
+      
+      if (updateData.questions) {
+        gameState.questions = updateData.questions
+        console.log(`❓ Domande aggiornate: ${updateData.questions.length} domande`)
+      }
+      
+      // Conferma l'aggiornamento
+      socket.emit("admin:gameStateUpdated", { 
+        password: gameState.password,
+        subject: gameState.subject,
+        questionsCount: gameState.questions.length 
+      })
+      
+      console.log(`✅ GameState aggiornato con successo!`)
+      
+    } catch (error) {
+      console.error('❌ Errore nell\'aggiornamento gameState:', error)
+      socket.emit("admin:updateError", error.message)
+    }
+  })
+
+  // Endpoint per ottenere lo stato corrente
+  socket.on("admin:getGameState", () => {
+    socket.emit("admin:currentGameState", {
+      password: gameState.password,
+      subject: gameState.subject,
+      questionsCount: gameState.questions.length,
+      started: gameState.started,
+      playersCount: gameState.players.length
+    })
+  })
 
   socket.on("disconnect", () => {
     console.log(`user disconnected ${socket.id}`)
