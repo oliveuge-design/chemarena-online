@@ -5,12 +5,7 @@ import generateRoomId from "../utils/generateRoomId.js"
 import { startRound } from "../utils/round.js"
 
 const Manager = {
-  createRoom: (game, io, socket, password) => {
-    if (game.password !== password) {
-      io.to(socket.id).emit("game:errorMessage", "Bad Password")
-      return
-    }
-
+  createRoom: (game, io, socket) => {
     if (game.manager || game.room) {
       io.to(socket.id).emit("game:errorMessage", "Already manager")
       return

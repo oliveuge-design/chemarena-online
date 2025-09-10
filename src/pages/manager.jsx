@@ -87,8 +87,8 @@ export default function Manager() {
     }
   }, [state, on, off])
 
-  const handleCreate = (password) => {
-    emit("manager:createRoom", password)
+  const handleCreate = () => {
+    emit("manager:createRoom")
   }
 
   const handleSkip = () => {

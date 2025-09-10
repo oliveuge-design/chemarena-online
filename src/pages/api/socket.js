@@ -57,8 +57,8 @@ export default function handler(req, res) {
         Player.join(gameState, io, socket, player),
       )
 
-      socket.on("manager:createRoom", (password) =>
-        Manager.createRoom(gameState, io, socket, password),
+      socket.on("manager:createRoom", () =>
+        Manager.createRoom(gameState, io, socket),
       )
       
       socket.on("manager:kickPlayer", (playerId) =>
