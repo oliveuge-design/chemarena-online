@@ -8,12 +8,29 @@ let socket = null
 // Function to create socket connection
 const createSocket = async () => {
   if (typeof window !== 'undefined' && !socket) {
-    // Initialize the socket server first
+    // Initialize the socket server first with multiple attempts
     try {
-      await fetch('/api/socket-init')
+      console.log('🔧 Initializing socket server...')
+      
+      // Try to wake up the socket API
+      const initResponse = await fetch('/api/socket-init', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      
+      if (initResponse.ok) {
+        console.log('✅ Socket server initialized')
+      }
+      
+      // Also try the status endpoint to ensure it's active
+      await fetch('/api/socket-status')
+      
     } catch (error) {
-      console.log('Socket init warning:', error)
+      console.log('⚠️ Socket init warning:', error)
     }
+    
+    // Wait a moment for server initialization
+    await new Promise(resolve => setTimeout(resolve, 1000))
     
     // Use current hostname for production
     const socketURL = window.location.origin
@@ -22,7 +39,8 @@ const createSocket = async () => {
     
     socket = io(socketURL, {
       path: '/api/socket',
-      transports: ["websocket", "polling"],
+      transports: ["polling", "websocket"],
+      timeout: 10000,
       autoConnect: true,
     })
     
@@ -42,31 +60,36 @@ const createSocket = async () => {
   return socket
 }
 
-// Create socket instance
-if (typeof window !== 'undefined') {
-  createSocket()
-}
-
 export { socket }
 
 export const SocketContext = createContext()
 
 export const SocketContextProvider = ({ children }) => {
   const [socketInstance, setSocketInstance] = useState(null)
+  const [isConnecting, setIsConnecting] = useState(false)
 
   useEffect(() => {
     const initSocket = async () => {
-      const sock = await createSocket()
-      setSocketInstance(sock)
+      if (isConnecting) return
+      
+      setIsConnecting(true)
+      try {
+        const sock = await createSocket()
+        setSocketInstance(sock)
+      } catch (error) {
+        console.error('Socket initialization failed:', error)
+      } finally {
+        setIsConnecting(false)
+      }
     }
     
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !socketInstance && !isConnecting) {
       initSocket()
     }
-  }, [])
+  }, [socketInstance, isConnecting])
 
   return (
-    <SocketContext.Provider value={socketInstance || socket}>
+    <SocketContext.Provider value={socketInstance}>
       {children}
     </SocketContext.Provider>
   )
@@ -75,5 +98,27 @@ export const SocketContextProvider = ({ children }) => {
 export function useSocketContext() {
   const context = useContext(SocketContext)
 
-  return { socket: context }
+  // Return socket with null checks
+  return { 
+    socket: context,
+    isConnected: context?.connected || false,
+    emit: (event, ...args) => {
+      if (context && context.emit) {
+        return context.emit(event, ...args)
+      }
+      console.warn('Socket not available for emit:', event)
+    },
+    on: (event, callback) => {
+      if (context && context.on) {
+        return context.on(event, callback)
+      }
+      console.warn('Socket not available for on:', event)
+    },
+    off: (event, callback) => {
+      if (context && context.off) {
+        return context.off(event, callback)
+      }
+      console.warn('Socket not available for off:', event)
+    }
+  }
 }
