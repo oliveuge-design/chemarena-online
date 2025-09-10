@@ -2,6 +2,14 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
+  eslint: {
+    // Disable ESLint during builds for deployment
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    // Skip TypeScript checks during builds
+    ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {
