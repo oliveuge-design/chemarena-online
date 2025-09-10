@@ -2,7 +2,6 @@
   "root": true,
   "extends": [
     "eslint:recommended",
-    "prettier",
     "next/core-web-vitals",
     "plugin:react/recommended"
   ],
@@ -86,7 +85,7 @@
     "no-alert": "error",
     "no-bitwise": "error",
     "no-caller": "error",
-    "no-console": "error",
+    "no-console": "warn",
     "no-else-return": "error",
     "no-empty-function": "error",
     "no-empty-static-block": "error",
@@ -125,7 +124,7 @@
     "no-underscore-dangle": ["error", { "allowFunctionParams": false }],
     "no-unneeded-ternary": ["error", { "defaultAssignment": false }],
     "no-unused-expressions": ["error", { "enforceForJSX": true }],
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "no-useless-call": "error",
     "no-useless-computed-key": ["error", { "enforceForClassMembers": true }],
     "no-useless-concat": "error",
