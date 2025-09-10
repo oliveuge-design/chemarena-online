@@ -7,13 +7,13 @@ import { useSocketContext } from "@/context/socket"
 import { useRouter } from "next/router"
 
 export default function Username() {
-  const { socket } = useSocketContext()
+  const { socket, emit, on, off } = useSocketContext()
   const { player, dispatch } = usePlayerContext()
   const router = useRouter()
   const [username, setUsername] = useState("")
 
   const handleJoin = () => {
-    socket.emit("player:join", { username: username, room: player.room })
+    emit("player:join", { username: username, room: player.room })
   }
 
   const handleKeyDown = (event) => {
@@ -23,7 +23,7 @@ export default function Username() {
   }
 
   useEffect(() => {
-    socket.on("game:successJoin", () => {
+    on("game:successJoin", () => {
       dispatch({
         type: "LOGIN",
         payload: username,
@@ -33,9 +33,9 @@ export default function Username() {
     })
 
     return () => {
-      socket.off("game:successJoin")
+      off("game:successJoin")
     }
-  }, [username])
+  }, [username, on, off, dispatch, router])
 
   return (
     <Form>

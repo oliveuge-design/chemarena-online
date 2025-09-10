@@ -9,7 +9,7 @@ import toast from "react-hot-toast"
 export default function Game() {
   const router = useRouter()
 
-  const { socket } = useSocketContext()
+  const { socket, on, off } = useSocketContext()
   const { player, dispatch } = usePlayerContext()
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function Game() {
   const [state, setState] = useState(GAME_STATES)
 
   useEffect(() => {
-    socket.on("game:status", (status) => {
+    on("game:status", (status) => {
       setState({
         ...state,
         status: status,
@@ -32,7 +32,7 @@ export default function Game() {
       })
     })
 
-    socket.on("game:reset", () => {
+    on("game:reset", () => {
       router.replace("/")
 
       dispatch({ type: "LOGOUT" })
@@ -42,10 +42,10 @@ export default function Game() {
     })
 
     return () => {
-      socket.off("game:status")
-      socket.off("game:reset")
+      off("game:status")
+      off("game:reset")
     }
-  }, [state])
+  }, [state, on, off])
 
   return (
     <GameWrapper>

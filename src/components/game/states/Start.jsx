@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import useSound from "use-sound"
 
 export default function Start({ data: { time, subject } }) {
-  const { socket } = useSocketContext()
+  const { socket, on, off } = useSocketContext()
   const [showTitle, setShowTitle] = useState(true)
   const [cooldown, setCooldown] = useState(time)
 
@@ -14,21 +14,21 @@ export default function Start({ data: { time, subject } }) {
   })
 
   useEffect(() => {
-    socket.on("game:startCooldown", () => {
+    on("game:startCooldown", () => {
       sfxBoump()
       setShowTitle(false)
     })
 
-    socket.on("game:cooldown", (sec) => {
+    on("game:cooldown", (sec) => {
       sfxBoump()
       setCooldown(sec)
     })
 
     return () => {
-      socket.off("game:startCooldown")
-      socket.off("game:cooldown")
+      off("game:startCooldown")
+      off("game:cooldown")
     }
-  }, [sfxBoump])
+  }, [sfxBoump, on, off])
 
   return (
     <section className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center">

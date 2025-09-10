@@ -7,14 +7,14 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
 export default function GameWrapper({ children, textNext, onNext, manager }) {
-  const { socket } = useSocketContext()
+  const { socket, on, off } = useSocketContext()
   const { player, dispatch } = usePlayerContext()
   const router = useRouter()
 
   const [questionState, setQuestionState] = useState()
 
   useEffect(() => {
-    socket.on("game:kick", () => {
+    on("game:kick", () => {
       dispatch({
         type: "LOGOUT",
       })
@@ -22,7 +22,7 @@ export default function GameWrapper({ children, textNext, onNext, manager }) {
       router.replace("/")
     })
 
-    socket.on("game:updateQuestion", ({ current, total }) => {
+    on("game:updateQuestion", ({ current, total }) => {
       setQuestionState({
         current,
         total,
@@ -30,10 +30,10 @@ export default function GameWrapper({ children, textNext, onNext, manager }) {
     })
 
     return () => {
-      socket.off("game:kick")
-      socket.off("game:updateQuestion")
+      off("game:kick")
+      off("game:updateQuestion")
     }
-  }, [])
+  }, [on, off, dispatch, router])
 
   return (
     <section className="relative flex min-h-screen w-full flex-col justify-between">
