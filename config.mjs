@@ -1,4 +1,4 @@
-export const WEBSOCKET_PUBLIC_URL = process.env.RENDER_EXTERNAL_URL ? `https://${process.env.RENDER_EXTERNAL_HOSTNAME}/` : (process.env.WEBSOCKET_PUBLIC_URL || "http://localhost:5505/")
+export const WEBSOCKET_PUBLIC_URL = process.env.RENDER_EXTERNAL_URL || (process.env.WEBSOCKET_PUBLIC_URL || "http://localhost:5505/")
 export const WEBSOCKET_SERVER_PORT = process.env.PORT || 5505
 
 const QUIZZ_CONFIG = {

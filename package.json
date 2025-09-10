@@ -9,6 +9,7 @@
     "socket": "node ./socket/index.js",
     "all": "npm run build && concurrently --kill-others \"npm run start\" \"npm run socket\"",
     "all-dev": "concurrently --kill-others \"npm run dev\" \"npm run socket\"",
+    "start:production": "node server.js",
     "rahoot": "node start.js",
     "lint": "next lint"
   },

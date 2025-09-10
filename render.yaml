@@ -4,15 +4,10 @@ services:
     env: node
     plan: free
     buildCommand: npm ci && npm run build
-    startCommand: npm run all
+    startCommand: npm run start:production
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
-      - key: WEBSOCKET_PUBLIC_URL
-        fromService:
-          type: web
-          name: rahoot-app
-          property: host
     autoDeploy: true
