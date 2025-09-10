@@ -4,11 +4,12 @@ import Form from "@/components/Form"
 import Button from "@/components/Button"
 import Input from "@/components/Input"
 import { useEffect, useState } from "react"
-import { socket } from "@/context/socket"
+import { useSocketContext } from "@/context/socket"
 import logo from "@/assets/logo.svg"
 import toast from "react-hot-toast"
 
 export default function ManagerPassword({ onCreateRoom }) {
+  const { socket, emit, on, off } = useSocketContext()
   const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState("")
   const [currentQuizPassword, setCurrentQuizPassword] = useState("QUIZ123")
@@ -57,7 +58,7 @@ export default function ManagerPassword({ onCreateRoom }) {
       if (onCreateRoom) {
         onCreateRoom(password)
       } else {
-        socket.emit("manager:createRoom", password)
+        emit("manager:createRoom", password)
       }
       
     } catch (error) {
@@ -66,7 +67,7 @@ export default function ManagerPassword({ onCreateRoom }) {
       if (onCreateRoom) {
         onCreateRoom(password)
       } else {
-        socket.emit("manager:createRoom", password)
+        emit("manager:createRoom", password)
       }
     } finally {
       setLoading(false)
@@ -80,14 +81,14 @@ export default function ManagerPassword({ onCreateRoom }) {
   }
 
   useEffect(() => {
-    socket.on("game:errorMessage", (message) => {
+    on("game:errorMessage", (message) => {
       toast.error(message)
     })
 
     return () => {
-      socket.off("game:errorMessage")
+      off("game:errorMessage")
     }
-  }, [])
+  }, [on, off])
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center">

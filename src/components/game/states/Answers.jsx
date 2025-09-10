@@ -37,7 +37,7 @@ const calculatePercentages = (objectResponses) => {
 export default function Answers({
   data: { question, answers, image, time, responses, correct },
 }) {
-  const { socket } = useSocketContext()
+  const { socket, emit, on, off } = useSocketContext()
   const { player } = usePlayerContext()
 
   const [percentages, setPercentages] = useState([])
@@ -64,7 +64,7 @@ export default function Answers({
       return
     }
 
-    socket.emit("player:selectedAnswer", answer)
+    emit("player:selectedAnswer", answer)
     sfxPop()
   }
 
@@ -93,20 +93,20 @@ export default function Answers({
   }, [playMusic, stopMusic])
 
   useEffect(() => {
-    socket.on("game:cooldown", (sec) => {
+    on("game:cooldown", (sec) => {
       setCooldown(sec)
     })
 
-    socket.on("game:playerAnswer", (count) => {
+    on("game:playerAnswer", (count) => {
       setTotalAnswer(count)
       sfxPop()
     })
 
     return () => {
-      socket.off("game:cooldown")
-      socket.off("game:playerAnswer")
+      off("game:cooldown")
+      off("game:playerAnswer")
     }
-  }, [sfxPop])
+  }, [sfxPop, on, off])
 
   return (
     <div className="flex h-full flex-1 flex-col justify-between">

@@ -16,34 +16,34 @@ import toast from "react-hot-toast"
 export default function Home() {
   const router = useRouter()
   const { player, dispatch } = usePlayerContext()
-  const { socket } = useSocketContext()
+  const { socket, emit, on, off } = useSocketContext()
 
   useEffect(() => {
-    socket.on("game:errorMessage", (message) => {
+    on("game:errorMessage", (message) => {
       toast.error(message)
     })
 
     return () => {
-      socket.off("game:errorMessage")
+      off("game:errorMessage")
     }
-  }, [])
+  }, [on, off])
 
   // Gestisce il PIN dal QR code
   useEffect(() => {
     if (router.query.pin && !player) {
-      socket.emit("player:checkRoom", router.query.pin)
+      emit("player:checkRoom", router.query.pin)
     }
   }, [router.query.pin, player])
 
   useEffect(() => {
-    socket.on("game:successRoom", (roomId) => {
+    on("game:successRoom", (roomId) => {
       dispatch({ type: "JOIN", payload: roomId })
     })
 
     return () => {
-      socket.off("game:successRoom")
+      off("game:successRoom")
     }
-  }, [dispatch])
+  }, [dispatch, on, off])
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center">

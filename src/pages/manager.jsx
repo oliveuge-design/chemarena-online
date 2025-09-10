@@ -8,7 +8,8 @@ import { useRouter } from "next/router"
 import { createElement, useEffect, useState } from "react"
 
 export default function Manager() {
-  const { socket } = useSocketContext()
+  const { socket, emit, on, off } = useSocketContext()
+  const router = useRouter()
 
   const [nextText, setNextText] = useState("Start")
   const [state, setState] = useState({
@@ -20,7 +21,7 @@ export default function Manager() {
   })
 
   useEffect(() => {
-    socket.on("game:status", (status) => {
+    on("game:status", (status) => {
       setState({
         ...state,
         status: status,
@@ -45,7 +46,7 @@ export default function Manager() {
     })
 
     // Listener per salvare statistiche di gioco
-    socket.on("game:saveStats", (gameStats) => {
+    on("game:saveStats", (gameStats) => {
       try {
         // Carica cronologia esistente
         const existingHistory = JSON.parse(localStorage.getItem('rahoot-game-history') || '[]')
@@ -65,7 +66,7 @@ export default function Manager() {
       }
     })
 
-    socket.on("manager:inviteCode", (inviteCode) => {
+    on("manager:inviteCode", (inviteCode) => {
       setState({
         ...state,
         created: true,
@@ -80,13 +81,14 @@ export default function Manager() {
     })
 
     return () => {
-      socket.off("game:status")
-      socket.off("manager:inviteCode")
+      off("game:status")
+      off("game:saveStats")
+      off("manager:inviteCode")
     }
-  }, [state])
+  }, [state, on, off])
 
   const handleCreate = (password) => {
-    socket.emit("manager:createRoom", password)
+    emit("manager:createRoom", password)
   }
 
   const handleSkip = () => {
@@ -94,19 +96,19 @@ export default function Manager() {
 
     switch (state.status.name) {
       case "SHOW_ROOM":
-        socket.emit("manager:startGame")
+        emit("manager:startGame")
         break
 
       case "SELECT_ANSWER":
-        socket.emit("manager:abortQuiz")
+        emit("manager:abortQuiz")
         break
 
       case "SHOW_RESPONSES":
-        socket.emit("manager:showLeaderboard")
+        emit("manager:showLeaderboard")
         break
 
       case "SHOW_LEADERBOARD":
-        socket.emit("manager:nextQuestion")
+        emit("manager:nextQuestion")
         break
 
       case "FINISH":

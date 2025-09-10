@@ -3,28 +3,28 @@ import { useEffect, useState } from "react"
 import QRCodeDisplay from "@/components/QRCodeDisplay"
 
 export default function Room({ data: { text, inviteCode }, manager = false }) {
-  const { socket } = useSocketContext()
+  const { socket, emit, on, off } = useSocketContext()
   const [playerList, setPlayerList] = useState([])
 
   useEffect(() => {
-    socket.on("manager:newPlayer", (player) => {
+    on("manager:newPlayer", (player) => {
       setPlayerList([...playerList, player])
     })
 
-    socket.on("manager:removePlayer", (playerId) => {
+    on("manager:removePlayer", (playerId) => {
       setPlayerList(playerList.filter((p) => p.id !== playerId))
     })
 
-    socket.on("manager:playerKicked", (playerId) => {
+    on("manager:playerKicked", (playerId) => {
       setPlayerList(playerList.filter((p) => p.id !== playerId))
     })
 
     return () => {
-      socket.off("manager:newPlayer")
-      socket.off("manager:removePlayer")
-      socket.off("manager:playerKicked")
+      off("manager:newPlayer")
+      off("manager:removePlayer")
+      off("manager:playerKicked")
     }
-  }, [playerList])
+  }, [playerList, on, off])
 
   if (manager) {
     return (
@@ -45,7 +45,7 @@ export default function Room({ data: { text, inviteCode }, manager = false }) {
                 <div
                   key={player.id}
                   className="shadow-inset rounded-md bg-primary px-4 py-3 font-bold text-white"
-                  onClick={() => socket.emit("manager:kickPlayer", player.id)}
+                  onClick={() => emit("manager:kickPlayer", player.id)}
                 >
                   <span className="cursor-pointer text-xl drop-shadow-md hover:line-through">
                     {player.username}
@@ -89,7 +89,7 @@ export default function Room({ data: { text, inviteCode }, manager = false }) {
           <div
             key={player.id}
             className="shadow-inset rounded-md bg-primary px-4 py-3 font-bold text-white"
-            onClick={() => socket.emit("manager:kickPlayer", player.id)}
+            onClick={() => emit("manager:kickPlayer", player.id)}
           >
             <span className="cursor-pointer text-xl drop-shadow-md hover:line-through">
               {player.username}
