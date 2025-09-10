@@ -10,7 +10,7 @@ let gameState = deepClone(GAME_STATE_INIT)
 const io = new Server({
   cors: {
     origin: process.env.NODE_ENV === 'production' 
-      ? ["https://*.railway.app", "https://*.up.railway.app"] 
+      ? ["https://*.onrender.com", "https://*.render.com"] 
       : "*",
     credentials: true,
   },
