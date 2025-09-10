@@ -5,6 +5,9 @@ import { WEBSOCKET_PUBLIC_URL } from "../../config.mjs"
 // Initialize socket connection
 let socket = null
 
+// Export a mutable reference
+const socketRef = { current: null }
+
 // Function to create socket connection
 const createSocket = async () => {
   if (typeof window !== 'undefined' && !socket) {
@@ -44,6 +47,9 @@ const createSocket = async () => {
       autoConnect: true,
     })
     
+    // Update the ref too
+    socketRef.current = socket
+    
     socket.on('connect', () => {
       console.log('🚀 Socket connected:', socket.id)
     })
@@ -76,6 +82,10 @@ export const SocketContextProvider = ({ children }) => {
       try {
         const sock = await createSocket()
         setSocketInstance(sock)
+        // Also update the global socket reference
+        if (sock) {
+          socketRef.current = sock
+        }
       } catch (error) {
         console.error('Socket initialization failed:', error)
       } finally {
@@ -88,8 +98,11 @@ export const SocketContextProvider = ({ children }) => {
     }
   }, [socketInstance, isConnecting])
 
+  // Provide the socket instance immediately if available
+  const currentSocket = socketInstance || socketRef.current
+
   return (
-    <SocketContext.Provider value={socketInstance}>
+    <SocketContext.Provider value={currentSocket}>
       {children}
     </SocketContext.Provider>
   )
@@ -97,26 +110,29 @@ export const SocketContextProvider = ({ children }) => {
 
 export function useSocketContext() {
   const context = useContext(SocketContext)
+  
+  // Use the global socket instance if context is not available yet
+  const socketInstance = context || socketRef.current
 
   // Return socket with null checks
   return { 
-    socket: context,
-    isConnected: context?.connected || false,
+    socket: socketInstance,
+    isConnected: socketInstance?.connected || false,
     emit: (event, ...args) => {
-      if (context && context.emit) {
-        return context.emit(event, ...args)
+      if (socketInstance && socketInstance.emit) {
+        return socketInstance.emit(event, ...args)
       }
       console.warn('Socket not available for emit:', event)
     },
     on: (event, callback) => {
-      if (context && context.on) {
-        return context.on(event, callback)
+      if (socketInstance && socketInstance.on) {
+        return socketInstance.on(event, callback)
       }
       console.warn('Socket not available for on:', event)
     },
     off: (event, callback) => {
-      if (context && context.off) {
-        return context.off(event, callback)
+      if (socketInstance && socketInstance.off) {
+        return socketInstance.off(event, callback)
       }
       console.warn('Socket not available for off:', event)
     }
