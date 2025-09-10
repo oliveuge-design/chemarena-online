@@ -5,7 +5,29 @@ import Manager from '../../../socket/roles/manager.js'
 import Player from '../../../socket/roles/player.js'
 import deepClone from '../../../socket/utils/deepClone.js'
 
-let gameState = deepClone(GAME_STATE_INIT)
+// Function to get current game state
+function getCurrentGameState() {
+  const baseState = {
+    started: false,
+    players: [],
+    playersAnswer: [],
+    manager: null,
+    room: null,
+    currentQuestion: 0,
+    roundStartTime: 0,
+  }
+  
+  // Use global config if available, otherwise fallback to file config
+  const config = global.currentQuizConfig || {
+    password: GAME_STATE_INIT.password,
+    subject: GAME_STATE_INIT.subject,
+    questions: GAME_STATE_INIT.questions
+  }
+  
+  return { ...baseState, ...config }
+}
+
+let gameState = getCurrentGameState()
 let io
 
 export default function handler(req, res) {
@@ -56,8 +78,15 @@ export default function handler(req, res) {
       )
 
       socket.on("admin:updateGameState", (newGameState) => {
-        gameState = { ...gameState, ...newGameState }
-        console.log("🔄 Game state updated via admin")
+        // Update global config
+        global.currentQuizConfig = { ...global.currentQuizConfig, ...newGameState }
+        // Refresh gameState with new config
+        gameState = getCurrentGameState()
+        console.log("🔄 Game state updated via admin:", {
+          password: gameState.password,
+          subject: gameState.subject,
+          questions: gameState.questions?.length
+        })
       })
 
       socket.on("disconnect", () => {

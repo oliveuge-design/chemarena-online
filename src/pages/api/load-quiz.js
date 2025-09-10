@@ -73,42 +73,27 @@ export default async function handler(req, res) {
           questions: quiz.questions
         };
 
+        // Store quiz data in memory for the socket API to use
+        global.currentQuizConfig = configData;
+
         if (updateConfig(configData)) {
-          
-          // Aggiorna il gameState del server socket in real-time (NUOVO SISTEMA!)
+          // Trigger socket server initialization with new quiz data
           try {
-            const { io } = await import('socket.io-client');
-            const socketClient = io('http://localhost:5505');
-            
-            socketClient.on('connect', () => {
-              console.log('🔄 Aggiornando gameState in real-time...');
-              
-              // Invia i dati del nuovo quiz direttamente al gameState
-              socketClient.emit('admin:updateGameState', {
-                password: configData.password,
-                subject: configData.subject,
-                questions: configData.questions
-              });
+            const response = await fetch(`${process.env.RENDER_EXTERNAL_URL || 'http://localhost:3000'}/api/socket-init`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ 
+                type: 'updateGameState',
+                data: configData 
+              })
             });
             
-            socketClient.on('admin:gameStateUpdated', (data) => {
-              console.log(`✅ GameState aggiornato! Password: ${data.password}, Domande: ${data.questionsCount}`);
-              socketClient.disconnect();
-            });
-            
-            socketClient.on('admin:updateError', (error) => {
-              console.log(`❌ Errore nell'aggiornamento: ${error}`);
-              socketClient.disconnect();
-            });
-            
-            // Timeout di sicurezza
-            setTimeout(() => {
-              socketClient.disconnect();
-            }, 3000);
-            
+            if (response.ok) {
+              console.log('✅ GameState updated via API');
+            }
           } catch (updateError) {
-            console.log('⚠️ Errore nell\'aggiornamento automatico:', updateError);
-            // Non bloccare il caricamento se l'aggiornamento fallisce
+            console.log('⚠️ Socket update warning:', updateError);
+            // Non bloccare il caricamento
           }
 
           return res.status(200).json({ 
