@@ -15,7 +15,12 @@ const createSocket = async () => {
       console.log('Socket init warning:', error)
     }
     
-    socket = io(WEBSOCKET_PUBLIC_URL, {
+    // Use current hostname for production
+    const socketURL = window.location.origin
+    
+    console.log('🌐 Connecting to:', socketURL)
+    
+    socket = io(socketURL, {
       path: '/api/socket',
       transports: ["websocket", "polling"],
       autoConnect: true,
@@ -27,6 +32,10 @@ const createSocket = async () => {
     
     socket.on('disconnect', () => {
       console.log('❌ Socket disconnected')
+    })
+    
+    socket.on('connect_error', (error) => {
+      console.log('❌ Socket connection error:', error)
     })
   }
   
