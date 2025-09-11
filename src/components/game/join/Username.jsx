@@ -11,8 +11,6 @@ export default function Username() {
   const { player, dispatch } = usePlayerContext()
   const router = useRouter()
   const [username, setUsername] = useState("")
-  const [realName, setRealName] = useState("")
-  const [isEducationalMode, setIsEducationalMode] = useState(false)
   const [error, setError] = useState("")
 
   const validateUsername = (name) => {
@@ -26,8 +24,7 @@ export default function Username() {
   }
 
   const handleJoin = () => {
-    const nameToValidate = isEducationalMode ? realName : username
-    const validationError = validateUsername(nameToValidate)
+    const validationError = validateUsername(username)
     
     if (validationError) {
       setError(validationError)
@@ -37,10 +34,9 @@ export default function Username() {
     setError("")
     
     const playerData = {
-      username: nameToValidate.trim(),
+      username: username.trim(),
       room: player.room,
-      isEducational: isEducationalMode,
-      displayName: isEducationalMode ? realName.trim() : username.trim()
+      displayName: username.trim()
     }
     
     emit("player:join", playerData)
@@ -54,10 +50,9 @@ export default function Username() {
 
   useEffect(() => {
     on("game:successJoin", () => {
-      const finalUsername = isEducationalMode ? realName : username
       dispatch({
         type: "LOGIN",
-        payload: finalUsername.trim(),
+        payload: username.trim(),
       })
 
       router.replace("/game")
@@ -66,60 +61,33 @@ export default function Username() {
     return () => {
       off("game:successJoin")
     }
-  }, [username, realName, isEducationalMode, on, off, dispatch, router])
+  }, [username, on, off, dispatch, router])
 
-  const currentName = isEducationalMode ? realName : username
-  const isValid = !validateUsername(currentName) && currentName.trim().length >= 3
+  const isValid = !validateUsername(username) && username.trim().length >= 3
 
   return (
     <Form>
       <div className="space-y-4">
-        {/* Toggle per modalità educativa */}
-        <div className="flex items-center justify-center space-x-3 p-3 bg-gray-50 rounded-lg">
-          <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={isEducationalMode}
-              onChange={(e) => setIsEducationalMode(e.target.checked)}
-              className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-            />
-            <span className="text-sm font-medium text-gray-700">
-              📚 Modalità Valutazione (Nome Reale)
-            </span>
-          </label>
-        </div>
-
-        {/* Input dinamico */}
         <Input
-          value={currentName}
+          value={username}
           onChange={(e) => {
-            const value = e.target.value
-            if (isEducationalMode) {
-              setRealName(value)
-            } else {
-              setUsername(value)
-            }
-            if (error) setError("") // Pulisci errore durante digitazione
+            setUsername(e.target.value)
+            if (error) setError("")
           }}
           onKeyDown={handleKeyDown}
-          placeholder={isEducationalMode ? "Il tuo nome e cognome" : "Nickname (min. 3 caratteri)"}
+          placeholder="Il tuo nickname (min. 3 caratteri)"
           className={error ? "border-red-500" : ""}
           type="text"
           maxLength="20"
           autoFocus={true}
         />
 
-        {/* Messaggio di errore */}
         {error && (
           <p className="text-red-500 text-sm text-center">{error}</p>
         )}
 
-        {/* Info dinamica */}
         <p className="text-xs text-center text-gray-500">
-          {isEducationalMode 
-            ? "🎓 Il tuo nome reale verrà usato per la valutazione" 
-            : "🎮 Usa un nickname divertente per il gioco!"
-          }
+          🎮 Inserisci un nickname per entrare nel gioco!
         </p>
       </div>
 
@@ -128,7 +96,7 @@ export default function Username() {
         disabled={!isValid}
         className={`mt-4 ${!isValid ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
-        {isEducationalMode ? "📚 Entra per Valutazione" : "🎮 Entra nel Gioco"}
+        🎮 Entra nel Gioco
       </Button>
     </Form>
   )

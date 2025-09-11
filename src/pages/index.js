@@ -52,15 +52,6 @@ export default function Home() {
         <div className="absolute -bottom-[15vmin] -right-[15vmin] min-h-[75vmin] min-w-[75vmin] rotate-45 bg-primary/15"></div>
       </div>
 
-      {/* Link Dashboard per Insegnanti */}
-      <div className="absolute top-4 right-4 z-10">
-        <Button
-          onClick={() => router.push('/dashboard')}
-          className="bg-primary hover:bg-orange-600 text-white text-sm px-3 py-2"
-        >
-          👨‍🏫 Dashboard
-        </Button>
-      </div>
 
       <Image src={logo} className="mb-6 h-32" alt="logo" />
 
