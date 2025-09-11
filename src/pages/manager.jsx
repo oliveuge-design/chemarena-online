@@ -151,22 +151,12 @@ export default function Manager() {
     // Messaggio di conferma dinamico basato sullo stato
     const isQuizActive = state.status.name !== "SHOW_ROOM" && state.status.name !== "FINISH"
     const confirmMessage = isQuizActive 
-      ? "🚨 Quiz in corso!\n\nVuoi interrompere il quiz attuale e creare una nuova room?"
-      : "🆕 Vuoi creare una nuova room?\n\nQuesta azione resetterà la room attuale."
+      ? "🚨 Quiz in corso!\n\nVuoi interrompere il quiz e scegliere un nuovo quiz?"
+      : "🆕 Vuoi scegliere un nuovo quiz?\n\nVerrai portato al dashboard per la selezione."
     
     const confirmReset = confirm(confirmMessage)
     
     if (confirmReset) {
-      // Reset dello stato per permettere creazione nuova room
-      setState({
-        ...GAME_STATES,
-        status: {
-          ...GAME_STATES.status,
-          name: "SHOW_ROOM",
-        },
-        created: false
-      })
-      
       // Emetti eventi per chiudere room e interrompere quiz
       if (socket && emit) {
         emit("manager:closeRoom")
@@ -174,6 +164,9 @@ export default function Manager() {
           emit("manager:abortQuiz")
         }
       }
+      
+      // Naviga direttamente al dashboard per scegliere nuovo quiz
+      router.push('/dashboard?tab=launch')
     }
   }
 
