@@ -80,7 +80,7 @@ export default function Dashboard() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: 'admin@rahoot.edu',
+          email: 'admin@chemhoot.edu',
           password: password.trim()
         })
       })
@@ -225,7 +225,7 @@ export default function Dashboard() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <Image src={logo} className="h-8 w-8 mr-3" alt="logo" />
-              <h1 className="text-xl font-semibold text-gray-900">Dashboard Rahoot</h1>
+              <h1 className="text-xl font-semibold text-gray-900">Dashboard Chemhoot</h1>
             </div>
             <div className="flex items-center space-x-3">
               <button 

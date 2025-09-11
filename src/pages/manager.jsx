@@ -142,8 +142,23 @@ export default function Manager() {
         created: false
       })
       
-      // Naviga al dashboard
-      router.push('/dashboard?tab=launch')
+      // Determina il dashboard corretto basato sul ruolo dell'utente
+      const savedTeacher = localStorage.getItem('teacher-auth')
+      let dashboardUrl = '/dashboard?tab=launch' // Default per admin
+      
+      if (savedTeacher) {
+        try {
+          const teacherData = JSON.parse(savedTeacher)
+          if (teacherData.role === 'teacher') {
+            dashboardUrl = '/teacher-dashboard?tab=launch'
+          }
+        } catch (error) {
+          console.error('Errore parsing teacher data:', error)
+        }
+      }
+      
+      // Naviga al dashboard corretto
+      router.push(dashboardUrl)
     }
   }
 
@@ -165,8 +180,33 @@ export default function Manager() {
         }
       }
       
-      // Naviga direttamente al dashboard per scegliere nuovo quiz
-      router.push('/dashboard?tab=launch')
+      // Reset completo dello stato locale
+      setState({
+        ...GAME_STATES,
+        status: {
+          ...GAME_STATES.status,
+          name: "SHOW_ROOM",
+        },
+        created: false
+      })
+      
+      // Determina il dashboard corretto basato sul ruolo dell'utente
+      const savedTeacher = localStorage.getItem('teacher-auth')
+      let dashboardUrl = '/dashboard?tab=launch' // Default per admin
+      
+      if (savedTeacher) {
+        try {
+          const teacherData = JSON.parse(savedTeacher)
+          if (teacherData.role === 'teacher') {
+            dashboardUrl = '/teacher-dashboard?tab=launch'
+          }
+        } catch (error) {
+          console.error('Errore parsing teacher data:', error)
+        }
+      }
+      
+      // Naviga al dashboard corretto
+      router.push(dashboardUrl)
     }
   }
 
@@ -187,10 +227,10 @@ export default function Manager() {
           </GameWrapper>
           
           {/* Pulsante per creare nuova room - Sempre disponibile */}
-          <div className="fixed top-4 right-4 z-50">
+          <div className="fixed bottom-4 left-4 z-50">
             <Button 
               onClick={handleCreateNewRoom}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm font-medium rounded-lg shadow-lg"
+              className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 text-lg font-medium rounded-lg shadow-lg"
             >
               🆕 Nuova Room
             </Button>

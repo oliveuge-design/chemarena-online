@@ -93,7 +93,7 @@ export default function TeacherDashboard() {
             <div className="flex items-center space-x-4">
               <Image
                 src={logo}
-                alt="Rahoot Logo"
+                alt="Chemhoot Logo"
                 width={100}
                 height={32}
                 className="h-8 w-auto"
