@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Image from "next/image"
 import logo from "@/assets/logo.svg"
@@ -7,6 +7,17 @@ import Button from "@/components/Button"
 export default function PrivacyPolicyPage() {
   const router = useRouter()
   const [showTOC, setShowTOC] = useState(false)
+  const [isLargeScreen, setIsLargeScreen] = useState(false)
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024)
+    }
+    
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
 
   const scrollToSection = (sectionId) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
@@ -52,7 +63,7 @@ export default function PrivacyPolicyPage() {
 
       <div className="max-w-4xl mx-auto px-6 py-8 flex gap-8">
         {/* Indice laterale */}
-        {(showTOC || window.innerWidth >= 1024) && (
+        {(showTOC || isLargeScreen) && (
           <div className="hidden lg:block w-64 flex-shrink-0">
             <div className="sticky top-8 bg-white rounded-xl shadow-sm p-4">
               <h3 className="font-semibold text-gray-800 mb-4">📋 Indice</h3>
