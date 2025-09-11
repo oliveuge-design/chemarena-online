@@ -15,7 +15,7 @@
 
     <!-- Glow effect for liquid -->
     <filter id="glow">
-      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
       <feMerge> 
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
@@ -23,53 +23,51 @@
     </filter>
   </defs>
 
-  <!-- Beaker outline - Blue, no spout -->
-  <g transform="translate(16, 8)">
-    <!-- Beaker neck -->
-    <rect x="12" y="8" width="8" height="6" 
+  <!-- Large Beaker - Doubled size, centered -->
+  <g transform="translate(8, 2)">
+    <!-- Beaker neck - Larger -->
+    <rect x="20" y="8" width="16" height="10" 
           fill="none" 
           stroke="url(#beakerBlue)" 
-          stroke-width="2.5" 
-          rx="1"/>
+          stroke-width="3" 
+          rx="2"/>
     
-    <!-- Beaker body - Erlenmeyer flask without spout -->
-    <path d="M12 14 L8 32 Q8 36 12 36 L20 36 Q24 36 24 32 L20 14 Z" 
+    <!-- Beaker body - Much larger Erlenmeyer flask -->
+    <path d="M20 18 L10 48 Q10 56 18 56 L30 56 Q38 56 38 48 L28 18 Z" 
           fill="none" 
           stroke="url(#beakerBlue)" 
-          stroke-width="2.5" 
+          stroke-width="3" 
           stroke-linejoin="round"/>
     
     <!-- Beaker flat base -->
-    <line x1="8" y1="36" x2="24" y2="36" 
+    <line x1="10" y1="56" x2="38" y2="56" 
           stroke="url(#beakerBlue)" 
-          stroke-width="2.5" 
+          stroke-width="3" 
           stroke-linecap="round"/>
     
-    <!-- Fluorescent liquid inside -->
-    <path d="M13 18 L9.5 30 Q9.5 34 13 34 L19 34 Q22.5 34 22.5 30 L18.5 18 Z" 
+    <!-- Fluorescent liquid inside - Much larger -->
+    <path d="M21.5 24 L12 45 Q12 52 18.5 52 L29.5 52 Q36 52 36 45 L26.5 24 Z" 
           fill="url(#fluorescentLiquid)" 
           filter="url(#glow)"/>
     
-    <!-- Liquid surface -->
-    <ellipse cx="16" cy="18" rx="2.75" ry="0.8" 
+    <!-- Liquid surface - Larger -->
+    <ellipse cx="24" cy="24" rx="5" ry="1.5" 
              fill="#00ff77" 
              opacity="0.9"/>
     
-    <!-- Volume measurement lines -->
-    <line x1="10" y1="22" x2="12.5" y2="22" stroke="#1d4ed8" stroke-width="1" opacity="0.6"/>
-    <line x1="10" y1="26" x2="12.5" y2="26" stroke="#1d4ed8" stroke-width="1" opacity="0.6"/>
-    <line x1="10" y1="30" x2="12.5" y2="30" stroke="#1d4ed8" stroke-width="1" opacity="0.6"/>
+    <!-- Volume measurement lines - Proportional -->
+    <line x1="13" y1="32" x2="18" y2="32" stroke="#1d4ed8" stroke-width="1.5" opacity="0.7"/>
+    <line x1="13" y1="38" x2="18" y2="38" stroke="#1d4ed8" stroke-width="1.5" opacity="0.7"/>
+    <line x1="13" y1="44" x2="18" y2="44" stroke="#1d4ed8" stroke-width="1.5" opacity="0.7"/>
     
-    <!-- Fluorescent bubbles -->
-    <circle cx="15" cy="28" r="1" fill="#ffffff" opacity="0.7"/>
-    <circle cx="17.5" cy="25" r="0.8" fill="#ffffff" opacity="0.5"/>
-    <circle cx="18" cy="31" r="0.6" fill="#ffffff" opacity="0.6"/>
+    <!-- Fluorescent bubbles - Larger -->
+    <circle cx="22" cy="42" r="2" fill="#ffffff" opacity="0.7"/>
+    <circle cx="26" cy="36" r="1.5" fill="#ffffff" opacity="0.5"/>
+    <circle cx="25" cy="46" r="1.2" fill="#ffffff" opacity="0.6"/>
     
-    <!-- Extra fluorescence particles -->
-    <circle cx="14.5" cy="24" r="0.4" fill="#00ffaa" opacity="0.8"/>
-    <circle cx="17" cy="29" r="0.3" fill="#00ff99" opacity="0.7"/>
+    <!-- Extra fluorescence particles - Larger -->
+    <circle cx="20" cy="35" r="0.8" fill="#00ffaa" opacity="0.8"/>
+    <circle cx="27" cy="41" r="0.6" fill="#00ff99" opacity="0.7"/>
+    <circle cx="23" cy="49" r="0.5" fill="#44ffdd" opacity="0.6"/>
   </g>
-
-  <!-- Optional subtle background circle for better visibility -->
-  <circle cx="32" cy="32" r="30" fill="none" stroke="#e5e7eb" stroke-width="1" opacity="0.3"/>
 </svg>
