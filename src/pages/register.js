@@ -12,7 +12,8 @@ export default function RegisterPage() {
     email: '',
     password: '',
     confirmPassword: '',
-    subject: ''
+    subject: '',
+    acceptPrivacy: false
   })
   const [loading, setLoading] = useState(false)
 
@@ -29,6 +30,12 @@ export default function RegisterPage() {
     // Validazione password coincidenti
     if (formData.password !== formData.confirmPassword) {
       toast.error('Le password non coincidono')
+      return
+    }
+
+    // Validazione accettazione privacy
+    if (!formData.acceptPrivacy) {
+      toast.error('Devi accettare l\'informativa sulla privacy')
       return
     }
 
@@ -76,7 +83,8 @@ export default function RegisterPage() {
                      formData.password.length >= 6 && 
                      formData.confirmPassword && 
                      formData.subject && 
-                     formData.password === formData.confirmPassword
+                     formData.password === formData.confirmPassword &&
+                     formData.acceptPrivacy
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 flex items-center justify-center px-4">
@@ -166,6 +174,27 @@ export default function RegisterPage() {
               placeholder="Ripeti la password"
               required
             />
+          </div>
+
+          <div className="flex items-start space-x-2">
+            <input
+              type="checkbox"
+              id="acceptPrivacy"
+              checked={formData.acceptPrivacy}
+              onChange={(e) => handleInputChange('acceptPrivacy', e.target.checked)}
+              className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              required
+            />
+            <label htmlFor="acceptPrivacy" className="text-sm text-gray-700">
+              <span className="text-red-500">*</span> Accetto l'{""}
+              <a 
+                href="/privacy-policy" 
+                target="_blank"
+                className="text-blue-600 hover:text-blue-700 underline font-medium"
+              >
+                informativa sulla privacy
+              </a>{""} e autorizzo il trattamento dei miei dati personali per le finalità indicate.
+            </label>
           </div>
 
           <Button

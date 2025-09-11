@@ -1,0 +1,88 @@
+{
+  "teachers": [
+    {
+      "id": "admin_001",
+      "name": "Admin Rahoot",
+      "email": "admin@rahoot.edu",
+      "password": "admin123",
+      "subject": "Amministrazione",
+      "role": "admin",
+      "active": true,
+      "lastLogin": null,
+      "createdAt": "2024-01-15",
+      "acceptedPrivacy": true,
+      "privacyDate": "2025-09-11"
+    },
+    {
+      "id": "teacher_001",
+      "name": "Prof. Mario Rossi",
+      "email": "mario.rossi@scuola.edu",
+      "password": "Matem123!",
+      "subject": "Matematica",
+      "role": "teacher",
+      "active": true,
+      "lastLogin": null,
+      "createdAt": "2024-01-15",
+      "acceptedPrivacy": true,
+      "privacyDate": "2025-09-11"
+    },
+    {
+      "id": "teacher_002", 
+      "name": "Prof.ssa Laura Bianchi",
+      "email": "laura.bianchi@scuola.edu",
+      "password": "Storia456!",
+      "subject": "Storia",
+      "role": "teacher",
+      "active": true,
+      "lastLogin": null,
+      "createdAt": "2024-01-15",
+      "acceptedPrivacy": true,
+      "privacyDate": "2025-09-11"
+    },
+    {
+      "id": "teacher_003",
+      "name": "Prof. Giuseppe Verdi",
+      "email": "giuseppe.verdi@scuola.edu", 
+      "password": "Scienze789!",
+      "subject": "Scienze",
+      "role": "teacher",
+      "active": true,
+      "lastLogin": null,
+      "createdAt": "2024-01-15",
+      "acceptedPrivacy": true,
+      "privacyDate": "2025-09-11"
+    },
+    {
+      "id": "teacher_004",
+      "name": "Prof.ssa Anna Neri",
+      "email": "anna.neri@scuola.edu",
+      "password": "Italiano123!",
+      "subject": "Italiano",
+      "role": "teacher",
+      "active": true,
+      "lastLogin": null,
+      "createdAt": "2024-01-15",
+      "acceptedPrivacy": true,
+      "privacyDate": "2025-09-11"
+    },
+    {
+      "id": "teacher_005",
+      "name": "Prof. Marco Blu",
+      "email": "marco.blu@scuola.edu",
+      "password": "Inglese456!", 
+      "subject": "Inglese",
+      "role": "teacher",
+      "active": true,
+      "lastLogin": null,
+      "createdAt": "2024-01-15",
+      "acceptedPrivacy": true,
+      "privacyDate": "2025-09-11"
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "lastUpdate": "2025-09-11",
+    "totalTeachers": 6,
+    "activeTeachers": 6
+  }
+}
