@@ -24,15 +24,15 @@ export default function handler(req, res) {
       })
     }
 
-    updateTeacherLastLogin(teacher.id)
+    const updatedTeacher = updateTeacherLastLogin(teacher.id)
 
     const teacherData = {
-      id: teacher.id,
-      name: teacher.name,
-      email: teacher.email,
-      subject: teacher.subject,
-      role: teacher.role,
-      lastLogin: teacher.lastLogin
+      id: updatedTeacher.id,
+      name: updatedTeacher.name,
+      email: updatedTeacher.email,
+      subject: updatedTeacher.subject,
+      role: updatedTeacher.role,
+      lastLogin: updatedTeacher.lastLogin
     }
 
     res.status(200).json({

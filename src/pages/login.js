@@ -38,6 +38,7 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
+      console.log('Login attempt with:', formData) // Debug log
       const response = await fetch('/api/teacher-auth', {
         method: 'POST',
         headers: {
@@ -47,6 +48,7 @@ export default function LoginPage() {
       })
 
       const data = await response.json()
+      console.log('Login response:', data) // Debug log
 
       if (data.success) {
         // Salva i dati dell'insegnante
