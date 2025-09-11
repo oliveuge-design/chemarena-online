@@ -59,7 +59,10 @@ const createSocket = async () => {
     })
     
     socket.on('connect_error', (error) => {
-      console.log('❌ Socket connection error:', error)
+      // Only log connection errors in development or if it's a persistent issue
+      if (process.env.NODE_ENV === 'development' || socket.connected === false) {
+        console.log('❌ Socket connection error:', error)
+      }
     })
   }
   
@@ -114,7 +117,7 @@ export function useSocketContext() {
   // Use the global socket instance if context is not available yet
   const socketInstance = context || socketRef.current
 
-  // Return socket with null checks
+  // Return socket with better null checks and less verbose warnings
   return { 
     socket: socketInstance,
     isConnected: socketInstance?.connected || false,
@@ -122,19 +125,25 @@ export function useSocketContext() {
       if (socketInstance && socketInstance.emit) {
         return socketInstance.emit(event, ...args)
       }
-      console.warn('Socket not available for emit:', event)
+      // Silently fail for game events during initialization
+      if (process.env.NODE_ENV === 'development' && !event.startsWith('game:')) {
+        console.warn('Socket not available for emit:', event)
+      }
     },
     on: (event, callback) => {
       if (socketInstance && socketInstance.on) {
         return socketInstance.on(event, callback)
       }
-      console.warn('Socket not available for on:', event)
+      // Silently fail during initialization - socket will be ready soon
+      if (process.env.NODE_ENV === 'development') {
+        console.debug('Socket not ready for listener:', event)
+      }
     },
     off: (event, callback) => {
       if (socketInstance && socketInstance.off) {
         return socketInstance.off(event, callback)
       }
-      console.warn('Socket not available for off:', event)
+      // Silently fail during cleanup
     }
   }
 }
