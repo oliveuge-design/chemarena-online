@@ -31,6 +31,7 @@ export default function handler(req, res) {
       name: teacher.name,
       email: teacher.email,
       subject: teacher.subject,
+      role: teacher.role,
       lastLogin: teacher.lastLogin
     }
 
