@@ -46,6 +46,11 @@ export default function Room() {
         onChange={(e) => setRoomId(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder="PIN Code here"
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        maxLength="6"
+        autoFocus={true}
       />
       <Button onClick={() => handleLogin()}>Submit</Button>
     </Form>

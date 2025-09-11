@@ -104,6 +104,9 @@ export default function Username() {
           onKeyDown={handleKeyDown}
           placeholder={isEducationalMode ? "Il tuo nome e cognome" : "Nickname (min. 3 caratteri)"}
           className={error ? "border-red-500" : ""}
+          type="text"
+          maxLength="20"
+          autoFocus={true}
         />
 
         {/* Messaggio di errore */}

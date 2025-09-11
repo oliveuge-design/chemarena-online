@@ -21,6 +21,11 @@ export default function Input({ className, onChange, ...otherProps }) {
         className,
       )}
       onChange={handleChange}
+      autoComplete="off"
+      autoCorrect="off"
+      autoCapitalize="off"
+      spellCheck="false"
+      inputMode="text"
       {...otherProps}
     />
   )
