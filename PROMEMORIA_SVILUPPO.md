@@ -1,6 +1,11 @@
-# 📋 PROMEMORIA SVILUPPO RAHOOT - SESSIONE AGGIORNATA 10/09/2025
+# 📋 PROMEMORIA SVILUPPO RAHOOT - SESSIONE AGGIORNATA 11/09/2025
 
-## 🎯 STATO PROGETTO AL 10/09/2025
+## 🌐 INFORMAZIONI DEPLOYMENT PRODUZIONE
+**URL PRODUZIONE**: https://chemhoot.onrender.com
+**PIATTAFORMA**: Render (NON Railway)
+**REPOSITORY**: https://github.com/oliveuge-design/rahoot-online.git
+
+## 🎯 STATO PROGETTO AL 11/09/2025
 
 ### ✅ FUNZIONALITÀ IMPLEMENTATE E TESTATE
 
@@ -81,7 +86,16 @@ cd "C:\Users\linea\Downloads\Rahoot-main (1)\Rahoot-main\Rahoot"
 npm run all-dev
 ```
 
-### URL Principali (⚠️ PORTA CAMBIATA)
+### URL Principali
+**🌐 PRODUZIONE (Render)**: https://chemhoot.onrender.com
+- **🎮 Studenti**: https://chemhoot.onrender.com
+- **🚀 Login Insegnanti**: https://chemhoot.onrender.com/login  
+- **📝 Registrazione**: https://chemhoot.onrender.com/register
+- **📊 Dashboard Teachers**: https://chemhoot.onrender.com/teacher-dashboard
+- **⚙️ Dashboard Admin**: https://chemhoot.onrender.com/dashboard
+- **🎯 Manager**: https://chemhoot.onrender.com/manager
+
+**🖥️ LOCAL (se serve test)**: 
 - **🎮 Studenti**: http://localhost:3001 (era 3000)
 - **👨‍🏫 Dashboard**: http://localhost:3001/dashboard
 - **🎯 Manager**: http://localhost:3001/manager  
@@ -199,16 +213,37 @@ config.mjs                               // Quiz chimica analitica precaricato
 - **Data**: 10/09/2025 - Aggiornamento password automatico ✅
 - **Data**: 10/09/2025 - Quiz Chimica Analitica ✅
 
-### ⚠️ **MODIFICHE IMPLEMENTATE MA NON CONFERMATE**
-- **Data**: 11/09/2025 - Sistema autenticazione insegnanti con database personalizzato
-  - **File Coinvolti**: `src/data/teachers.js`, `src/components/TeacherAuth.jsx`, `src/pages/api/teacher-auth.js`, modifiche a `ManagerPassword.jsx`, `socket/roles/manager.js`
-  - **Stato**: IMPLEMENTATO ma in attesa di conferma utente
-  - **Note**: 5 insegnanti preconfigurati con credenziali individuali + tracking nelle statistiche
+### ✅ **SISTEMA AUTENTICAZIONE INSEGNANTI - COMPLETATO 11/09/2025**
+- **Sistema Multi-Ruolo**: Admin vs Teachers con dashboard separate
+- **Admin Predefinito**: admin@rahoot.edu / admin123
+- **Registrazione Insegnanti**: Pagina /register per nuovi insegnanti
+- **Dashboard Limitata**: /teacher-dashboard per insegnanti normali (solo uso quiz)
+- **Dashboard Completa**: /dashboard per Admin (crea/modifica quiz)
+- **Login Intelligente**: Reindirizzamento automatico basato su ruolo
+- **Homepage Aggiornata**: Link a login/registrazione insegnanti
+
+### **FILE CREATI/MODIFICATI:**
+```
+NUOVI FILE:
+src/pages/login.js                        // Login insegnanti
+src/pages/register.js                     // Registrazione insegnanti  
+src/pages/teacher-dashboard.js            // Dashboard limitata teachers
+src/pages/api/teacher-register.js         // API registrazione
+
+MODIFICATI:
+src/data/teachers.js                      // Database con ruoli Admin/Teacher
+src/pages/dashboard.js                    // Solo per Admin + controllo ruoli
+src/pages/index.js                        // Homepage con opzioni login
+src/components/dashboard/QuizArchiveManager.jsx  // Modalità readOnly
+DEPLOYMENT.md                             // Aggiornato per Render
+```
 
 ### 🗑️ **MODIFICHE RIMOSSE**
 - Nessuna al momento
 
 ### 📝 **NOTE PER FUTURE IMPLEMENTAZIONI**
+- ⚠️ **SEMPRE LEGGERE QUESTO PROMEMORIA PRIMA DI OGNI COMANDO**
+- ⚠️ **SITO IN PRODUZIONE SU RENDER**: https://chemhoot.onrender.com
 - Tenere sempre traccia di ogni modifica prima dell'implementazione
 - Chiedere conferma esplicita prima di modificare file esistenti
 - Documentare percorso di rollback per ogni modifica
