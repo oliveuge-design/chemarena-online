@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
           <div className="flex items-center space-x-3">
             <Image
               src={logo}
-              alt="Rahoot Logo"
+              alt="Chemhoot Logo"
               width={80}
               height={26}
               className="cursor-pointer"
@@ -104,7 +104,7 @@ export default function PrivacyPolicyPage() {
                   📋 Informazioni Generali
                 </h2>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <p><strong>Titolare del Trattamento:</strong> Rahoot Educational Platform</p>
+                  <p><strong>Titolare del Trattamento:</strong> Chemhoot Educational Platform</p>
                   <p><strong>Contatti:</strong> admin@rahoot.edu</p>
                   <p><strong>Finalità:</strong> Sistema educativo per quiz interattivi</p>
                 </div>
@@ -276,7 +276,7 @@ export default function PrivacyPolicyPage() {
             {/* Footer documento */}
             <div className="bg-gray-50 px-8 py-4 rounded-b-xl border-t">
               <div className="flex items-center justify-between text-sm text-gray-600">
-                <p>🎓 <strong>RAHOOT</strong> - Privacy First Education</p>
+                <p>🎓 <strong>CHEMHOOT</strong> - Privacy First Education</p>
                 <p>Ultimo aggiornamento: <strong>11 settembre 2025</strong></p>
               </div>
             </div>

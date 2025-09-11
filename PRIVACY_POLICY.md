@@ -1,4 +1,4 @@
-# 🔐 INFORMATIVA SULLA PRIVACY - RAHOOT
+# 🔐 INFORMATIVA SULLA PRIVACY - CHEMHOOT
 
 **Data ultimo aggiornamento**: 11 settembre 2025  
 **Versione**: 1.0
@@ -7,8 +7,8 @@
 
 ## 📋 INFORMAZIONI GENERALI
 
-**Titolare del Trattamento**: Rahoot Educational Platform  
-**Contatti**: admin@rahoot.edu  
+**Titolare del Trattamento**: Chemhoot Educational Platform  
+**Contatti**: admin@chemhoot.edu  
 **Finalità**: Sistema educativo per quiz interattivi
 
 ---
@@ -77,7 +77,7 @@ I dati vengono utilizzati esclusivamente per:
 ## 👥 COMUNICAZIONE DATI
 
 ### **Dati NON condivisi con terze parti**
-Il sistema Rahoot **NON condivide** i dati personali con soggetti esterni, eccetto:
+Il sistema Chemhoot **NON condivide** i dati personali con soggetti esterni, eccetto:
 
 ### **Casi Eccezionali Previsti per Legge**
 - 📋 Autorità giudiziarie (su richiesta ufficiale)
@@ -165,7 +165,7 @@ Secondo il GDPR, hai diritto a:
 
 ## 🌍 TRASFERIMENTI INTERNAZIONALI
 
-**Il sistema Rahoot è ospitato in Europa** e non prevede trasferimenti di dati extra-UE, garantendo piena conformità GDPR.
+**Il sistema Chemhoot è ospitato in Europa** e non prevede trasferimenti di dati extra-UE, garantendo piena conformità GDPR.
 
 ---
 
@@ -185,7 +185,7 @@ Secondo il GDPR, hai diritto a:
 ## 📞 CONTATTI E RECLAMI
 
 ### **Titolare del Trattamento**
-**Email**: admin@rahoot.edu  
+**Email**: admin@chemhoot.edu  
 **Risposta**: Entro 72 ore lavorative
 
 ### **Autorità di Controllo**
@@ -214,5 +214,5 @@ Website: www.gpdp.it
 
 ---
 
-**🎓 RAHOOT - PRIVACY FIRST EDUCATION**  
+**🎓 CHEMHOOT - PRIVACY FIRST EDUCATION**  
 *Ultimo aggiornamento: 11 settembre 2025*

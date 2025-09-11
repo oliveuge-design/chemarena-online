@@ -84,7 +84,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <Image
             src={logo}
-            alt="Rahoot Logo"
+            alt="Chemhoot Logo"
             width={120}
             height={40}
             className="mx-auto mb-4"

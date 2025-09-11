@@ -2,8 +2,8 @@
   "teachers": [
     {
       "id": "admin_001",
-      "name": "Admin Rahoot",
-      "email": "admin@rahoot.edu",
+      "name": "Admin Chemhoot",
+      "email": "admin@chemhoot.edu",
       "password": "admin123",
       "subject": "Amministrazione",
       "role": "admin",
@@ -16,7 +16,7 @@
     {
       "id": "teacher_001",
       "name": "Prof. Mario Rossi",
-      "email": "mario.rossi@scuola.edu",
+      "email": "mario.rossi@chemhoot.edu",
       "password": "Matem123!",
       "subject": "Matematica",
       "role": "teacher",
@@ -29,7 +29,7 @@
     {
       "id": "teacher_002", 
       "name": "Prof.ssa Laura Bianchi",
-      "email": "laura.bianchi@scuola.edu",
+      "email": "laura.bianchi@chemhoot.edu",
       "password": "Storia456!",
       "subject": "Storia",
       "role": "teacher",
@@ -42,7 +42,7 @@
     {
       "id": "teacher_003",
       "name": "Prof. Giuseppe Verdi",
-      "email": "giuseppe.verdi@scuola.edu", 
+      "email": "giuseppe.verdi@chemhoot.edu", 
       "password": "Scienze789!",
       "subject": "Scienze",
       "role": "teacher",
@@ -55,7 +55,7 @@
     {
       "id": "teacher_004",
       "name": "Prof.ssa Anna Neri",
-      "email": "anna.neri@scuola.edu",
+      "email": "anna.neri@chemhoot.edu",
       "password": "Italiano123!",
       "subject": "Italiano",
       "role": "teacher",
@@ -68,7 +68,7 @@
     {
       "id": "teacher_005",
       "name": "Prof. Marco Blu",
-      "email": "marco.blu@scuola.edu",
+      "email": "marco.blu@chemhoot.edu",
       "password": "Inglese456!", 
       "subject": "Inglese",
       "role": "teacher",

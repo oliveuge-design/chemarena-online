@@ -92,7 +92,7 @@ export default function RegisterPage() {
         <div className="text-center mb-8">
           <Image
             src={logo}
-            alt="Rahoot Logo"
+            alt="Chemhoot Logo"
             width={120}
             height={40}
             className="mx-auto mb-4"
@@ -221,7 +221,7 @@ export default function RegisterPage() {
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <h3 className="font-medium text-blue-800 mb-2">✨ Cosa potrai fare:</h3>
           <ul className="text-sm text-blue-700 space-y-1">
-            <li>• Accedere a tutti i quiz disponibili</li>
+            <li>• Accedere a tutti i quiz di chimica disponibili</li>
             <li>• Lanciare giochi per le tue classi</li>
             <li>• Gestire i giocatori in tempo reale</li>
             <li>• Visualizzare statistiche dei giochi</li>
