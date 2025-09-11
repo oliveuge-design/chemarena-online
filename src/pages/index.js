@@ -66,8 +66,8 @@ export default function Home() {
 
       {!player ? <Room /> : <Username />}
 
-      {/* Info per insegnanti */}
-      {!player && (
+      {/* Info per insegnanti - Solo se non c'è un PIN (non è accesso da QR code) */}
+      {!player && !router.query.pin && (
         <div className="mt-8 max-w-md text-center relative z-10">
           <p className="text-gray-700 text-sm mb-4 font-medium">
             Sei un insegnante? Accedi per gestire i tuoi quiz!
