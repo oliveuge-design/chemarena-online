@@ -148,8 +148,13 @@ export default function Manager() {
   }
 
   const handleCreateNewRoom = () => {
-    // Conferma prima di resettare
-    const confirmReset = confirm("🆕 Vuoi creare una nuova room?\n\nQuesta azione resetterà la room attuale.")
+    // Messaggio di conferma dinamico basato sullo stato
+    const isQuizActive = state.status.name !== "SHOW_ROOM" && state.status.name !== "FINISH"
+    const confirmMessage = isQuizActive 
+      ? "🚨 Quiz in corso!\n\nVuoi interrompere il quiz attuale e creare una nuova room?"
+      : "🆕 Vuoi creare una nuova room?\n\nQuesta azione resetterà la room attuale."
+    
+    const confirmReset = confirm(confirmMessage)
     
     if (confirmReset) {
       // Reset dello stato per permettere creazione nuova room
@@ -162,9 +167,12 @@ export default function Manager() {
         created: false
       })
       
-      // Emetti evento per chiudere room precedente se esistente
+      // Emetti eventi per chiudere room e interrompere quiz
       if (socket && emit) {
         emit("manager:closeRoom")
+        if (isQuizActive) {
+          emit("manager:abortQuiz")
+        }
       }
     }
   }
@@ -185,17 +193,15 @@ export default function Manager() {
               })}
           </GameWrapper>
           
-          {/* Pulsante per creare nuova room - Solo se in SHOW_ROOM */}
-          {state.status.name === "SHOW_ROOM" && (
-            <div className="fixed top-4 right-4 z-50">
-              <Button 
-                onClick={handleCreateNewRoom}
-                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm font-medium rounded-lg shadow-lg"
-              >
-                🆕 Nuova Room
-              </Button>
-            </div>
-          )}
+          {/* Pulsante per creare nuova room - Sempre disponibile */}
+          <div className="fixed top-4 right-4 z-50">
+            <Button 
+              onClick={handleCreateNewRoom}
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm font-medium rounded-lg shadow-lg"
+            >
+              🆕 Nuova Room
+            </Button>
+          </div>
         </>
       )}
     </>
