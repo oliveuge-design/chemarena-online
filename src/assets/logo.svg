@@ -6,59 +6,97 @@
       <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
     </linearGradient>
     
-    <!-- Beaker liquid gradient -->
-    <linearGradient id="liquidGradient" x1="0%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.8" />
-      <stop offset="50%" style="stop-color:#34d399;stop-opacity:0.6" />
-      <stop offset="100%" style="stop-color:#6ee7b7;stop-opacity:0.3" />
+    <!-- Fluorescent liquid gradient - Super bright green -->
+    <linearGradient id="fluorescentLiquid" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#00ff55;stop-opacity:0.9" />
+      <stop offset="60%" style="stop-color:#44ffaa;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#88ffcc;stop-opacity:0.4" />
     </linearGradient>
 
-    <!-- Bubbles animation effect -->
-    <circle id="bubble" r="1.5" fill="#ffffff" opacity="0.7">
-      <animate attributeName="cy" values="45;25;45" dur="3s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.7;0.3;0.7" dur="3s" repeatCount="indefinite"/>
+    <!-- Glow effect for fluorescent liquid -->
+    <filter id="fluorescenceGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Animated bubbles -->
+    <circle id="bubble" r="1.5" fill="#ffffff" opacity="0.8">
+      <animate attributeName="cy" values="48;28;48" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0.4;0.8" dur="3s" repeatCount="indefinite"/>
     </circle>
   </defs>
 
-  <!-- Beaker Icon - Styled like a professional lab equipment -->
+  <!-- Complete Beaker - Fixed and intact -->
   <g transform="translate(15, 15)">
-    <!-- Beaker body -->
-    <path d="M20 25 L15 45 Q15 50 20 50 L35 50 Q40 50 40 45 L35 25" 
+    <!-- Beaker neck (narrow top) -->
+    <rect x="22" y="15" width="11" height="8" 
+          fill="none" 
+          stroke="url(#brandGradient)" 
+          stroke-width="3" 
+          rx="1"/>
+    
+    <!-- Beaker body - Complete erlenmeyer flask shape -->
+    <path d="M22 23 L17 42 Q17 48 22 48 L33 48 Q38 48 38 42 L33 23 Z" 
           fill="none" 
           stroke="url(#brandGradient)" 
           stroke-width="3" 
           stroke-linejoin="round"/>
     
-    <!-- Beaker liquid -->
-    <path d="M21 30 L16.5 43 Q16.5 47 20.5 47 L34.5 47 Q38.5 47 38.5 43 L34 30 Z" 
-          fill="url(#liquidGradient)"/>
-    
-    <!-- Beaker rim -->
-    <line x1="15" y1="25" x2="40" y2="25" 
+    <!-- Beaker base - flat bottom -->
+    <line x1="17" y1="48" x2="38" y2="48" 
           stroke="url(#brandGradient)" 
           stroke-width="3" 
           stroke-linecap="round"/>
     
+    <!-- Fluorescent liquid inside -->
+    <path d="M23 28 L18.5 40 Q18.5 46 23 46 L32 46 Q36.5 46 36.5 40 L31.5 28 Z" 
+          fill="url(#fluorescentLiquid)" 
+          filter="url(#fluorescenceGlow)"/>
+    
+    <!-- Liquid surface with subtle wave -->
+    <ellipse cx="27.25" cy="28" rx="4.25" ry="1" 
+             fill="#00ff77" 
+             opacity="0.8">
+      <animate attributeName="ry" values="1;1.5;1" dur="4s" repeatCount="indefinite"/>
+    </ellipse>
+    
     <!-- Beaker spout -->
-    <path d="M35 25 Q42 20 45 15" 
+    <path d="M33 15 Q40 12 43 8" 
           fill="none" 
           stroke="url(#brandGradient)" 
           stroke-width="2.5" 
           stroke-linecap="round"/>
     
-    <!-- Measurement lines -->
-    <line x1="18" y1="32" x2="22" y2="32" stroke="#1e40af" stroke-width="1" opacity="0.6"/>
-    <line x1="18" y1="36" x2="22" y2="36" stroke="#1e40af" stroke-width="1" opacity="0.6"/>
-    <line x1="18" y1="40" x2="22" y2="40" stroke="#1e40af" stroke-width="1" opacity="0.6"/>
+    <!-- Volume measurement lines -->
+    <line x1="19" y1="34" x2="23" y2="34" stroke="#1e40af" stroke-width="1" opacity="0.7"/>
+    <line x1="19" y1="38" x2="23" y2="38" stroke="#1e40af" stroke-width="1" opacity="0.7"/>
+    <line x1="19" y1="42" x2="23" y2="42" stroke="#1e40af" stroke-width="1" opacity="0.7"/>
     
-    <!-- Animated bubbles -->
-    <use href="#bubble" x="25" y="45"/>
-    <use href="#bubble" x="30" y="42" opacity="0.5">
-      <animate attributeName="cy" values="42;20;42" dur="4s" repeatCount="indefinite"/>
+    <!-- Volume labels -->
+    <text x="15" y="35" font-family="Arial" font-size="6" fill="#6b7280">100</text>
+    <text x="15" y="39" font-family="Arial" font-size="6" fill="#6b7280">50</text>
+    <text x="18" y="43" font-family="Arial" font-size="6" fill="#6b7280">0</text>
+    
+    <!-- Animated fluorescent bubbles -->
+    <use href="#bubble" x="25" y="48"/>
+    <use href="#bubble" x="29" y="45" opacity="0.6">
+      <animate attributeName="cy" values="45;25;45" dur="4s" repeatCount="indefinite"/>
     </use>
-    <use href="#bubble" x="32" y="38" opacity="0.4">
-      <animate attributeName="cy" values="38;18;38" dur="5s" repeatCount="indefinite"/>
+    <use href="#bubble" x="31" y="41" opacity="0.4">
+      <animate attributeName="cy" values="41;21;41" dur="5s" repeatCount="indefinite"/>
     </use>
+    
+    <!-- Extra fluorescence particles -->
+    <circle cx="26" cy="35" r="0.8" fill="#00ff99" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="30" cy="39" r="0.6" fill="#00ff77" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
   </g>
 
   <!-- CHEMHOOT Text - Professional, readable font -->
@@ -71,13 +109,14 @@
           letter-spacing="-0.5px"
           fill="url(#brandGradient)">CHEM</text>
     
-    <!-- HOOT in accent color -->
+    <!-- HOOT in fluorescent green -->
     <text x="95" y="45" 
           font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif" 
           font-size="32" 
           font-weight="700" 
           letter-spacing="-0.5px"
-          fill="#10b981">HOOT</text>
+          fill="#00ff66"
+          filter="url(#fluorescenceGlow)">HOOT</text>
     
     <!-- Question mark - Interactive element -->
     <g transform="translate(190, 25)">
@@ -106,7 +145,7 @@
   <g opacity="0.3" transform="translate(250, 20)">
     <!-- Molecular structure -->
     <circle cx="0" cy="0" r="3" fill="#3b82f6"/>
-    <circle cx="15" cy="8" r="2" fill="#10b981"/>
+    <circle cx="15" cy="8" r="2" fill="#00ff66"/>
     <circle cx="8" cy="18" r="2.5" fill="#3b82f6"/>
     
     <!-- Bonds -->
