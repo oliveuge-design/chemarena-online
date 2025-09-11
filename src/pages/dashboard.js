@@ -9,6 +9,7 @@ import QuizArchiveManager from "@/components/dashboard/QuizArchiveManager"
 import Statistics from "@/components/dashboard/Statistics"
 import GameLauncher from "@/components/dashboard/GameLauncher"
 import ServerControls from "@/components/dashboard/ServerControls"
+import SystemRestart from "@/components/SystemRestart"
 
 export default function Dashboard() {
   const router = useRouter()
@@ -224,7 +225,12 @@ export default function Dashboard() {
           {activeTab === 'create' && <QuizCreator editingQuiz={editingQuiz} onClearEdit={handleClearEdit} />}
           {activeTab === 'launch' && <GameLauncher />}
           {activeTab === 'statistics' && <Statistics />}
-          {activeTab === 'server' && <ServerControls />}
+          {activeTab === 'server' && (
+            <div className="space-y-6">
+              <ServerControls />
+              <SystemRestart />
+            </div>
+          )}
         </div>
       </main>
     </div>

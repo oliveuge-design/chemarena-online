@@ -5,7 +5,7 @@ import generateRoomId from "../utils/generateRoomId.js"
 import { startRound } from "../utils/round.js"
 
 const Manager = {
-  createRoom: (game, io, socket) => {
+  createRoom: (game, io, socket, data = {}) => {
     if (game.manager || game.room) {
       io.to(socket.id).emit("game:errorMessage", "Already manager")
       return
@@ -14,11 +14,15 @@ const Manager = {
     let roomInvite = generateRoomId()
     game.room = roomInvite
     game.manager = socket.id
+    
+    if (data.teacherId) {
+      game.teacherId = data.teacherId
+    }
 
     socket.join(roomInvite)
     io.to(socket.id).emit("manager:inviteCode", roomInvite)
 
-    console.log("New room created: " + roomInvite)
+    console.log("New room created: " + roomInvite + (data.teacherId ? ` by teacher ${data.teacherId}` : ""))
   },
 
   kickPlayer: (game, io, socket, playerId) => {
@@ -86,7 +90,7 @@ const Manager = {
     abortCooldown(game, io, game.room)
   },
 
-  showLoaderboard: (game, io, socket) => {
+  showLeaderboard: (game, io, socket) => {
     if (!game.questions[game.currentQuestion + 1]) {
       // Salva statistiche prima di finire il gioco
       const gameEndTime = Date.now()
@@ -94,6 +98,7 @@ const Manager = {
         id: Date.now().toString(),
         date: new Date().toISOString(),
         quizSubject: game.subject,
+        teacherId: game.teacherId || null,
         duration: gameEndTime - (game.gameStartTime || gameEndTime),
         questionsCount: game.questions.length,
         players: game.players.map(player => ({

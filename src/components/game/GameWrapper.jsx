@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Button from "@/components/Button"
+import SystemRestart from "@/components/SystemRestart"
 import background from "@/assets/background.webp"
 import { usePlayerContext } from "@/context/player"
 import { useSocketContext } from "@/context/socket"
@@ -53,12 +54,27 @@ export default function GameWrapper({ children, textNext, onNext, manager }) {
         )}
 
         {manager && (
-          <Button
-            className="self-end bg-white px-4 !text-black"
-            onClick={() => onNext()}
-          >
-            {textNext}
-          </Button>
+          <div className="flex flex-col gap-2">
+            <Button
+              className="self-end bg-white px-4 !text-black"
+              onClick={() => onNext()}
+            >
+              {textNext}
+            </Button>
+            
+            {/* Pulsante di emergenza solo per manager */}
+            <Button
+              className="self-end bg-red-600 hover:bg-red-700 text-white px-2 py-1 text-xs"
+              onClick={() => {
+                const restart = confirm('⚠️ Riavvio di emergenza?\n\nUsa solo se il gioco si è bloccato.')
+                if (restart) {
+                  window.location.href = '/dashboard?emergency=true'
+                }
+              }}
+            >
+              🚨 Emergency Reset
+            </Button>
+          </div>
         )}
       </div>
 

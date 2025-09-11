@@ -34,8 +34,8 @@ io.on("connection", (socket) => {
     Player.join(gameState, io, socket, player),
   )
 
-  socket.on("manager:createRoom", (password) =>
-    Manager.createRoom(gameState, io, socket, password),
+  socket.on("manager:createRoom", (data) =>
+    Manager.createRoom(gameState, io, socket, data),
   )
   socket.on("manager:kickPlayer", (playerId) =>
     Manager.kickPlayer(gameState, io, socket, playerId),
@@ -54,7 +54,7 @@ io.on("connection", (socket) => {
   )
 
   socket.on("manager:showLeaderboard", () =>
-    Manager.showLoaderboard(gameState, io, socket),
+    Manager.showLeaderboard(gameState, io, socket),
   )
 
   // Sistema automatico di aggiornamento password real-time

@@ -22,14 +22,14 @@ export default function Manager() {
 
   useEffect(() => {
     on("game:status", (status) => {
-      setState({
-        ...state,
+      setState(prevState => ({
+        ...prevState,
         status: status,
         question: {
-          ...state.question,
+          ...prevState.question,
           current: status.question,
         },
-      })
+      }))
       
       // Aggiorna il testo del pulsante basandosi sullo stato
       switch (status.name) {
@@ -67,17 +67,17 @@ export default function Manager() {
     })
 
     on("manager:inviteCode", (inviteCode) => {
-      setState({
-        ...state,
+      setState(prevState => ({
+        ...prevState,
         created: true,
         status: {
-          ...state.status,
+          ...prevState.status,
           data: {
-            ...state.status.data,
+            ...prevState.status.data,
             inviteCode: inviteCode,
           },
         },
-      })
+      }))
     })
 
     return () => {
@@ -85,34 +85,44 @@ export default function Manager() {
       off("game:saveStats")
       off("manager:inviteCode")
     }
-  }, [state, on, off])
+  }, [on, off])
 
   const handleCreate = () => {
     emit("manager:createRoom")
   }
 
   const handleSkip = () => {
+    // Validazione stato prima di procedere
+    if (!state || !state.status || !state.status.name) {
+      console.warn('⚠️ Stato non valido per handleSkip:', state)
+      return
+    }
+
     setNextText("Skip")
 
     switch (state.status.name) {
       case "SHOW_ROOM":
-        emit("manager:startGame")
+        if (socket && emit) emit("manager:startGame")
         break
 
       case "SELECT_ANSWER":
-        emit("manager:abortQuiz")
+        if (socket && emit) emit("manager:abortQuiz")
         break
 
       case "SHOW_RESPONSES":
-        emit("manager:showLeaderboard")
+        if (socket && emit) emit("manager:showLeaderboard")
         break
 
       case "SHOW_LEADERBOARD":
-        emit("manager:nextQuestion")
+        if (socket && emit) emit("manager:nextQuestion")
         break
 
       case "FINISH":
         handleEndGame()
+        break
+
+      default:
+        console.warn('⚠️ Stato sconosciuto in handleSkip:', state.status.name)
         break
     }
   }
