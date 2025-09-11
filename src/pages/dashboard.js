@@ -27,8 +27,8 @@ export default function Dashboard() {
       try {
         const teacherData = JSON.parse(savedTeacher)
         
-        // Solo Admin può accedere alla dashboard completa
-        if (teacherData.role === 'admin') {
+        // Solo Admin (Eugenio Oliva) può accedere alla dashboard completa
+        if (teacherData.role === 'admin' && teacherData.name === 'Eugenio Oliva') {
           setIsAuthenticated(true)
           return
         } else {
@@ -87,11 +87,11 @@ export default function Dashboard() {
       
       const data = await response.json()
       
-      if (data.success && data.teacher.role === 'admin') {
+      if (data.success && data.teacher.role === 'admin' && data.teacher.name === 'Eugenio Oliva') {
         setIsAuthenticated(true)
         localStorage.setItem('teacher-auth', JSON.stringify(data.teacher))
         localStorage.setItem('dashboard-auth', 'true') // Mantieni compatibilità
-        console.log("Accesso Admin autorizzato")
+        console.log("Accesso Admin autorizzato per Eugenio Oliva")
       } else {
         // Fallback al vecchio sistema per compatibilità
         if (password.trim() === "admin123") {

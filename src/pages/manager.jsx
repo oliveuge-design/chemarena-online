@@ -180,14 +180,14 @@ export default function Manager() {
         }
       }
       
-      // Reset completo dello stato locale
+      // Reset completo dello stato locale - forza il reset completo
       setState({
         ...GAME_STATES,
         status: {
           ...GAME_STATES.status,
           name: "SHOW_ROOM",
         },
-        created: false
+        created: false // Questo forza il ritorno al ManagerPassword
       })
       
       // Determina il dashboard corretto basato sul ruolo dell'utente
@@ -205,8 +205,11 @@ export default function Manager() {
         }
       }
       
-      // Naviga al dashboard corretto
-      router.push(dashboardUrl)
+      // Invece di navigare, resetta completamente lo stato per permettere nuova generazione PIN
+      // Questo permette di generare un nuovo PIN subito
+      setTimeout(() => {
+        router.push(dashboardUrl)
+      }, 100)
     }
   }
 

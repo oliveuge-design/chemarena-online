@@ -2,7 +2,7 @@
   "teachers": [
     {
       "id": "admin_001",
-      "name": "Admin Chemhoot",
+      "name": "Eugenio Oliva",
       "email": "admin@chemhoot.edu",
       "password": "admin123",
       "subject": "Amministrazione",

@@ -45,12 +45,12 @@ export function saveTeachersDatabase(database) {
   }
 }
 
-// Trova insegnante per email e password
-export function findTeacherByCredentials(email, password) {
+// Trova insegnante per email/nome e password
+export function findTeacherByCredentials(identifier, password) {
   try {
     const database = loadTeachersDatabase()
     return database.teachers.find(teacher => 
-      teacher.email === email && 
+      (teacher.email === identifier || teacher.name === identifier) && 
       teacher.password === password && 
       teacher.active
     )

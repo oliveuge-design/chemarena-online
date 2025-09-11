@@ -33,6 +33,15 @@ export default function ManagerPassword({ onCreateRoom }) {
     setLoading(true)
     
     try {
+      // Sempre pulire eventuali room precedenti prima di creare una nuova
+      if (socket && emit) {
+        emit("manager:closeRoom")
+        emit("manager:abortQuiz")
+        
+        // Piccolo delay per assicurare che i messaggi siano processati
+        await new Promise(resolve => setTimeout(resolve, 100))
+      }
+      
       if (onCreateRoom) {
         onCreateRoom()
       } else {

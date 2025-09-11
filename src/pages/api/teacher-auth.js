@@ -6,16 +6,19 @@ export default function handler(req, res) {
   }
 
   try {
-    const { email, password } = req.body
+    const { email, name, password } = req.body
 
-    if (!email || !password) {
+    // Supporta sia email (per retrocompatibilità admin) che nome
+    const identifier = email || name
+    
+    if (!identifier || !password) {
       return res.status(400).json({ 
-        error: 'Email e password sono obbligatori',
+        error: 'Nome/Email e password sono obbligatori',
         success: false 
       })
     }
 
-    const teacher = findTeacherByCredentials(email, password)
+    const teacher = findTeacherByCredentials(identifier, password)
     
     if (!teacher) {
       return res.status(401).json({ 

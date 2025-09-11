@@ -8,7 +8,7 @@ import logo from '@/assets/logo.svg'
 
 export default function TeacherAuth({ onAuthSuccess }) {
   const [formData, setFormData] = useState({
-    email: '',
+    name: '',
     password: ''
   })
   const [loading, setLoading] = useState(false)
@@ -77,13 +77,13 @@ export default function TeacherAuth({ onAuthSuccess }) {
       <Form onSubmit={handleSubmit}>
         <div className="space-y-4 mb-6">
           <Input
-            type="email"
-            placeholder="📧 Email insegnante"
-            value={formData.email}
-            onChange={(value) => handleInputChange('email', value)}
+            type="text"
+            placeholder="👤 Nome Completo"
+            value={formData.name}
+            onChange={(value) => handleInputChange('name', value)}
             onKeyDown={handleKeyDown}
             required
-            autoComplete="email"
+            autoComplete="name"
           />
           
           <Input
@@ -99,7 +99,7 @@ export default function TeacherAuth({ onAuthSuccess }) {
 
         <Button
           type="submit"
-          disabled={loading || !formData.email || !formData.password}
+          disabled={loading || !formData.name || !formData.password}
           className="w-full py-4 text-lg"
         >
           {loading ? '🔄 Verifica in corso...' : '🚀 Accedi come Insegnante'}
@@ -109,7 +109,7 @@ export default function TeacherAuth({ onAuthSuccess }) {
           <div className="bg-gray-50 p-4 rounded-lg">
             <p className="text-sm text-gray-600 mb-2">ℹ️ <strong>Informazioni Accesso:</strong></p>
             <div className="text-xs text-gray-500 space-y-1">
-              <div>📧 Utilizza le credenziali fornite dal tuo istituto</div>
+              <div>👤 Inserisci il tuo nome completo e la password assegnata</div>
               <div>🔐 Per supporto, contatta l'amministratore di sistema</div>
             </div>
           </div>
