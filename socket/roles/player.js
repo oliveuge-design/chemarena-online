@@ -48,9 +48,12 @@ const Player = {
 
     let playerData = {
       username: player.username,
+      displayName: player.displayName || player.username,
       room: player.room,
       id: socket.id,
       points: 0,
+      isEducational: player.isEducational || false,
+      joinedAt: new Date().toISOString(),
     }
     socket.to(player.room).emit("manager:newPlayer", { ...playerData })
 
