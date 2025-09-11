@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { QuizArchive } from '../../utils/quizArchive';
 import toast from 'react-hot-toast';
 
-export default function QuizArchiveManager() {
+export default function QuizArchiveManager({ readOnly = false }) {
   const [quizzes, setQuizzes] = useState([]);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -247,6 +247,7 @@ export default function QuizArchiveManager() {
           >
             Sfoglia Quiz ({quizzes.length})
           </button>
+          {!readOnly && (
           <button
             onClick={() => {
               setSelectedTab('create');
@@ -274,12 +275,15 @@ export default function QuizArchiveManager() {
           >
             {editingQuiz ? 'Modifica Quiz' : 'Crea Quiz'}
           </button>
+          )}
+          {!readOnly && (
           <button
             onClick={() => setSelectedTab('images')}
             className={`py-2 px-4 font-medium ${selectedTab === 'images' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'}`}
           >
             Immagini ({images.length})
           </button>
+          )}
         </div>
       </div>
 
@@ -318,18 +322,22 @@ export default function QuizArchiveManager() {
                       >
                         🚀 Carica nel Gioco
                       </button>
-                      <button
-                        onClick={() => editQuiz(quiz)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600 transition-colors"
-                      >
-                        ✏️ Modifica
-                      </button>
-                      <button
-                        onClick={() => deleteQuiz(quiz.id)}
-                        className="bg-red-500 text-white px-4 py-2 rounded text-sm hover:bg-red-600 transition-colors"
-                      >
-                        🗑️ Elimina
-                      </button>
+                      {!readOnly && (
+                        <>
+                          <button
+                            onClick={() => editQuiz(quiz)}
+                            className="bg-blue-500 text-white px-4 py-2 rounded text-sm hover:bg-blue-600 transition-colors"
+                          >
+                            ✏️ Modifica
+                          </button>
+                          <button
+                            onClick={() => deleteQuiz(quiz.id)}
+                            className="bg-red-500 text-white px-4 py-2 rounded text-sm hover:bg-red-600 transition-colors"
+                          >
+                            🗑️ Elimina
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>

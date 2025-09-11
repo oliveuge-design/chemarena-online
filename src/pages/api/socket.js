@@ -73,6 +73,10 @@ export default function handler(req, res) {
 
       socket.on("manager:abortQuiz", () => Manager.abortQuiz(gameState, io, socket))
 
+      socket.on("manager:showLeaderboard", () =>
+        Manager.showLeaderboard(gameState, io, socket),
+      )
+
       socket.on("manager:nextQuestion", () =>
         Manager.nextQuestion(gameState, io, socket),
       )

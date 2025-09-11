@@ -70,14 +70,31 @@ export default function Home() {
       {!player && (
         <div className="mt-8 max-w-md text-center relative z-10">
           <p className="text-gray-700 text-sm mb-4 font-medium">
-            Sei un insegnante? Accedi alla dashboard per creare e gestire i tuoi quiz!
+            Sei un insegnante? Accedi per gestire i tuoi quiz!
           </p>
-          <Button 
-            onClick={() => router.push('/dashboard')}
-            className="bg-green-500 hover:bg-green-600 text-sm px-6 py-3"
-          >
-            🎓 Dashboard Insegnanti
-          </Button>
+          <div className="space-y-3">
+            <Button 
+              onClick={() => router.push('/login')}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3"
+            >
+              🚀 Accedi come Insegnante
+            </Button>
+            <Button 
+              onClick={() => router.push('/register')}
+              className="w-full bg-green-500 hover:bg-green-600 text-sm px-6 py-3"
+            >
+              📝 Registrati come Insegnante
+            </Button>
+            <div className="mt-4 pt-3 border-t border-gray-200">
+              <p className="text-xs text-gray-500 mb-2">Amministratori:</p>
+              <Button 
+                onClick={() => router.push('/dashboard')}
+                className="bg-purple-500 hover:bg-purple-600 text-xs px-4 py-2"
+              >
+                ⚙️ Dashboard Admin
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </section>

@@ -21,6 +21,27 @@ export default function Dashboard() {
 
   // Controlla se l'utente era già autenticato (per mantenere la sessione)
   useEffect(() => {
+    // Controlla prima l'autenticazione insegnante
+    const savedTeacher = localStorage.getItem('teacher-auth')
+    if (savedTeacher) {
+      try {
+        const teacherData = JSON.parse(savedTeacher)
+        
+        // Solo Admin può accedere alla dashboard completa
+        if (teacherData.role === 'admin') {
+          setIsAuthenticated(true)
+          return
+        } else {
+          // Insegnanti normali vengono reindirizzati alla loro dashboard
+          router.push('/teacher-dashboard')
+          return
+        }
+      } catch (error) {
+        console.error('Errore parsing teacher data:', error)
+      }
+    }
+
+    // Fallback al vecchio sistema di autenticazione (per compatibilità)
     const savedAuth = localStorage.getItem('dashboard-auth')
     if (savedAuth === 'true') {
       setIsAuthenticated(true)
@@ -49,16 +70,49 @@ export default function Dashboard() {
     // Simula un piccolo delay per mostrare il loading
     await new Promise(resolve => setTimeout(resolve, 500))
     
-    console.log("Tentativo di accesso con password:", password) // Debug
+    console.log("Tentativo di accesso con password:", password)
     
-    // Per ora usiamo una password semplice, in futuro si può implementare un sistema più robusto
-    if (password.trim() === "admin123") {
-      setIsAuthenticated(true)
-      localStorage.setItem('dashboard-auth', 'true')
-      console.log("Accesso autorizzato") // Debug
-    } else {
-      alert("Password non corretta. Usa: admin123")
-      console.log("Accesso negato") // Debug
+    // Controlla prima se esiste un admin con questa password
+    try {
+      const response = await fetch('/api/teacher-auth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: 'admin@rahoot.edu',
+          password: password.trim()
+        })
+      })
+      
+      const data = await response.json()
+      
+      if (data.success && data.teacher.role === 'admin') {
+        setIsAuthenticated(true)
+        localStorage.setItem('teacher-auth', JSON.stringify(data.teacher))
+        localStorage.setItem('dashboard-auth', 'true') // Mantieni compatibilità
+        console.log("Accesso Admin autorizzato")
+      } else {
+        // Fallback al vecchio sistema per compatibilità
+        if (password.trim() === "admin123") {
+          setIsAuthenticated(true)
+          localStorage.setItem('dashboard-auth', 'true')
+          console.log("Accesso autorizzato (fallback)")
+        } else {
+          alert("Password Admin non corretta.")
+          console.log("Accesso negato")
+        }
+      }
+    } catch (error) {
+      console.error('Errore autenticazione:', error)
+      // Fallback al vecchio sistema
+      if (password.trim() === "admin123") {
+        setIsAuthenticated(true)
+        localStorage.setItem('dashboard-auth', 'true')
+        console.log("Accesso autorizzato (fallback)")
+      } else {
+        alert("Password non corretta.")
+      }
     }
     
     setIsLoading(false)
@@ -114,10 +168,19 @@ export default function Dashboard() {
         </div>
 
         <Image src={logo} className="mb-6 h-32" alt="logo" />
-        <h1 className="mb-8 text-3xl font-bold text-gray-800">Dashboard Insegnanti</h1>
+        <h1 className="mb-8 text-3xl font-bold text-gray-800">Dashboard Admin</h1>
         
         <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative z-10">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">Accesso Riservato</h2>
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">Accesso Admin</h2>
+          <p className="text-sm text-gray-600 mb-4">
+            Solo per amministratori. Gli insegnanti possono accedere{" "}
+            <button 
+              onClick={() => router.push('/login')}
+              className="text-blue-600 hover:text-blue-700 underline"
+            >
+              qui
+            </button>
+          </p>
           <form onSubmit={handleAuth}>
             <input
               type="password"
