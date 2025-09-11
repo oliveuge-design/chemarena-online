@@ -80,7 +80,7 @@ export default function TeacherAuth({ onAuthSuccess }) {
             type="text"
             placeholder="👤 Nome Completo"
             value={formData.name}
-            onChange={(value) => handleInputChange('name', value)}
+            onChange={(e) => handleInputChange('name', e.target.value)}
             onKeyDown={handleKeyDown}
             required
             autoComplete="name"
@@ -90,7 +90,7 @@ export default function TeacherAuth({ onAuthSuccess }) {
             type="password"
             placeholder="🔐 Password"
             value={formData.password}
-            onChange={(value) => handleInputChange('password', value)}
+            onChange={(e) => handleInputChange('password', e.target.value)}
             onKeyDown={handleKeyDown}
             required
             autoComplete="current-password"
