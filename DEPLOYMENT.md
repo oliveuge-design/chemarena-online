@@ -63,15 +63,24 @@ NEXT_PUBLIC_WEBSOCKET_URL=https://YOUR-PROJECT-NAME.up.railway.app/
 
 ### **URL di Accesso:**
 - 🎮 **Studenti**: `https://your-project-name.up.railway.app`
-- 👨‍🏫 **Dashboard**: `https://your-project-name.up.railway.app/dashboard`
-- 📝 **Manager**: `https://your-project-name.up.railway.app/manager`
+- 👨‍🏫 **Login Insegnanti**: `https://your-project-name.up.railway.app/login`
+- 📝 **Registrazione**: `https://your-project-name.up.railway.app/register`
+- 📊 **Dashboard Insegnanti**: `https://your-project-name.up.railway.app/teacher-dashboard`
+- ⚙️ **Dashboard Admin**: `https://your-project-name.up.railway.app/dashboard`
+- 🎯 **Manager**: `https://your-project-name.up.railway.app/manager`
+
+### **Test Sistema Autenticazione:**
+1. **Registrazione Insegnante**: `/register` → Crea nuovo account
+2. **Login Insegnante**: `/login` → Accesso con credenziali
+3. **Dashboard Limitata**: Auto-redirect a `/teacher-dashboard` per insegnanti
+4. **Admin Access**: `/dashboard` → Solo per admin (`admin@rahoot.edu` / `admin123`)
 
 ### **Test QR Code Mobile:**
-1. **Dashboard** → Login (`admin123`)
-2. **Carica quiz** dall'archivio
-3. **Manager** → Avvia stanza
-4. **QR Code** apparirà automaticamente
-5. **Smartphone** → Scansiona QR → Auto-join!
+1. **Login Insegnante** → Dashboard limitata
+2. **Lancia Gioco** → Seleziona quiz esistente  
+3. **Manager** → Genera PIN e QR Code
+4. **Smartphone** → Scansiona QR → Auto-join!
+5. **Statistiche** → Visualizza risultati dopo il gioco
 
 ## 🚨 TROUBLESHOOTING
 
@@ -115,9 +124,12 @@ Deployments → View Logs → Controlla errori
 **URL PUBBLICO**: `https://your-project-name.up.railway.app`
 
 **Funzionalità Online:**
+- 🔐 **Sistema Autenticazione Insegnanti**
+- 👥 **Ruoli Admin e Teacher distinti**
+- 📝 **Registrazione automatica insegnanti**
+- 📊 **Dashboard personalizzate per ruolo**
 - 📱 **QR Code** per smartphone
 - 🎮 **Real-time gaming** con WebSocket
-- 📊 **Dashboard professionale**
 - 🖼️ **Immagini nelle risposte**
 - 📈 **Statistiche automatiche**
 
