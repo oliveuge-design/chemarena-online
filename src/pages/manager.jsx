@@ -147,6 +147,28 @@ export default function Manager() {
     }
   }
 
+  const handleCreateNewRoom = () => {
+    // Conferma prima di resettare
+    const confirmReset = confirm("🆕 Vuoi creare una nuova room?\n\nQuesta azione resetterà la room attuale.")
+    
+    if (confirmReset) {
+      // Reset dello stato per permettere creazione nuova room
+      setState({
+        ...GAME_STATES,
+        status: {
+          ...GAME_STATES.status,
+          name: "SHOW_ROOM",
+        },
+        created: false
+      })
+      
+      // Emetti evento per chiudere room precedente se esistente
+      if (socket && emit) {
+        emit("manager:closeRoom")
+      }
+    }
+  }
+
   return (
     <>
       {!state.created ? (
@@ -162,6 +184,18 @@ export default function Manager() {
                 manager: true
               })}
           </GameWrapper>
+          
+          {/* Pulsante per creare nuova room - Solo se in SHOW_ROOM */}
+          {state.status.name === "SHOW_ROOM" && (
+            <div className="fixed top-4 right-4 z-50">
+              <Button 
+                onClick={handleCreateNewRoom}
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm font-medium rounded-lg shadow-lg"
+              >
+                🆕 Nuova Room
+              </Button>
+            </div>
+          )}
         </>
       )}
     </>
