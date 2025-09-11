@@ -107,13 +107,10 @@ export default function TeacherAuth({ onAuthSuccess }) {
 
         <div className="mt-6 text-center">
           <div className="bg-gray-50 p-4 rounded-lg">
-            <p className="text-sm text-gray-600 mb-2">📋 <strong>Credenziali di esempio:</strong></p>
+            <p className="text-sm text-gray-600 mb-2">ℹ️ <strong>Informazioni Accesso:</strong></p>
             <div className="text-xs text-gray-500 space-y-1">
-              <div>📧 mario.rossi@scuola.edu - 🔐 Matem123!</div>
-              <div>📧 laura.bianchi@scuola.edu - 🔐 Storia456!</div>
-              <div>📧 giuseppe.verdi@scuola.edu - 🔐 Scienze789!</div>
-              <div>📧 anna.neri@scuola.edu - 🔐 Italiano123!</div>
-              <div>📧 marco.blu@scuola.edu - 🔐 Inglese456!</div>
+              <div>📧 Utilizza le credenziali fornite dal tuo istituto</div>
+              <div>🔐 Per supporto, contatta l'amministratore di sistema</div>
             </div>
           </div>
         </div>

@@ -38,7 +38,7 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      console.log('Login attempt with:', formData) // Debug log
+      // Login attempt
       const response = await fetch('/api/teacher-auth', {
         method: 'POST',
         headers: {
@@ -48,7 +48,7 @@ export default function LoginPage() {
       })
 
       const data = await response.json()
-      console.log('Login response:', data) // Debug log
+      // Process login response
 
       if (data.success) {
         // Salva i dati dell'insegnante
@@ -150,10 +150,10 @@ export default function LoginPage() {
         </div>
 
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <h3 className="font-medium text-gray-800 mb-2">🔐 Accesso Demo:</h3>
+          <h3 className="font-medium text-gray-800 mb-2">ℹ️ Informazioni Accesso:</h3>
           <div className="text-sm text-gray-600 space-y-1">
-            <p><strong>Admin:</strong> admin@rahoot.edu / admin123</p>
-            <p><strong>Insegnante:</strong> mario.rossi@scuola.edu / Matem123!</p>
+            <p>Utilizza le credenziali fornite dal tuo istituto</p>
+            <p>Gli insegnanti possono richiedere accesso tramite registrazione</p>
           </div>
         </div>
       </div>

@@ -39,7 +39,7 @@ export default function handler(req, res) {
     // Scrive il file aggiornato
     fs.writeFileSync(configPath, configContent, 'utf8')
 
-    console.log(`✅ Password sincronizzata: ${password}`)
+    console.log(`✅ Quiz password synchronized successfully`)
 
     res.status(200).json({ 
       success: true, 

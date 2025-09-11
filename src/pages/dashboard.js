@@ -70,7 +70,7 @@ export default function Dashboard() {
     // Simula un piccolo delay per mostrare il loading
     await new Promise(resolve => setTimeout(resolve, 500))
     
-    console.log("Tentativo di accesso con password:", password)
+    // Admin authentication attempt
     
     // Controlla prima se esiste un admin con questa password
     try {
@@ -186,7 +186,7 @@ export default function Dashboard() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Inserisci la password (admin123)"
+              placeholder="Inserisci la password Admin"
               className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               onKeyDown={(e) => e.key === 'Enter' && handleAuth(e)}
               autoFocus
@@ -210,7 +210,7 @@ export default function Dashboard() {
             </button>
           </div>
           <div className="mt-4 text-center text-xs text-gray-500">
-            <p>Password: <strong>admin123</strong></p>
+            <p>Accesso riservato agli amministratori di sistema</p>
           </div>
         </div>
       </section>

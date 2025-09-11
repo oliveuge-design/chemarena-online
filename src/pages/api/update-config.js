@@ -74,7 +74,7 @@ export const GAME_STATE_INIT = {
 
     console.log('✅ File config.mjs aggiornato con successo')
     console.log(`📝 Quiz: ${processedQuiz.subject}`)
-    console.log(`🔑 Password: ${settings.password || quiz.password}`)
+    console.log(`🔑 Quiz configuration updated with new password`)
     console.log(`📊 Domande: ${processedQuiz.questions.length}`)
 
     res.status(200).json({ 
