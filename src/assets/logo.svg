@@ -1,52 +1,116 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 60" width="400" height="60">
-  <!-- Background gradient -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" width="320" height="80">
   <defs>
-    <linearGradient id="chemGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    <!-- Professional gradient inspired by tech brands -->
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
     </linearGradient>
     
-    <!-- Molecule atoms -->
-    <circle id="atom" r="6" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
-    <circle id="smallAtom" r="4" fill="#60a5fa" stroke="#1d4ed8" stroke-width="1"/>
+    <!-- Beaker liquid gradient -->
+    <linearGradient id="liquidGradient" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#34d399;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#6ee7b7;stop-opacity:0.3" />
+    </linearGradient>
+
+    <!-- Bubbles animation effect -->
+    <circle id="bubble" r="1.5" fill="#ffffff" opacity="0.7">
+      <animate attributeName="cy" values="45;25;45" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7;0.3;0.7" dur="3s" repeatCount="indefinite"/>
+    </circle>
   </defs>
-  
-  <!-- Molecule structure background -->
-  <g opacity="0.3">
-    <!-- Bonds -->
-    <line x1="20" y1="25" x2="45" y2="35" stroke="#3b82f6" stroke-width="2"/>
-    <line x1="45" y1="35" x2="70" y2="25" stroke="#3b82f6" stroke-width="2"/>
-    <line x1="45" y1="35" x2="45" y2="15" stroke="#3b82f6" stroke-width="2"/>
+
+  <!-- Beaker Icon - Styled like a professional lab equipment -->
+  <g transform="translate(15, 15)">
+    <!-- Beaker body -->
+    <path d="M20 25 L15 45 Q15 50 20 50 L35 50 Q40 50 40 45 L35 25" 
+          fill="none" 
+          stroke="url(#brandGradient)" 
+          stroke-width="3" 
+          stroke-linejoin="round"/>
     
-    <!-- Atoms -->
-    <use href="#atom" x="20" y="25"/>
-    <use href="#smallAtom" x="45" y="35"/>
-    <use href="#atom" x="70" y="25"/>
-    <use href="#smallAtom" x="45" y="15"/>
+    <!-- Beaker liquid -->
+    <path d="M21 30 L16.5 43 Q16.5 47 20.5 47 L34.5 47 Q38.5 47 38.5 43 L34 30 Z" 
+          fill="url(#liquidGradient)"/>
+    
+    <!-- Beaker rim -->
+    <line x1="15" y1="25" x2="40" y2="25" 
+          stroke="url(#brandGradient)" 
+          stroke-width="3" 
+          stroke-linecap="round"/>
+    
+    <!-- Beaker spout -->
+    <path d="M35 25 Q42 20 45 15" 
+          fill="none" 
+          stroke="url(#brandGradient)" 
+          stroke-width="2.5" 
+          stroke-linecap="round"/>
+    
+    <!-- Measurement lines -->
+    <line x1="18" y1="32" x2="22" y2="32" stroke="#1e40af" stroke-width="1" opacity="0.6"/>
+    <line x1="18" y1="36" x2="22" y2="36" stroke="#1e40af" stroke-width="1" opacity="0.6"/>
+    <line x1="18" y1="40" x2="22" y2="40" stroke="#1e40af" stroke-width="1" opacity="0.6"/>
+    
+    <!-- Animated bubbles -->
+    <use href="#bubble" x="25" y="45"/>
+    <use href="#bubble" x="30" y="42" opacity="0.5">
+      <animate attributeName="cy" values="42;20;42" dur="4s" repeatCount="indefinite"/>
+    </use>
+    <use href="#bubble" x="32" y="38" opacity="0.4">
+      <animate attributeName="cy" values="38;18;38" dur="5s" repeatCount="indefinite"/>
+    </use>
   </g>
-  
-  <!-- Main text: CHEMHOOT -->
-  <text x="100" y="40" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="url(#chemGradient)">
-    CHEM
-    <tspan fill="#059669">HOOT</tspan>
-  </text>
-  
-  <!-- Chemical formula style decoration -->
-  <text x="320" y="35" font-family="Arial, sans-serif" font-size="16" fill="#6b7280">
-    C₈H₁₀N₄O₂
-  </text>
-  
-  <!-- Question mark in molecular style -->
-  <g transform="translate(360, 20)">
-    <circle cx="0" cy="0" r="18" fill="none" stroke="url(#chemGradient)" stroke-width="3"/>
-    <text x="0" y="8" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="url(#chemGradient)" text-anchor="middle">?</text>
+
+  <!-- CHEMHOOT Text - Professional, readable font -->
+  <g transform="translate(75, 0)">
+    <!-- CHEM in primary brand color -->
+    <text x="0" y="45" 
+          font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif" 
+          font-size="32" 
+          font-weight="700" 
+          letter-spacing="-0.5px"
+          fill="url(#brandGradient)">CHEM</text>
+    
+    <!-- HOOT in accent color -->
+    <text x="95" y="45" 
+          font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif" 
+          font-size="32" 
+          font-weight="700" 
+          letter-spacing="-0.5px"
+          fill="#10b981">HOOT</text>
+    
+    <!-- Question mark - Interactive element -->
+    <g transform="translate(190, 25)">
+      <circle cx="0" cy="0" r="16" 
+              fill="none" 
+              stroke="url(#brandGradient)" 
+              stroke-width="2.5"/>
+      <text x="0" y="7" 
+            font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif" 
+            font-size="20" 
+            font-weight="600" 
+            text-anchor="middle" 
+            fill="url(#brandGradient)">?</text>
+    </g>
+
+    <!-- Subtitle/tagline -->
+    <text x="0" y="62" 
+          font-family="'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif" 
+          font-size="11" 
+          font-weight="400" 
+          letter-spacing="0.5px"
+          fill="#6b7280">CHEMISTRY EDUCATION PLATFORM</text>
   </g>
-  
-  <!-- Small molecules decoration -->
-  <g transform="translate(85, 10)" opacity="0.6">
-    <circle cx="0" cy="0" r="2" fill="#3b82f6"/>
-    <circle cx="8" cy="3" r="1.5" fill="#059669"/>
-    <line x1="0" y1="0" x2="8" y2="3" stroke="#6b7280" stroke-width="1"/>
+
+  <!-- Decorative elements - Chemical bonds -->
+  <g opacity="0.3" transform="translate(250, 20)">
+    <!-- Molecular structure -->
+    <circle cx="0" cy="0" r="3" fill="#3b82f6"/>
+    <circle cx="15" cy="8" r="2" fill="#10b981"/>
+    <circle cx="8" cy="18" r="2.5" fill="#3b82f6"/>
+    
+    <!-- Bonds -->
+    <line x1="0" y1="0" x2="15" y2="8" stroke="#6b7280" stroke-width="1"/>
+    <line x1="0" y1="0" x2="8" y2="18" stroke="#6b7280" stroke-width="1"/>
   </g>
 </svg>
