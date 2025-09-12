@@ -13,14 +13,32 @@ export default function ManagerPassword({ onCreateRoom }) {
   const [authenticatedTeacher, setAuthenticatedTeacher] = useState(null)
 
   useEffect(() => {
-    const savedTeacher = localStorage.getItem('teacher-auth')
-    if (savedTeacher) {
-      try {
-        setAuthenticatedTeacher(JSON.parse(savedTeacher))
-      } catch (error) {
-        localStorage.removeItem('teacher-auth')
+    // Controlla autenticazione con un piccolo delay per assicurarsi che localStorage sia disponibile
+    const checkAuthentication = () => {
+      const savedTeacher = localStorage.getItem('teacher-auth')
+      console.log('ManagerPassword: localStorage teacher-auth:', savedTeacher ? 'FOUND' : 'NOT FOUND')
+      
+      if (savedTeacher) {
+        try {
+          const teacherData = JSON.parse(savedTeacher)
+          console.log('ManagerPassword: Teacher data loaded:', teacherData.name, teacherData.role)
+          setAuthenticatedTeacher(teacherData)
+        } catch (error) {
+          console.error('ManagerPassword: Error parsing teacher data:', error)
+          localStorage.removeItem('teacher-auth')
+        }
+      } else {
+        console.log('ManagerPassword: No teacher authentication found, showing login form')
       }
     }
+
+    // Controlla immediatamente
+    checkAuthentication()
+    
+    // Ricontrolla dopo un breve delay (per gestire race conditions)
+    const timeout = setTimeout(checkAuthentication, 100)
+    
+    return () => clearTimeout(timeout)
   }, [])
 
 

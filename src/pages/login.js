@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 export default function LoginPage() {
   const router = useRouter()
   const [formData, setFormData] = useState({
-    email: '',
+    name: '',
     password: ''
   })
   const [loading, setLoading] = useState(false)
@@ -76,7 +76,7 @@ export default function LoginPage() {
     setLoading(false)
   }
 
-  const isFormValid = formData.email && formData.password
+  const isFormValid = formData.name && formData.password
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 flex items-center justify-center px-4">
@@ -100,15 +100,15 @@ export default function LoginPage() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
+              Nome Completo
             </label>
             <input
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
+              type="text"
+              value={formData.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="mario.rossi@scuola.edu"
-              autoComplete="email"
+              placeholder="Prof. Mario Rossi"
+              autoComplete="name"
               required
             />
           </div>
@@ -152,8 +152,8 @@ export default function LoginPage() {
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
           <h3 className="font-medium text-gray-800 mb-2">ℹ️ Informazioni Accesso:</h3>
           <div className="text-sm text-gray-600 space-y-1">
-            <p>Utilizza le credenziali fornite dal tuo istituto</p>
-            <p>Gli insegnanti possono richiedere accesso tramite registrazione</p>
+            <p>Utilizza il tuo nome completo e la password assegnata</p>
+            <p>Per supporto contatta l'amministratore di sistema</p>
           </div>
         </div>
       </div>

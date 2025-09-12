@@ -12,6 +12,8 @@ import Room from "@/components/game/join/Room"
 import Username from "@/components/game/join/Username"
 import { useSocketContext } from "@/context/socket"
 import toast from "react-hot-toast"
+import LabParticles from "@/components/LabParticles"
+import AtomAnimation from "@/components/AtomAnimation"
 
 export default function Home() {
   const router = useRouter()
@@ -46,48 +48,21 @@ export default function Home() {
   }, [dispatch, on, off])
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center">
-      <div className="absolute h-full w-full overflow-hidden">
-        <div className="absolute -left-[15vmin] -top-[15vmin] min-h-[75vmin] min-w-[75vmin] rounded-full bg-primary/15"></div>
-        <div className="absolute -bottom-[15vmin] -right-[15vmin] min-h-[75vmin] min-w-[75vmin] rotate-45 bg-primary/15"></div>
+    <section className="relative flex min-h-screen flex-col items-center justify-center lab-background">
+      <LabParticles intensity="normal" show={true} />
+      
+      <AtomAnimation 
+        size={100} 
+        position={{ top: '15%', left: '50%', transform: 'translateX(-50%)' }} 
+        show={true} 
+      />
+
+      <div className="glass-card-strong p-8 w-full max-w-md mx-auto relative z-10 flex flex-col items-center text-center">
+        <Image src={logo} className="mb-6 h-32 mx-auto glow-green" alt="logo" />
+
+        {!player ? <Room /> : <Username />}
+
       </div>
-
-
-      <Image src={logo} className="mb-6 h-32" alt="logo" />
-
-      {!player ? <Room /> : <Username />}
-
-      {/* Info per insegnanti - Solo se non c'è un PIN (non è accesso da QR code) */}
-      {!player && !router.query.pin && (
-        <div className="mt-8 max-w-md text-center relative z-10">
-          <p className="text-gray-700 text-sm mb-4 font-medium">
-            Sei un insegnante? Accedi per gestire i tuoi quiz!
-          </p>
-          <div className="space-y-3">
-            <Button 
-              onClick={() => router.push('/login')}
-              className="w-full bg-blue-500 hover:bg-blue-600 text-sm px-6 py-3"
-            >
-              🚀 Accedi come Insegnante
-            </Button>
-            <Button 
-              onClick={() => router.push('/register')}
-              className="w-full bg-green-500 hover:bg-green-600 text-sm px-6 py-3"
-            >
-              📝 Registrati come Insegnante
-            </Button>
-            <div className="mt-4 pt-3 border-t border-gray-200">
-              <p className="text-xs text-gray-500 mb-2">Amministratori:</p>
-              <Button 
-                onClick={() => router.push('/dashboard')}
-                className="bg-purple-500 hover:bg-purple-600 text-xs px-4 py-2"
-              >
-                ⚙️ Dashboard Admin
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   )
 }

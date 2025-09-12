@@ -24,6 +24,8 @@ export default function TeacherAuth({ onAuthSuccess }) {
     e.preventDefault()
     setLoading(true)
 
+    console.log('TeacherAuth: Attempting login with data:', { name: formData.name, password: formData.password ? '[HIDDEN]' : 'EMPTY' })
+
     try {
       const response = await fetch('/api/teacher-auth', {
         method: 'POST',

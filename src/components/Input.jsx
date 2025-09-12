@@ -11,7 +11,7 @@ export default function Input({ className, onChange, ...otherProps }) {
   return (
     <input
       className={clsx(
-        "rounded-sm p-2 text-lg font-semibold outline outline-2 outline-gray-300",
+        "w-full text-center rounded-lg p-3 text-lg font-semibold bg-white/20 backdrop-blur-sm border-2 border-white/30 text-white placeholder-white/70 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-400/50",
         className,
       )}
       onChange={handleChange}
