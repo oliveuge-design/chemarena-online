@@ -8,15 +8,51 @@ import toast from "react-hot-toast"
 
 export default function Game() {
   const router = useRouter()
+  const { pin, name } = router.query
 
-  const { socket, on, off } = useSocketContext()
+  const { socket, emit, on, off } = useSocketContext()
   const { player, dispatch } = usePlayerContext()
 
+  // Auto-join se PIN e nome sono forniti nella query
   useEffect(() => {
-    if (!player) {
+    if (pin && name && !player && socket) {
+      // Prima verifica la stanza
+      emit("player:checkRoom", pin)
+      
+      // Ascolta per il successo della verifica stanza
+      const handleRoomSuccess = (roomId) => {
+        dispatch({ type: "JOIN", payload: roomId })
+        
+        // Poi prova a unirsi
+        const playerData = {
+          username: name,
+          room: roomId,
+          displayName: name
+        }
+        
+        emit("player:join", playerData)
+      }
+      
+      // Ascolta per il successo del join
+      const handleJoinSuccess = () => {
+        dispatch({ type: "LOGIN", payload: name })
+      }
+      
+      on("game:successRoom", handleRoomSuccess)
+      on("game:successJoin", handleJoinSuccess)
+      
+      return () => {
+        off("game:successRoom", handleRoomSuccess)
+        off("game:successJoin", handleJoinSuccess)
+      }
+    }
+  }, [pin, name, player, socket, emit, on, off, dispatch])
+
+  useEffect(() => {
+    if (!player && !pin && !name) {
       router.replace("/")
     }
-  }, [])
+  }, [player, pin, name, router])
 
   const [state, setState] = useState(GAME_STATES)
 

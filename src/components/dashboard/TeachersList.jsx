@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { getAllTeachers, toggleTeacherStatus, deleteTeacher } from '@/utils/teacherDatabase'
 import Button from '@/components/Button'
 import toast from 'react-hot-toast'
 
@@ -12,10 +11,16 @@ export default function TeachersList() {
     loadTeachers()
   }, [])
 
-  const loadTeachers = () => {
+  const loadTeachers = async () => {
     try {
-      const allTeachers = getAllTeachers()
-      setTeachers(allTeachers)
+      const response = await fetch('/api/teachers-list')
+      const data = await response.json()
+      
+      if (data.success) {
+        setTeachers(data.teachers)
+      } else {
+        throw new Error(data.error || 'Errore nel caricamento')
+      }
     } catch (error) {
       console.error('Errore caricamento insegnanti:', error)
       toast.error('Errore nel caricamento della lista insegnanti')
@@ -26,14 +31,25 @@ export default function TeachersList() {
 
   const handleToggleStatus = async (teacherId) => {
     try {
-      const updatedTeacher = toggleTeacherStatus(teacherId)
-      if (updatedTeacher) {
+      const response = await fetch('/api/teachers-toggle', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ teacherId })
+      })
+      
+      const data = await response.json()
+      
+      if (data.success) {
         loadTeachers() // Ricarica la lista
         toast.success(
-          updatedTeacher.active 
-            ? `${updatedTeacher.name} è stato riattivato` 
-            : `${updatedTeacher.name} è stato disattivato`
+          data.teacher.active 
+            ? `${data.teacher.name} è stato riattivato` 
+            : `${data.teacher.name} è stato disattivato`
         )
+      } else {
+        throw new Error(data.error)
       }
     } catch (error) {
       console.error('Errore cambio stato:', error)
@@ -48,10 +64,21 @@ export default function TeachersList() {
 
     if (confirmDelete) {
       try {
-        const deleted = deleteTeacher(teacherId)
-        if (deleted) {
+        const response = await fetch('/api/teachers-delete', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teacherId })
+        })
+        
+        const data = await response.json()
+        
+        if (data.success) {
           loadTeachers() // Ricarica la lista
           toast.success(`Insegnante "${teacherName}" eliminato definitivamente`)
+        } else {
+          throw new Error(data.error)
         }
       } catch (error) {
         console.error('Errore eliminazione:', error)

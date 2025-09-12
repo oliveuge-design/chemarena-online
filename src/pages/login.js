@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import Image from "next/image"
 import logo from "@/assets/logo.svg"
 import Button from "@/components/Button"
+import SimpleLabBackground from "@/components/SimpleLabBackground"
 import toast from 'react-hot-toast'
 
 export default function LoginPage() {
@@ -79,7 +80,9 @@ export default function LoginPage() {
   const isFormValid = formData.name && formData.password
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 flex items-center justify-center px-4">
+    <>
+      <SimpleLabBackground />
+      <div className="min-h-screen flex items-center justify-center px-4 relative z-10">
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
           <Image
@@ -158,5 +161,6 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }
