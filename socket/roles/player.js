@@ -4,45 +4,56 @@ import { inviteCodeValidator, usernameValidator } from "../validator.js"
 
 const Player = {
   checkRoom: async (game, io, socket, roomId) => {
+    console.log(`🔍 Player ${socket.id} checking room ${roomId} - Current game room: ${game.room}`)
+    
     try {
       await inviteCodeValidator.validate(roomId)
     } catch (error) {
+      console.log(`❌ Room validation failed: ${error.errors[0]}`)
       socket.emit("game:errorMessage", error.errors[0])
       return
     }
 
     if (!game.room || roomId !== game.room) {
+      console.log(`❌ Room not found or mismatch - game.room: ${game.room}, requested: ${roomId}`)
       socket.emit("game:errorMessage", "Room not found")
       return
     }
 
+    console.log(`✅ Room check success for ${socket.id}`)
     socket.emit("game:successRoom", roomId)
   },
 
   join: async (game, io, socket, player) => {
+    console.log(`🚀 Player ${socket.id} attempting to join room ${player.room} with username: ${player.username}`)
+    
     try {
       await usernameValidator.validate(player.username)
     } catch (error) {
+      console.log(`❌ Username validation failed: ${error.errors[0]}`)
       socket.emit("game:errorMessage", error.errors[0])
       return
     }
 
     if (!game.room || player.room !== game.room) {
+      console.log(`❌ Join failed - Room mismatch: game.room=${game.room}, player.room=${player.room}`)
       socket.emit("game:errorMessage", "Room not found")
       return
     }
 
     if (game.players.find((p) => p.username === player.username)) {
+      console.log(`❌ Username already exists: ${player.username}`)
       socket.emit("game:errorMessage", "Username already exists")
       return
     }
 
     if (game.started) {
+      console.log(`❌ Game already started, cannot join`)
       socket.emit("game:errorMessage", "Game already started")
       return
     }
 
-    console.log("New Player", player)
+    console.log(`✅ Player join successful: ${player.username} in room ${player.room}`)
 
     socket.join(player.room)
 

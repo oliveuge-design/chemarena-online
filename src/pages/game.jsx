@@ -16,11 +16,14 @@ export default function Game() {
   // Auto-join se PIN e nome sono forniti nella query
   useEffect(() => {
     if (pin && name && !player && socket) {
+      console.log(`🎮 Auto-join attempt: PIN=${pin}, name=${name}`)
+      
       // Prima verifica la stanza
       emit("player:checkRoom", pin)
       
       // Ascolta per il successo della verifica stanza
       const handleRoomSuccess = (roomId) => {
+        console.log(`✅ Room check successful: ${roomId}`)
         dispatch({ type: "JOIN", payload: roomId })
         
         // Poi prova a unirsi
@@ -30,20 +33,29 @@ export default function Game() {
           displayName: name
         }
         
+        console.log(`🚀 Attempting to join with data:`, playerData)
         emit("player:join", playerData)
       }
       
       // Ascolta per il successo del join
       const handleJoinSuccess = () => {
+        console.log(`✅ Player join successful: ${name}`)
         dispatch({ type: "LOGIN", payload: name })
+      }
+      
+      // Ascolta per errori
+      const handleError = (error) => {
+        console.log(`❌ Game error: ${error}`)
       }
       
       on("game:successRoom", handleRoomSuccess)
       on("game:successJoin", handleJoinSuccess)
+      on("game:errorMessage", handleError)
       
       return () => {
         off("game:successRoom", handleRoomSuccess)
         off("game:successJoin", handleJoinSuccess)
+        off("game:errorMessage", handleError)
       }
     }
   }, [pin, name, player, socket, emit, on, off, dispatch])
