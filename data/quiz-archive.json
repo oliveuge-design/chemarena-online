@@ -660,13 +660,413 @@
           "image": ""
         }
       ]
+    },
+    {
+      "id": "medicina_quiz_1",
+      "title": "Test Medicina - Biologia e Scienze Naturali",
+      "subject": "Medicina",
+      "created": "2025-09-12",
+      "author": "Sistema",
+      "password": "medicina123",
+      "questions": [
+        {
+          "id": "med1_q1",
+          "question": "Quale organello cellulare è responsabile della produzione di ATP?",
+          "answers": [
+            "Ribosomi",
+            "Mitocondri", 
+            "Reticolo endoplasmatico",
+            "Apparato di Golgi"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med1_q2", 
+          "question": "Il DNA è costituito da quale tipo di zucchero?",
+          "answers": [
+            "Ribosio",
+            "Saccarosio",
+            "Desossiribosio",
+            "Fruttosio"
+          ],
+          "solution": 2,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med1_q3",
+          "question": "Quante camere ha il cuore umano?",
+          "answers": [
+            "Due",
+            "Tre", 
+            "Quattro",
+            "Sei"
+          ],
+          "solution": 2,
+          "time": 15,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med1_q4",
+          "question": "Quale gas viene eliminato dai polmoni durante l'espirazione?",
+          "answers": [
+            "Ossigeno",
+            "Azoto",
+            "Anidride carbonica",
+            "Vapore acqueo"
+          ],
+          "solution": 2,
+          "time": 15,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med1_q5",
+          "question": "Il tessuto che collega i muscoli alle ossa è chiamato:",
+          "answers": [
+            "Legamento",
+            "Tendine",
+            "Cartilagine", 
+            "Fascia"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "medicina_quiz_2",
+      "title": "Test Medicina - Chimica e Biochimica",
+      "subject": "Medicina",
+      "created": "2025-09-12",
+      "author": "Sistema",
+      "password": "medicina123",
+      "questions": [
+        {
+          "id": "med2_q1",
+          "question": "Quale elemento chimico ha simbolo 'Fe'?",
+          "answers": [
+            "Fluoro",
+            "Ferro",
+            "Fosforo", 
+            "Francio"
+          ],
+          "solution": 1,
+          "time": 15,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med2_q2",
+          "question": "Il pH dell'acqua pura a 25°C è:",
+          "answers": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "solution": 1,
+          "time": 15,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med2_q3",
+          "question": "Gli amminoacidi sono i costituenti base di:",
+          "answers": [
+            "Carboidrati",
+            "Lipidi",
+            "Proteine",
+            "Acidi nucleici"
+          ],
+          "solution": 2,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med2_q4",
+          "question": "Quale tipo di legame tiene insieme le due catene del DNA?",
+          "answers": [
+            "Legami ionici",
+            "Legami covalenti", 
+            "Legami idrogeno",
+            "Forze di Van der Waals"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med2_q5",
+          "question": "L'emoglobina contiene quale ione metallico?",
+          "answers": [
+            "Calcio (Ca²⁺)",
+            "Ferro (Fe²⁺)",
+            "Zinco (Zn²⁺)",
+            "Magnesio (Mg²⁺)"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "medicina_quiz_3", 
+      "title": "Test Medicina - Fisica e Matematica",
+      "subject": "Medicina",
+      "created": "2025-09-12",
+      "author": "Sistema", 
+      "password": "medicina123",
+      "questions": [
+        {
+          "id": "med3_q1",
+          "question": "L'unità di misura della pressione nel Sistema Internazionale è:",
+          "answers": [
+            "Pascal (Pa)",
+            "Torr",
+            "Atmosfera (atm)",
+            "Bar"
+          ],
+          "solution": 0,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med3_q2",
+          "question": "La velocità della luce nel vuoto è approssimativamente:",
+          "answers": [
+            "300.000 km/h",
+            "300.000 km/s", 
+            "3.000.000 km/s",
+            "30.000 km/s"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med3_q3",
+          "question": "Qual è la derivata di x² rispetto a x?",
+          "answers": [
+            "x",
+            "2x",
+            "x²/2",
+            "2"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med3_q4",
+          "question": "La frequenza è l'inverso di quale grandezza fisica?",
+          "answers": [
+            "Lunghezza d'onda",
+            "Velocità",
+            "Periodo",
+            "Ampiezza"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med3_q5",
+          "question": "In un triangolo rettangolo, il teorema di Pitagora stabilisce che:",
+          "answers": [
+            "a + b = c",
+            "a² + b² = c²",
+            "a × b = c²", 
+            "a² × b² = c²"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "medicina_quiz_4",
+      "title": "Test Medicina - Logica e Cultura Generale",
+      "subject": "Medicina", 
+      "created": "2025-09-12",
+      "author": "Sistema",
+      "password": "medicina123",
+      "questions": [
+        {
+          "id": "med4_q1",
+          "question": "Se tutti i medici sono laureati e Mario è un medico, allora:",
+          "answers": [
+            "Mario non è laureato",
+            "Mario è laureato", 
+            "Non si può determinare",
+            "Mario è un dottore"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med4_q2",
+          "question": "Quale Nobel per la Medicina ha scoperto la penicillina?",
+          "answers": [
+            "Louis Pasteur",
+            "Alexander Fleming",
+            "Marie Curie",
+            "Albert Einstein"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med4_q3",
+          "question": "Il giuramento professionale dei medici prende il nome da:",
+          "answers": [
+            "Ippocrate",
+            "Galeno",
+            "Avicenna", 
+            "Paracelso"
+          ],
+          "solution": 0,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med4_q4",
+          "question": "In una serie: 2, 4, 8, 16, ... quale numero segue?",
+          "answers": [
+            "24",
+            "30",
+            "32",
+            "20"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med4_q5",
+          "question": "L'OMS (Organizzazione Mondiale della Sanità) ha sede a:",
+          "answers": [
+            "New York",
+            "Ginevra",
+            "Bruxelles",
+            "Vienna"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "medicina_quiz_5",
+      "title": "Test Medicina - Anatomia e Fisiologia",
+      "subject": "Medicina",
+      "created": "2025-09-12", 
+      "author": "Sistema",
+      "password": "medicina123",
+      "questions": [
+        {
+          "id": "med5_q1",
+          "question": "Il cranio umano è costituito da quante ossa?",
+          "answers": [
+            "20",
+            "22",
+            "24",
+            "26"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med5_q2",
+          "question": "Quale ghiandola produce l'insulina?",
+          "answers": [
+            "Fegato",
+            "Pancreas",
+            "Tiroide", 
+            "Surrene"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med5_q3",
+          "question": "Il sistema nervoso simpatico e parasimpatico fanno parte di:",
+          "answers": [
+            "Sistema nervoso centrale",
+            "Sistema nervoso periferico",
+            "Sistema nervoso autonomo",
+            "Sistema nervoso somatico"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med5_q4",
+          "question": "Quale vaso sanguigno porta il sangue dal cuore ai polmoni?",
+          "answers": [
+            "Aorta",
+            "Arteria polmonare", 
+            "Vena cava",
+            "Arteria coronaria"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "med5_q5",
+          "question": "La filtrazione del sangue avviene principalmente in quale organo?",
+          "answers": [
+            "Fegato",
+            "Polmoni",
+            "Reni",
+            "Milza"
+          ],
+          "solution": 2,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
     }
   ],
   "images": [],
   "metadata": {
     "version": "1.0",
-    "lastUpdate": "2025-09-10",
-    "totalQuizzes": 8,
-    "totalQuestions": 42
+    "lastUpdate": "2025-09-12",
+    "totalQuizzes": 13,
+    "totalQuestions": 67
   }
 }
