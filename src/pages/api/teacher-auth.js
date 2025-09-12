@@ -1,4 +1,4 @@
-import { findTeacherByCredentials, updateTeacherLastLogin } from '@/data/teachers'
+import { findTeacherByCredentials, updateTeacherLastLogin } from '@/utils/teacherDatabase'
 
 export default function handler(req, res) {
   if (req.method !== 'POST') {

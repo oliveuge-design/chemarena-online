@@ -1,4 +1,4 @@
-import { getAllActiveTeachers } from '@/data/teachers'
+import { getAllActiveTeachers } from '@/utils/teacherDatabase'
 
 export default function handler(req, res) {
   if (req.method !== 'GET') {

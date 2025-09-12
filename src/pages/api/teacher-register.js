@@ -1,4 +1,4 @@
-import { registerNewTeacher, validateEmailFormat, validatePasswordStrength } from '@/data/teachers'
+import { registerNewTeacher, validateEmailFormat, validatePasswordStrength } from '@/utils/teacherDatabase'
 
 export default function handler(req, res) {
   if (req.method !== 'POST') {
