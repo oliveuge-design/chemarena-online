@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
 export default function GameWrapper({ children, textNext, onNext, manager }) {
-  const { socket, on, off } = useSocketContext()
+  const { socket, emit, on, off } = useSocketContext()
   const { player, dispatch } = usePlayerContext()
   const router = useRouter()
 
@@ -66,9 +66,33 @@ export default function GameWrapper({ children, textNext, onNext, manager }) {
             <Button
               className="self-end bg-red-600 hover:bg-red-700 text-white px-2 py-1 text-xs"
               onClick={() => {
-                const restart = confirm('⚠️ Riavvio di emergenza?\n\nUsa solo se il gioco si è bloccato.')
+                const restart = confirm('⚠️ Riavvio di emergenza?\n\nUsa solo se il gioco si è bloccato.\n\nReset completo server + client.')
                 if (restart) {
-                  window.location.href = '/dashboard?emergency=true'
+                  // Reset del game state sul server
+                  if (socket && emit) {
+                    emit("manager:resetGame")
+                    console.log('🚨 Emergency reset: server state resettato')
+                  }
+                  
+                  // Determina il dashboard corretto basato sul ruolo dell'utente
+                  const savedTeacher = localStorage.getItem('teacher-auth')
+                  let dashboardUrl = '/dashboard?emergency=true' // Default per admin
+                  
+                  if (savedTeacher) {
+                    try {
+                      const teacherData = JSON.parse(savedTeacher)
+                      if (teacherData.role === 'teacher') {
+                        dashboardUrl = '/teacher-dashboard?emergency=true'
+                      }
+                    } catch (error) {
+                      console.error('Errore parsing teacher data:', error)
+                    }
+                  }
+                  
+                  // Naviga al dashboard corretto dopo reset server
+                  setTimeout(() => {
+                    window.location.href = dashboardUrl
+                  }, 100) // Piccolo delay per assicurare che il reset server sia completato
                 }
               }}
             >
