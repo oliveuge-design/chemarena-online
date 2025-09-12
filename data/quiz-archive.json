@@ -1060,13 +1060,162 @@
           "image": ""
         }
       ]
+    },
+    {
+      "id": "deutsch_geografie_quiz",
+      "title": "Deutsche Geografie - Städte, Länder und Flüsse",
+      "subject": "Geografie",
+      "created": "2025-09-12",
+      "author": "Sistema",
+      "questions": [
+        {
+          "id": "de_geo_q1",
+          "question": "Welche Stadt ist die Hauptstadt von Deutschland?",
+          "answers": [
+            "München",
+            "Hamburg",
+            "Berlin",
+            "Köln"
+          ],
+          "solution": 2,
+          "time": 15,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q2",
+          "question": "Welcher Fluss fließt durch Hamburg?",
+          "answers": [
+            "Der Rhein",
+            "Die Elbe",
+            "Die Donau",
+            "Die Weser"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q3",
+          "question": "Welches Bundesland hat die größte Fläche?",
+          "answers": [
+            "Nordrhein-Westfalen",
+            "Bayern",
+            "Baden-Württemberg",
+            "Niedersachsen"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q4",
+          "question": "An welche Länder grenzt Deutschland NICHT?",
+          "answers": [
+            "Frankreich",
+            "Italien",
+            "Polen",
+            "Österreich"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q5",
+          "question": "Welcher Berg ist der höchste in Deutschland?",
+          "answers": [
+            "Der Brocken",
+            "Die Wasserkuppe",
+            "Die Zugspitze",
+            "Der Feldberg"
+          ],
+          "solution": 2,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q6",
+          "question": "In welchem Bundesland liegt der Schwarzwald?",
+          "answers": [
+            "Bayern",
+            "Baden-Württemberg",
+            "Hessen",
+            "Rheinland-Pfalz"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q7",
+          "question": "Welche Stadt liegt an der Nordsee?",
+          "answers": [
+            "Bremen",
+            "Kiel",
+            "Wilhelmshaven",
+            "Rostock"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q8",
+          "question": "Wie viele Bundesländer hat Deutschland?",
+          "answers": [
+            "14",
+            "15",
+            "16",
+            "17"
+          ],
+          "solution": 2,
+          "time": 15,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q9",
+          "question": "Welche Insel gehört zu Schleswig-Holstein?",
+          "answers": [
+            "Rügen",
+            "Usedom",
+            "Sylt",
+            "Fehmarn"
+          ],
+          "solution": 2,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "de_geo_q10",
+          "question": "Der Rhein mündet in welches Meer?",
+          "answers": [
+            "Die Ostsee",
+            "Die Nordsee",
+            "Das Mittelmeer",
+            "Das Schwarze Meer"
+          ],
+          "solution": 1,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
     }
   ],
   "images": [],
   "metadata": {
     "version": "1.0",
     "lastUpdate": "2025-09-12",
-    "totalQuizzes": 13,
-    "totalQuestions": 67
+    "totalQuizzes": 14,
+    "totalQuestions": 77
   }
 }
