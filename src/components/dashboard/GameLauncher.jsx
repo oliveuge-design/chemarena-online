@@ -10,11 +10,15 @@ export default function GameLauncher() {
   const [quizzes, setQuizzes] = useState([])
   const [selectedQuiz, setSelectedQuiz] = useState(null)
   const [gameSettings, setGameSettings] = useState({
-    password: '',
     allowLateJoin: true,
     showLeaderboardBetweenQuestions: true,
     shuffleQuestions: false,
-    shuffleAnswers: false
+    shuffleAnswers: false,
+    gameMode: 'standard', // standard, chase, appearingAnswers, timed, untimed
+    chaseMode: false,
+    appearingAnswers: false,
+    timedMode: true,
+    bonusForSpeed: true
   })
   const [currentGameQuiz, setCurrentGameQuiz] = useState(null)
   const [configStatus, setConfigStatus] = useState('unknown') // 'unknown', 'updated', 'needs-update'
@@ -65,7 +69,6 @@ export default function GameLauncher() {
 
   const handleQuizSelection = (quiz) => {
     setSelectedQuiz(quiz)
-    setGameSettings(prev => ({ ...prev, password: quiz.password }))
     
     // Salva come quiz attivo
     localStorage.setItem('current-game-quiz', JSON.stringify(quiz))
@@ -92,7 +95,7 @@ export default function GameLauncher() {
         },
         body: JSON.stringify({
           quizId: selectedQuiz.id,
-          password: gameSettings.password
+          password: selectedQuiz.password // Usa la password del quiz stesso
         }),
       })
 
@@ -152,13 +155,13 @@ export default function GameLauncher() {
 
     // Vai alla pagina manager
     const confirmManager = confirm(
-      `🚀 Pronto per lanciare il gioco!\n\n🔑 Password quiz: ${gameSettings.password}\n\nVuoi andare alla:\n` +
+      `🚀 Pronto per lanciare il gioco!\n\n🎮 Modalità: ${gameSettings.gameMode}\n📝 Quiz: ${selectedQuiz.title}\n\nVuoi andare alla:\n` +
       `👨‍🏫 Pagina MANAGER (per gestire il gioco) - OK\n` +
       `👥 Pagina STUDENTI (per testare come studente) - Annulla`
     )
     
     if (confirmManager) {
-      alert(`📋 Istruzioni per l'insegnante:\n\n1. Inserisci la password: ${gameSettings.password}\n2. Ottieni il PIN numerico\n3. Condividi il PIN con gli studenti\n4. Gestisci il gioco dalla dashboard`)
+      alert(`📋 Istruzioni per l'insegnante:\n\n1. ${selectedQuiz.password ? `Inserisci la password: ${selectedQuiz.password}` : 'Accedi al manager'}\n2. Ottieni il PIN numerico\n3. Condividi il PIN con gli studenti\n4. Gestisci il gioco dalla dashboard`)
       router.push('/manager')
     } else {
       alert(`📋 Modalità studente:\n\nInserisci il PIN numerico che ti darà l'insegnante per partecipare al quiz.`)
@@ -177,6 +180,29 @@ export default function GameLauncher() {
       averageTime: Math.round(quiz.questions.reduce((sum, q) => sum + (q.time || 15), 0) / quiz.questions.length),
       hasImages: quiz.questions.some(q => q.image)
     }
+  }
+
+  const getDifficulty = (quiz) => {
+    const avgTime = quiz.questions.reduce((sum, q) => sum + (q.time || 15), 0) / quiz.questions.length
+    const hasImages = quiz.questions.some(q => q.image || q.answers.some(a => a.image))
+    const hasComplexQuestions = quiz.questions.some(q => q.question.length > 100)
+    
+    let difficulty = 0
+    
+    // Tempo per domanda
+    if (avgTime <= 10) difficulty += 2 // Difficile
+    else if (avgTime <= 20) difficulty += 1 // Medio
+    else difficulty += 0 // Facile
+    
+    // Presenza di immagini
+    if (hasImages) difficulty += 1
+    
+    // Complessità delle domande
+    if (hasComplexQuestions) difficulty += 1
+    
+    if (difficulty >= 3) return 'Difficile'
+    if (difficulty >= 1) return 'Medio'
+    return 'Facile'
   }
 
   return (
@@ -234,52 +260,170 @@ export default function GameLauncher() {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {quizzes.map((quiz) => {
-              const preview = previewQuiz(quiz)
-              const isSelected = selectedQuiz && selectedQuiz.id === quiz.id
+          <div className="space-y-4">
+            {/* Tabella quiz dettagliata */}
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Quiz
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Materia
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      N° Domande
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Durata
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Difficoltà
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Punteggio Max
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Immagini
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Seleziona
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {quizzes.map((quiz) => {
+                    const preview = previewQuiz(quiz)
+                    const isSelected = selectedQuiz && selectedQuiz.id === quiz.id
+                    const difficulty = getDifficulty(quiz)
+                    const maxScore = quiz.questions.length * 1000
+                    
+                    return (
+                      <tr 
+                        key={quiz.id}
+                        className={`hover:bg-gray-50 cursor-pointer ${isSelected ? 'bg-blue-50' : ''}`}
+                        onClick={() => handleQuizSelection(quiz)}
+                      >
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">{quiz.title}</div>
+                          <div className="text-sm text-gray-500">
+                            Creato il {quiz.created} {quiz.author && `da ${quiz.author}`}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                            {quiz.subject}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {preview.questionsCount}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {preview.duration}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                            difficulty === 'Facile' ? 'bg-green-100 text-green-800' :
+                            difficulty === 'Medio' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
+                          }`}>
+                            {difficulty}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {maxScore.toLocaleString()} pt
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {preview.hasImages ? (
+                            <span className="text-purple-600">📸 Sì</span>
+                          ) : (
+                            <span className="text-gray-400">📄 No</span>
+                          )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {isSelected ? (
+                            <span className="text-blue-500 font-semibold">✓ Selezionato</span>
+                          ) : (
+                            <button className="text-blue-600 hover:text-blue-900">Seleziona</button>
+                          )}
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+        
+        {/* Banner dettagli quiz selezionato */}
+        {selectedQuiz && (
+          <div className="mt-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-lg font-semibold text-blue-900">
+                📊 Quiz Selezionato: {selectedQuiz.title}
+              </h4>
+              <button
+                onClick={() => setSelectedQuiz(null)}
+                className="text-blue-400 hover:text-blue-600"
+              >
+                ✕
+              </button>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+              <div className="bg-white rounded-lg p-3 border border-blue-100">
+                <div className="text-xs font-medium text-gray-500 uppercase mb-1">Domande</div>
+                <div className="text-2xl font-bold text-blue-600">{selectedQuiz.questions.length}</div>
+              </div>
               
-              return (
-                <div
-                  key={quiz.id}
-                  className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                    isSelected 
-                      ? 'border-blue-500 bg-blue-50' 
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                  onClick={() => handleQuizSelection(quiz)}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-gray-900 truncate">
-                      {quiz.title}
-                    </h4>
-                    {isSelected && <span className="text-blue-500">✓</span>}
-                  </div>
-                  <p className="text-sm text-gray-500 mb-2">{quiz.subject}</p>
-                  
-                  <div className="space-y-1 text-sm text-gray-600">
-                    <div className="flex justify-between">
-                      <span>Domande:</span>
-                      <span>{preview.questionsCount}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Durata:</span>
-                      <span>{preview.duration}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Tempo medio:</span>
-                      <span>{preview.averageTime}s</span>
-                    </div>
-                    {preview.hasImages && (
-                      <div className="flex items-center text-purple-600">
-                        <span className="mr-1">📸</span>
-                        <span>Con immagini</span>
-                      </div>
-                    )}
-                  </div>
+              <div className="bg-white rounded-lg p-3 border border-blue-100">
+                <div className="text-xs font-medium text-gray-500 uppercase mb-1">Durata Stimata</div>
+                <div className="text-2xl font-bold text-green-600">{previewQuiz(selectedQuiz).duration}</div>
+              </div>
+              
+              <div className="bg-white rounded-lg p-3 border border-blue-100">
+                <div className="text-xs font-medium text-gray-500 uppercase mb-1">Difficoltà</div>
+                <div className={`text-2xl font-bold ${
+                  getDifficulty(selectedQuiz) === 'Facile' ? 'text-green-600' :
+                  getDifficulty(selectedQuiz) === 'Medio' ? 'text-yellow-600' :
+                  'text-red-600'
+                }`}>
+                  {getDifficulty(selectedQuiz)}
                 </div>
-              )
-            })}
+              </div>
+              
+              <div className="bg-white rounded-lg p-3 border border-blue-100">
+                <div className="text-xs font-medium text-gray-500 uppercase mb-1">Punteggio Max</div>
+                <div className="text-2xl font-bold text-purple-600">
+                  {(selectedQuiz.questions.length * 1000).toLocaleString()}
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white rounded-lg p-3 border border-blue-100">
+                <div className="text-xs font-medium text-gray-500 uppercase mb-2">Tempo Medio per Domanda</div>
+                <div className="text-lg font-semibold text-gray-700">
+                  {previewQuiz(selectedQuiz).averageTime}s
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg p-3 border border-blue-100">
+                <div className="text-xs font-medium text-gray-500 uppercase mb-2">Contenuti Multimediali</div>
+                <div className="text-lg font-semibold text-gray-700">
+                  {previewQuiz(selectedQuiz).hasImages ? '📸 Con immagini' : '📄 Solo testo'}
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-lg p-3 border border-blue-100">
+                <div className="text-xs font-medium text-gray-500 uppercase mb-2">Materia</div>
+                <div className="text-lg font-semibold text-gray-700">
+                  {selectedQuiz.subject}
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -288,78 +432,232 @@ export default function GameLauncher() {
       {selectedQuiz && (
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
-            2. Configurazione Gioco
+            2. Modalità e Configurazione Gioco
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-6">
+            {/* Modalità Quiz */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password Gioco
-              </label>
-              <input
-                type="text"
-                value={gameSettings.password}
-                onChange={(e) => {
-                  setGameSettings(prev => ({ ...prev, password: e.target.value }))
-                  setTimeout(checkConfigStatus, 100)
-                }}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Inserisci password per gli studenti"
-              />
+              <h4 className="font-medium text-gray-900 mb-3">🎮 Modalità Quiz</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <label className="relative">
+                  <input
+                    type="radio"
+                    name="gameMode"
+                    value="standard"
+                    checked={gameSettings.gameMode === 'standard'}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, gameMode: e.target.value }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="sr-only"
+                  />
+                  <div className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    gameSettings.gameMode === 'standard' 
+                      ? 'border-blue-500 bg-blue-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                    <div className="font-semibold text-gray-900">📝 Standard</div>
+                    <div className="text-sm text-gray-600 mt-1">Modalità tradizionale con tempo fisso</div>
+                  </div>
+                </label>
+
+                <label className="relative">
+                  <input
+                    type="radio"
+                    name="gameMode"
+                    value="chase"
+                    checked={gameSettings.gameMode === 'chase'}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, gameMode: e.target.value }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="sr-only"
+                  />
+                  <div className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    gameSettings.gameMode === 'chase' 
+                      ? 'border-red-500 bg-red-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                    <div className="font-semibold text-gray-900">🏃 Inseguimento</div>
+                    <div className="text-sm text-gray-600 mt-1">Domande a inseguimento veloce</div>
+                  </div>
+                </label>
+
+                <label className="relative">
+                  <input
+                    type="radio"
+                    name="gameMode"
+                    value="appearing"
+                    checked={gameSettings.gameMode === 'appearing'}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, gameMode: e.target.value }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="sr-only"
+                  />
+                  <div className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    gameSettings.gameMode === 'appearing' 
+                      ? 'border-purple-500 bg-purple-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                    <div className="font-semibold text-gray-900">✨ Risposte a Comparsa</div>
+                    <div className="text-sm text-gray-600 mt-1">Risposte appaiono gradualmente</div>
+                  </div>
+                </label>
+
+                <label className="relative">
+                  <input
+                    type="radio"
+                    name="gameMode"
+                    value="timed"
+                    checked={gameSettings.gameMode === 'timed'}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, gameMode: e.target.value }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="sr-only"
+                  />
+                  <div className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    gameSettings.gameMode === 'timed' 
+                      ? 'border-orange-500 bg-orange-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                    <div className="font-semibold text-gray-900">⏱️ Quiz a Tempo</div>
+                    <div className="text-sm text-gray-600 mt-1">Tempo limitato per domanda</div>
+                  </div>
+                </label>
+
+                <label className="relative">
+                  <input
+                    type="radio"
+                    name="gameMode"
+                    value="untimed"
+                    checked={gameSettings.gameMode === 'untimed'}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, gameMode: e.target.value }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="sr-only"
+                  />
+                  <div className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    gameSettings.gameMode === 'untimed' 
+                      ? 'border-green-500 bg-green-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                    <div className="font-semibold text-gray-900">🎯 Senza Tempo</div>
+                    <div className="text-sm text-gray-600 mt-1">Bonus per velocità, senza limite</div>
+                  </div>
+                </label>
+
+                <label className="relative">
+                  <input
+                    type="radio"
+                    name="gameMode"
+                    value="survival"
+                    checked={gameSettings.gameMode === 'survival'}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, gameMode: e.target.value }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="sr-only"
+                  />
+                  <div className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                    gameSettings.gameMode === 'survival' 
+                      ? 'border-gray-800 bg-gray-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}>
+                    <div className="font-semibold text-gray-900">💀 Sopravvivenza</div>
+                    <div className="text-sm text-gray-600 mt-1">Eliminazione per errori</div>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            <div className="space-y-4">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={gameSettings.allowLateJoin}
-                  onChange={(e) => {
-                    setGameSettings(prev => ({ ...prev, allowLateJoin: e.target.checked }))
-                    setTimeout(checkConfigStatus, 100)
-                  }}
-                  className="mr-2"
-                />
-                <span className="text-sm text-gray-700">Consenti accesso tardivo</span>
-              </label>
+            {/* Opzioni Generali */}
+            <div>
+              <h4 className="font-medium text-gray-900 mb-3">⚙️ Opzioni Generali</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={gameSettings.allowLateJoin}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, allowLateJoin: e.target.checked }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="mr-3 w-4 h-4 text-blue-600"
+                  />
+                  <div>
+                    <div className="font-medium text-gray-900">Accesso Tardivo</div>
+                    <div className="text-sm text-gray-600">Consenti agli studenti di unirsi dopo l'inizio</div>
+                  </div>
+                </label>
 
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={gameSettings.showLeaderboardBetweenQuestions}
-                  onChange={(e) => {
-                    setGameSettings(prev => ({ ...prev, showLeaderboardBetweenQuestions: e.target.checked }))
-                    setTimeout(checkConfigStatus, 100)
-                  }}
-                  className="mr-2"
-                />
-                <span className="text-sm text-gray-700">Mostra classifica tra le domande</span>
-              </label>
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={gameSettings.showLeaderboardBetweenQuestions}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, showLeaderboardBetweenQuestions: e.target.checked }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="mr-3 w-4 h-4 text-blue-600"
+                  />
+                  <div>
+                    <div className="font-medium text-gray-900">Classifica Intermedia</div>
+                    <div className="text-sm text-gray-600">Mostra classifica tra le domande</div>
+                  </div>
+                </label>
 
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={gameSettings.shuffleQuestions}
-                  onChange={(e) => {
-                    setGameSettings(prev => ({ ...prev, shuffleQuestions: e.target.checked }))
-                    setTimeout(checkConfigStatus, 100)
-                  }}
-                  className="mr-2"
-                />
-                <span className="text-sm text-gray-700">Mescola ordine domande</span>
-              </label>
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={gameSettings.shuffleQuestions}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, shuffleQuestions: e.target.checked }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="mr-3 w-4 h-4 text-blue-600"
+                  />
+                  <div>
+                    <div className="font-medium text-gray-900">Mescola Domande</div>
+                    <div className="text-sm text-gray-600">Ordine casuale delle domande</div>
+                  </div>
+                </label>
 
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={gameSettings.shuffleAnswers}
-                  onChange={(e) => {
-                    setGameSettings(prev => ({ ...prev, shuffleAnswers: e.target.checked }))
-                    setTimeout(checkConfigStatus, 100)
-                  }}
-                  className="mr-2"
-                />
-                <span className="text-sm text-gray-700">Mescola ordine risposte</span>
-              </label>
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={gameSettings.shuffleAnswers}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, shuffleAnswers: e.target.checked }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="mr-3 w-4 h-4 text-blue-600"
+                  />
+                  <div>
+                    <div className="font-medium text-gray-900">Mescola Risposte</div>
+                    <div className="text-sm text-gray-600">Ordine casuale delle opzioni</div>
+                  </div>
+                </label>
+
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={gameSettings.bonusForSpeed}
+                    onChange={(e) => {
+                      setGameSettings(prev => ({ ...prev, bonusForSpeed: e.target.checked }))
+                      setTimeout(checkConfigStatus, 100)
+                    }}
+                    className="mr-3 w-4 h-4 text-blue-600"
+                  />
+                  <div>
+                    <div className="font-medium text-gray-900">Bonus Velocità</div>
+                    <div className="text-sm text-gray-600">Punteggio extra per risposte veloci</div>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -386,7 +684,18 @@ export default function GameLauncher() {
                 </div>
                 <div className="flex justify-between">
                   <span>Password:</span>
-                  <span className="font-medium">{gameSettings.password}</span>
+                  <span className="font-medium">{selectedQuiz.password || 'Nessuna'}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Modalità:</span>
+                  <span className="font-medium capitalize">
+                    {gameSettings.gameMode === 'standard' && '📝 Standard'}
+                    {gameSettings.gameMode === 'chase' && '🏃 Inseguimento'}
+                    {gameSettings.gameMode === 'appearing' && '✨ Risposte a Comparsa'}
+                    {gameSettings.gameMode === 'timed' && '⏱️ Quiz a Tempo'}
+                    {gameSettings.gameMode === 'untimed' && '🎯 Senza Tempo'}
+                    {gameSettings.gameMode === 'survival' && '💀 Sopravvivenza'}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Domande:</span>
@@ -416,7 +725,7 @@ export default function GameLauncher() {
                 </div>
                 <div className="flex items-start">
                   <span className="mr-2">4.</span>
-                  <span>Condividi la password con gli studenti</span>
+                  <span>Condividi il PIN con gli studenti per l'accesso</span>
                 </div>
               </div>
             </div>

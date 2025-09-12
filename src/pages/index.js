@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TronLabBackground from '@/components/TronLabBackground'
 import TronButton from '@/components/TronButton'
 import TronBeaker from '@/components/TronBeaker'
@@ -11,6 +11,18 @@ export default function Home() {
   const [showQuickJoin, setShowQuickJoin] = useState(false)
   const [gamePin, setGamePin] = useState('')
   const [playerName, setPlayerName] = useState('')
+  const [isQRAccess, setIsQRAccess] = useState(false)
+  
+  // Rileva accesso via QR code
+  useEffect(() => {
+    const { pin, qr } = router.query
+    if (pin && qr === '1') {
+      console.log('🔍 Accesso via QR code rilevato - PIN:', pin)
+      setIsQRAccess(true)
+      setGamePin(pin)
+      setShowQuickJoin(true) // Mostra automaticamente il form di join
+    }
+  }, [router.query])
 
   const handleQuickJoin = () => {
     if (gamePin.trim() && playerName.trim()) {
@@ -104,17 +116,26 @@ export default function Home() {
                 <div className="mt-8 max-w-md mx-auto quick-join-panel">
                   <div className="tron-panel p-6">
                     <h3 className="text-cyan-400 text-xl font-bold mb-4 text-center">
-                      ENTRA NEL QUIZ
+                      {isQRAccess ? '📱 ACCESSO RAPIDO' : 'ENTRA NEL QUIZ'}
                     </h3>
+                    {isQRAccess && (
+                      <div className="bg-cyan-900/20 border border-cyan-400/30 rounded-lg p-3 mb-4">
+                        <p className="text-cyan-300 text-sm text-center">
+                          ✅ PIN riconosciuto: <span className="font-bold text-cyan-400">{gamePin}</span>
+                        </p>
+                      </div>
+                    )}
                     <div className="space-y-3">
-                      <input
-                        type="text"
-                        placeholder="PIN..."
-                        value={gamePin}
-                        onChange={(e) => setGamePin(e.target.value.toUpperCase())}
-                        className="tron-input w-full"
-                        maxLength={6}
-                      />
+                      {!isQRAccess && (
+                        <input
+                          type="text"
+                          placeholder="PIN..."
+                          value={gamePin}
+                          onChange={(e) => setGamePin(e.target.value.toUpperCase())}
+                          className="tron-input w-full"
+                          maxLength={6}
+                        />
+                      )}
                       <input
                         type="text"
                         placeholder="Il tuo nome..."
@@ -123,13 +144,14 @@ export default function Home() {
                         className="tron-input w-full"
                         maxLength={20}
                         onKeyDown={(e) => e.key === 'Enter' && handleQuickJoin()}
+                        autoFocus={isQRAccess} // Focus automatico se via QR
                       />
                       <button
                         onClick={handleQuickJoin}
                         disabled={!gamePin.trim() || !playerName.trim()}
                         className="tron-join-btn w-full"
                       >
-                        ENTRA
+                        {isQRAccess ? '🚀 ENTRA VELOCEMENTE' : 'ENTRA'}
                       </button>
                     </div>
                   </div>

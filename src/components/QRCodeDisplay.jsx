@@ -7,8 +7,8 @@ export default function QRCodeDisplay({ inviteCode, gameUrl }) {
   
   useEffect(() => {
     if (inviteCode && canvasRef.current) {
-      // Genera l'URL completo per il gioco con il PIN
-      const fullUrl = `${gameUrl}?pin=${inviteCode}`
+      // Genera l'URL completo per il gioco con il PIN e flag QR
+      const fullUrl = `${gameUrl}?pin=${inviteCode}&qr=1`
       setQrUrl(fullUrl)
       
       // Genera il QR code

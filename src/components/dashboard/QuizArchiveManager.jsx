@@ -51,55 +51,6 @@ export default function QuizArchiveManager({ readOnly = false }) {
     }
   };
 
-  const loadQuizIntoGame = async (quizId) => {
-    try {
-      // Trova il quiz per ottenere la password
-      const quiz = quizzes.find(q => q.id === quizId);
-      
-      const response = await fetch('/api/load-quiz', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          quizId,
-          password: quiz?.password 
-        })
-      });
-
-      if (!response.ok) throw new Error('Errore nel caricamento');
-      
-      const result = await response.json();
-      
-      if (result.autoUpdate) {
-        toast.success(`✅ Quiz "${result.quiz}" caricato! 🔄 Sistema aggiornato automaticamente - Password: ${result.password}`, {
-          duration: 4000,
-          style: {
-            background: '#10b981',
-            color: 'white',
-          },
-        });
-      } else {
-        toast.success(`Quiz "${result.quiz}" caricado nel gioco! Password: ${result.password}`);
-      }
-      
-      // Salva la password nel localStorage per il manager
-      if (result.password) {
-        localStorage.setItem('game-settings', JSON.stringify({
-          password: result.password,
-          quizId: quizId,
-          quizTitle: result.quiz,
-          autoUpdated: result.autoUpdate || false,
-          timestamp: Date.now()
-        }));
-      }
-      
-      // Ricarica la pagina dopo un breve delay per mostrare le modifiche
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } catch (error) {
-      toast.error('Errore nel caricamento del quiz');
-    }
-  };
 
   const saveNewQuiz = async () => {
     try {
@@ -316,12 +267,6 @@ export default function QuizArchiveManager({ readOnly = false }) {
                       </p>
                     </div>
                     <div className="flex space-x-2">
-                      <button
-                        onClick={() => loadQuizIntoGame(quiz.id)}
-                        className="bg-green-500 text-white px-4 py-2 rounded text-sm hover:bg-green-600 transition-colors"
-                      >
-                        🚀 Carica nel Gioco
-                      </button>
                       {!readOnly && (
                         <>
                           <button
