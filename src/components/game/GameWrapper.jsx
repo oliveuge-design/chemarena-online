@@ -68,10 +68,10 @@ export default function GameWrapper({ children, textNext, onNext, manager }) {
               onClick={() => {
                 const restart = confirm('⚠️ Riavvio di emergenza?\n\nUsa solo se il gioco si è bloccato.\n\nReset completo server + client.')
                 if (restart) {
-                  // Reset del game state sul server
+                  // Reset del game state sul server (forceReset per emergenza)
                   if (socket && emit) {
-                    emit("manager:resetGame")
-                    console.log('🚨 Emergency reset: server state resettato')
+                    emit("manager:forceReset")
+                    console.log('🚨 Emergency force reset: server state resettato')
                   }
                   
                   // Determina il dashboard corretto basato sul ruolo dell'utente

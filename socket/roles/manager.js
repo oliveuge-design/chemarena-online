@@ -6,7 +6,10 @@ import { startRound } from "../utils/round.js"
 
 const Manager = {
   createRoom: (game, io, socket, data = {}) => {
+    console.log(`🔍 CreateRoom attempt by ${socket.id} - Current manager: ${game.manager}, Current room: ${game.room}`)
+    
     if (game.manager || game.room) {
+      console.log(`❌ Already manager error - manager: ${game.manager}, room: ${game.room}`)
       io.to(socket.id).emit("game:errorMessage", "Already manager")
       return
     }
@@ -92,6 +95,7 @@ const Manager = {
 
   resetGame: (game, io, socket) => {
     if (socket.id !== game.manager) {
+      console.log(`⚠️ Reset attempt by non-manager ${socket.id} - Current manager: ${game.manager}`)
       return
     }
 
@@ -99,6 +103,16 @@ const Manager = {
     io.to(game.room).emit("game:reset")
     Object.assign(game, deepClone(GAME_STATE_INIT))
     console.log(`🔄 Game reset by manager ${socket.id}`)
+  },
+
+  forceReset: (game, io, socket) => {
+    // Reset forzato per situazioni di emergenza - solo per debug
+    console.log(`🚨 Force reset by ${socket.id} - Previous manager: ${game.manager}, Previous room: ${game.room}`)
+    if (game.room) {
+      io.to(game.room).emit("game:reset")
+    }
+    Object.assign(game, deepClone(GAME_STATE_INIT))
+    console.log(`✅ Force reset completed - New state: manager=${game.manager}, room=${game.room}`)
   },
 
   showLeaderboard: (game, io, socket) => {

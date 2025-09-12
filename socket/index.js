@@ -6,6 +6,7 @@ import { abortCooldown } from "./utils/cooldown.js"
 import deepClone from "./utils/deepClone.js"
 
 let gameState = deepClone(GAME_STATE_INIT)
+console.log(`🎮 Initial GameState: manager=${gameState.manager}, room=${gameState.room}, started=${gameState.started}`)
 
 const io = new Server({
   cors: {
@@ -59,6 +60,10 @@ io.on("connection", (socket) => {
 
   socket.on("manager:resetGame", () =>
     Manager.resetGame(gameState, io, socket),
+  )
+
+  socket.on("manager:forceReset", () =>
+    Manager.forceReset(gameState, io, socket),
   )
 
   // Sistema automatico di aggiornamento password real-time

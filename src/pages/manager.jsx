@@ -88,6 +88,31 @@ export default function Manager() {
   }, [on, off])
 
   const handleCreate = () => {
+    console.log('🔌 Attempting to create room...')
+    
+    // Listener per errori di creazione room
+    const handleRoomError = (error) => {
+      console.log('❌ Room creation error:', error)
+      if (error === "Already manager") {
+        const forceReset = confirm("⚠️ Stato server inconsistente!\n\nIl server pensa che ci sia già un manager attivo.\n\nVuoi forzare un reset completo?")
+        if (forceReset) {
+          console.log('🚨 Forcing server reset...')
+          emit("manager:forceReset")
+          setTimeout(() => {
+            emit("manager:createRoom")
+          }, 500) // Retry dopo il reset
+        }
+      }
+    }
+    
+    // Ascolta per errori
+    on("game:errorMessage", handleRoomError)
+    
+    // Cleanup del listener dopo 5 secondi
+    setTimeout(() => {
+      off("game:errorMessage", handleRoomError)
+    }, 5000)
+    
     emit("manager:createRoom")
   }
 
