@@ -124,12 +124,24 @@ export default function ManagerPassword({ onCreateRoom }) {
         </Button>
       </div>
 
-      <div className="mb-6 text-center">
+      <div className="mb-6 text-center space-x-2">
         <Button 
-          onClick={() => window.open('/dashboard', '_blank')}
-          className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 mr-4"
+          onClick={() => {
+            const dashboardUrl = authenticatedTeacher.role === 'admin' ? '/dashboard' : '/teacher-dashboard'
+            window.open(dashboardUrl, '_blank')
+          }}
+          className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 text-sm"
         >
-          📚 Dashboard Completo
+          📚 Dashboard
+        </Button>
+        
+        <Button 
+          onClick={() => {
+            window.location.href = '/login'
+          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-sm"
+        >
+          🔄 Cambia Utente
         </Button>
       </div>
 

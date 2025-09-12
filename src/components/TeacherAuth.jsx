@@ -44,6 +44,15 @@ export default function TeacherAuth({ onAuthSuccess }) {
         
         if (onAuthSuccess) {
           onAuthSuccess(data.teacher)
+        } else {
+          // Se non c'è callback, reindirizza automaticamente al dashboard appropriato
+          setTimeout(() => {
+            if (data.teacher.role === 'admin') {
+              window.location.href = '/dashboard'
+            } else {
+              window.location.href = '/teacher-dashboard'
+            }
+          }, 1000)
         }
       } else {
         toast.error(data.error)

@@ -225,3 +225,60 @@ export function getDatabaseStats() {
     return null
   }
 }
+
+// Ottieni tutti gli insegnanti (inclusi inattivi) - per admin dashboard
+export function getAllTeachers() {
+  try {
+    const database = loadTeachersDatabase()
+    return database.teachers
+  } catch (error) {
+    console.error('❌ Errore caricamento tutti gli insegnanti:', error)
+    return []
+  }
+}
+
+// Toggle stato attivo/inattivo
+export function toggleTeacherStatus(teacherId) {
+  try {
+    const database = loadTeachersDatabase()
+    const teacher = database.teachers.find(t => t.id === teacherId)
+    
+    if (teacher && teacher.role !== 'admin') { // Non permettere di disattivare admin
+      teacher.active = !teacher.active
+      teacher.statusChangedAt = new Date().toISOString()
+      saveTeachersDatabase(database)
+      return teacher
+    }
+    
+    return null
+  } catch (error) {
+    console.error('❌ Errore toggle status:', error)
+    return null
+  }
+}
+
+// Elimina definitivamente insegnante
+export function deleteTeacher(teacherId) {
+  try {
+    const database = loadTeachersDatabase()
+    const teacherIndex = database.teachers.findIndex(t => t.id === teacherId)
+    
+    if (teacherIndex !== -1) {
+      const teacher = database.teachers[teacherIndex]
+      
+      // Non permettere di eliminare admin
+      if (teacher.role === 'admin') {
+        return false
+      }
+      
+      database.teachers.splice(teacherIndex, 1)
+      saveTeachersDatabase(database)
+      return true
+    }
+    
+    return false
+  } catch (error) {
+    console.error('❌ Errore eliminazione insegnante:', error)
+    return false
+  }
+}

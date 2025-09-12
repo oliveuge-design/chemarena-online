@@ -10,6 +10,7 @@ import Statistics from "@/components/dashboard/Statistics"
 import GameLauncher from "@/components/dashboard/GameLauncher"
 import ServerControls from "@/components/dashboard/ServerControls"
 import SystemRestart from "@/components/SystemRestart"
+import TeachersList from "@/components/dashboard/TeachersList"
 
 export default function Dashboard() {
   const router = useRouter()
@@ -50,7 +51,7 @@ export default function Dashboard() {
     // Controlla se c'è un tab specificato nella query string
     const urlParams = new URLSearchParams(window.location.search)
     const tabParam = urlParams.get('tab')
-    if (tabParam && ['archive', 'quizzes', 'create', 'launch', 'statistics', 'server'].includes(tabParam)) {
+    if (tabParam && ['archive', 'quizzes', 'create', 'launch', 'statistics', 'teachers', 'server'].includes(tabParam)) {
       setActiveTab(tabParam)
     }
 
@@ -156,6 +157,7 @@ export default function Dashboard() {
     { id: 'create', name: 'Crea Quiz', icon: '➕' },
     { id: 'launch', name: 'Lancia Gioco', icon: '🚀' },
     { id: 'statistics', name: 'Statistiche', icon: '📊' },
+    { id: 'teachers', name: 'Insegnanti', icon: '👥' },
     { id: 'server', name: 'Server', icon: '⚙️' }
   ]
 
@@ -288,6 +290,7 @@ export default function Dashboard() {
           {activeTab === 'create' && <QuizCreator editingQuiz={editingQuiz} onClearEdit={handleClearEdit} />}
           {activeTab === 'launch' && <GameLauncher />}
           {activeTab === 'statistics' && <Statistics />}
+          {activeTab === 'teachers' && <TeachersList />}
           {activeTab === 'server' && (
             <div className="space-y-6">
               <ServerControls />
