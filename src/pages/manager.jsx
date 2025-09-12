@@ -132,6 +132,11 @@ export default function Manager() {
     const confirmEnd = confirm("🏆 Quiz completato!\n\nVuoi tornare al Dashboard per scegliere un nuovo quiz?")
     
     if (confirmEnd) {
+      // Reset del game state sul server
+      if (socket && emit) {
+        emit("manager:resetGame")
+      }
+      
       // Reset del manager
       setState({
         ...GAME_STATES,
@@ -172,9 +177,9 @@ export default function Manager() {
     const confirmReset = confirm(confirmMessage)
     
     if (confirmReset) {
-      // Emetti eventi per chiudere room e interrompere quiz
+      // Reset del game state sul server
       if (socket && emit) {
-        emit("manager:closeRoom")
+        emit("manager:resetGame")
         if (isQuizActive) {
           emit("manager:abortQuiz")
         }

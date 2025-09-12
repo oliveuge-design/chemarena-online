@@ -57,6 +57,10 @@ io.on("connection", (socket) => {
     Manager.showLeaderboard(gameState, io, socket),
   )
 
+  socket.on("manager:resetGame", () =>
+    Manager.resetGame(gameState, io, socket),
+  )
+
   // Sistema automatico di aggiornamento password real-time
   socket.on("admin:updateGameState", (updateData) => {
     try {

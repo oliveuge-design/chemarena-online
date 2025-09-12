@@ -90,6 +90,17 @@ const Manager = {
     abortCooldown(game, io, game.room)
   },
 
+  resetGame: (game, io, socket) => {
+    if (socket.id !== game.manager) {
+      return
+    }
+
+    // Reset completo del game state
+    io.to(game.room).emit("game:reset")
+    Object.assign(game, deepClone(GAME_STATE_INIT))
+    console.log(`🔄 Game reset by manager ${socket.id}`)
+  },
+
   showLeaderboard: (game, io, socket) => {
     if (!game.questions[game.currentQuestion + 1]) {
       // Salva statistiche prima di finire il gioco
@@ -134,7 +145,8 @@ const Manager = {
         },
       })
 
-      game = deepClone(GAME_STATE_INIT)
+      // Reset del game state - modifica direttamente l'oggetto game
+      Object.assign(game, deepClone(GAME_STATE_INIT))
       return
     }
 
