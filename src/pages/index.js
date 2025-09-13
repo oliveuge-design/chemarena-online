@@ -85,36 +85,35 @@ export default function Home() {
             
             {/* Elementi decorativi laboratorio */}
             <div className="lab-elements">
-              {/* Beute animate */}
-              <div className="lab-beaker lab-beaker-1">
-                <div className="beaker-liquid liquid-cyan"></div>
-                <div className="beaker-bubbles">
-                  <div className="bubble"></div>
-                  <div className="bubble"></div>
-                  <div className="bubble"></div>
+              {/* Setup beute che versano in provette */}
+              <div className="beaker-setup beaker-setup-1">
+                <div className="pouring-beaker">
+                  <div className="beaker-liquid liquid-cyan"></div>
                 </div>
+                <div className="test-tube">
+                  <div className="tube-liquid liquid-cyan"></div>
+                </div>
+                <div className="pouring-stream stream-cyan"></div>
               </div>
-              
-              <div className="lab-beaker lab-beaker-2">
-                <div className="beaker-liquid liquid-red"></div>
-                <div className="beaker-steam"></div>
+
+              <div className="beaker-setup beaker-setup-2">
+                <div className="pouring-beaker">
+                  <div className="beaker-liquid liquid-red"></div>
+                </div>
+                <div className="test-tube">
+                  <div className="tube-liquid liquid-red"></div>
+                </div>
+                <div className="pouring-stream stream-red"></div>
               </div>
-              
-              <div className="lab-beaker lab-beaker-3">
-                <div className="beaker-liquid liquid-green"></div>
-                <div className="beaker-glow"></div>
-              </div>
-              
-              {/* Scaffali con strumenti */}
-              <div className="lab-shelf lab-shelf-left">
-                <div className="shelf-item"></div>
-                <div className="shelf-item"></div>
-                <div className="shelf-item"></div>
-              </div>
-              
-              <div className="lab-shelf lab-shelf-right">
-                <div className="shelf-item"></div>
-                <div className="shelf-item"></div>
+
+              <div className="beaker-setup beaker-setup-3">
+                <div className="pouring-beaker">
+                  <div className="beaker-liquid liquid-green"></div>
+                </div>
+                <div className="test-tube">
+                  <div className="tube-liquid liquid-green"></div>
+                </div>
+                <div className="pouring-stream stream-green"></div>
               </div>
             </div>
 
@@ -411,7 +410,8 @@ export default function Home() {
         
         .chem-part {
           color: #00ffff;
-          text-shadow: 
+          -webkit-text-stroke: 2px #003333;
+          text-shadow:
             0 0 20px #00ffff,
             0 0 40px #00ffff,
             0 0 60px #00ffff;
@@ -420,7 +420,8 @@ export default function Home() {
         
         .arena-part {
           color: #ff0088;
-          text-shadow: 
+          -webkit-text-stroke: 2px #330022;
+          text-shadow:
             0 0 20px #ff0088,
             0 0 40px #ff0088,
             0 0 60px #ff0088;
@@ -545,152 +546,147 @@ export default function Home() {
           pointer-events: none;
         }
         
-        .lab-beaker {
+        /* Setup beute che versano in provette */
+        .beaker-setup {
           position: absolute;
-          width: 40px;
-          height: 60px;
-          background: rgba(0, 255, 255, 0.1);
-          border: 2px solid #00ffff;
-          border-radius: 0 0 20px 20px;
-          border-top: none;
+          width: 80px;
+          height: 120px;
         }
-        
-        .lab-beaker-1 {
-          top: 50%;
-          left: 15%;
-          animation: beakerBob 4s ease-in-out infinite;
-        }
-        
-        .lab-beaker-2 {
+
+        .beaker-setup-1 {
           top: 30%;
-          right: 20%;
-          animation: beakerBob 5s ease-in-out infinite 1s;
+          left: 10%;
+          animation: setupFloat 5s ease-in-out infinite;
+        }
+
+        .beaker-setup-2 {
+          top: 15%;
+          right: 15%;
+          animation: setupFloat 6s ease-in-out infinite 1.5s;
+        }
+
+        .beaker-setup-3 {
+          bottom: 25%;
+          left: 65%;
+          animation: setupFloat 7s ease-in-out infinite 3s;
+        }
+
+        @keyframes setupFloat {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-8px) rotate(1deg); }
+        }
+
+        .pouring-beaker {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 35px;
+          height: 50px;
+          background: rgba(0, 255, 255, 0.08);
+          border: 2px solid #00ffff;
+          border-radius: 0 0 18px 18px;
+          border-top: none;
+          transform: rotate(-15deg);
+        }
+
+        .beaker-setup-2 .pouring-beaker {
           border-color: #ff0088;
         }
-        
-        .lab-beaker-3 {
-          bottom: 40%;
-          left: 70%;
-          animation: beakerBob 6s ease-in-out infinite 2s;
+
+        .beaker-setup-3 .pouring-beaker {
           border-color: #00ff88;
         }
-        
-        @keyframes beakerBob {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(2deg); }
+
+        .test-tube {
+          position: absolute;
+          bottom: 0;
+          right: 5px;
+          width: 12px;
+          height: 80px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 2px solid #00ffff;
+          border-radius: 0 0 6px 6px;
+          border-top: none;
         }
-        
+
+        .beaker-setup-2 .test-tube {
+          border-color: #ff0088;
+        }
+
+        .beaker-setup-3 .test-tube {
+          border-color: #00ff88;
+        }
+
+        .pouring-stream {
+          position: absolute;
+          top: 45px;
+          left: 30px;
+          width: 3px;
+          height: 35px;
+          background: linear-gradient(180deg, transparent, #00ffff);
+          border-radius: 2px;
+          opacity: 0;
+          animation: streamPour 4s ease-in-out infinite;
+        }
+
+        .stream-red {
+          background: linear-gradient(180deg, transparent, #ff0088);
+        }
+
+        .stream-green {
+          background: linear-gradient(180deg, transparent, #00ff88);
+        }
+
+        @keyframes streamPour {
+          0%, 30%, 100% { opacity: 0; transform: scaleY(0); }
+          40%, 90% { opacity: 0.8; transform: scaleY(1); }
+        }
+
         .beaker-liquid {
           position: absolute;
           bottom: 2px;
           left: 2px;
           right: 2px;
-          height: 60%;
-          border-radius: 0 0 16px 16px;
-          animation: liquidBubble 3s ease-in-out infinite;
+          height: 40%;
+          border-radius: 0 0 14px 14px;
+          animation: pourAnimation 4s ease-in-out infinite;
         }
-        
-        .liquid-cyan { 
-          background: linear-gradient(180deg, #00ffff, #0088aa); 
-          box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-        }
-        
-        .liquid-red { 
-          background: linear-gradient(180deg, #ff0088, #aa0055); 
-          box-shadow: 0 0 20px rgba(255, 0, 136, 0.5);
-        }
-        
-        .liquid-green { 
-          background: linear-gradient(180deg, #00ff88, #00aa55); 
-          box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-        }
-        
-        @keyframes liquidBubble {
-          0%, 100% { height: 60%; }
-          50% { height: 70%; }
-        }
-        
-        .beaker-bubbles {
+
+        .tube-liquid {
           position: absolute;
-          top: 10px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 20px;
-          height: 30px;
+          bottom: 2px;
+          left: 2px;
+          right: 2px;
+          height: 0%;
+          border-radius: 0 0 4px 4px;
+          animation: fillTube 4s ease-in-out infinite;
         }
-        
-        .bubble {
-          position: absolute;
-          width: 4px;
-          height: 4px;
-          background: rgba(255, 255, 255, 0.6);
-          border-radius: 50%;
-          animation: bubbleRise 2s ease-in-out infinite;
+
+        .liquid-cyan {
+          background: linear-gradient(180deg, #00ffff, #0088aa);
+          box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
         }
-        
-        .bubble:nth-child(1) { left: 2px; animation-delay: 0s; }
-        .bubble:nth-child(2) { left: 8px; animation-delay: 0.7s; }
-        .bubble:nth-child(3) { left: 14px; animation-delay: 1.4s; }
-        
-        @keyframes bubbleRise {
-          0% { 
-            bottom: 0; 
-            opacity: 0; 
-            transform: scale(0.5); 
-          }
-          50% { 
-            opacity: 1; 
-            transform: scale(1); 
-          }
-          100% { 
-            bottom: 30px; 
-            opacity: 0; 
-            transform: scale(0.3); 
-          }
+
+        .liquid-red {
+          background: linear-gradient(180deg, #ff0088, #aa0055);
+          box-shadow: 0 0 15px rgba(255, 0, 136, 0.4);
         }
-        
-        .beaker-steam {
-          position: absolute;
-          top: -10px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 15px;
-          height: 20px;
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 50%;
-          filter: blur(2px);
-          animation: steamRise 3s ease-in-out infinite;
+
+        .liquid-green {
+          background: linear-gradient(180deg, #00ff88, #00aa55);
+          box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
         }
-        
-        @keyframes steamRise {
-          0% { 
-            opacity: 0; 
-            transform: translateX(-50%) translateY(0px) scale(0.5); 
-          }
-          50% { 
-            opacity: 0.8; 
-            transform: translateX(-50%) translateY(-15px) scale(1); 
-          }
-          100% { 
-            opacity: 0; 
-            transform: translateX(-50%) translateY(-30px) scale(1.5); 
-          }
+
+        @keyframes pourAnimation {
+          0%, 30%, 100% { height: 40%; }
+          40%, 90% { height: 25%; }
         }
-        
-        .beaker-glow {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          height: 100%;
-          border-radius: 0 0 20px 20px;
-          background: radial-gradient(ellipse at center bottom, rgba(0, 255, 136, 0.3), transparent);
-          animation: glowPulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes glowPulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.8; }
+
+        @keyframes fillTube {
+          0%, 30% { height: 0%; }
+          40% { height: 10%; }
+          90% { height: 60%; }
+          100% { height: 60%; }
         }
         
         .lab-shelf {
