@@ -124,7 +124,7 @@ export default function QuizCreator({ editingQuiz, onClearEdit }) {
       updatedAt: new Date().toISOString()
     }
 
-    const savedQuizzes = JSON.parse(localStorage.getItem('rahoot-quizzes') || '[]')
+    const savedQuizzes = JSON.parse(localStorage.getItem('chemarena-quizzes') || '[]')
     const existingIndex = savedQuizzes.findIndex(q => q.id === quizToSave.id)
     
     if (existingIndex >= 0) {
@@ -135,7 +135,7 @@ export default function QuizCreator({ editingQuiz, onClearEdit }) {
       alert('✅ Quiz creato con successo!')
     }
     
-    localStorage.setItem('rahoot-quizzes', JSON.stringify(savedQuizzes))
+    localStorage.setItem('chemarena-quizzes', JSON.stringify(savedQuizzes))
     
     // Reset del form e uscita dalla modalità modifica
     if (onClearEdit) {

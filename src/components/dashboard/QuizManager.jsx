@@ -8,7 +8,7 @@ export default function QuizManager({ onEditQuiz }) {
 
   useEffect(() => {
     // Carica i quiz salvati dal localStorage
-    const savedQuizzes = JSON.parse(localStorage.getItem('rahoot-quizzes') || '[]')
+    const savedQuizzes = JSON.parse(localStorage.getItem('chemarena-quizzes') || '[]')
     setQuizzes(savedQuizzes)
   }, [])
 
@@ -24,7 +24,7 @@ export default function QuizManager({ onEditQuiz }) {
   const handleDelete = (quizId) => {
     const updatedQuizzes = quizzes.filter(quiz => quiz.id !== quizId)
     setQuizzes(updatedQuizzes)
-    localStorage.setItem('rahoot-quizzes', JSON.stringify(updatedQuizzes))
+    localStorage.setItem('chemarena-quizzes', JSON.stringify(updatedQuizzes))
     setShowDeleteConfirm(null)
   }
 
@@ -37,7 +37,7 @@ export default function QuizManager({ onEditQuiz }) {
     }
     const updatedQuizzes = [...quizzes, newQuiz]
     setQuizzes(updatedQuizzes)
-    localStorage.setItem('rahoot-quizzes', JSON.stringify(updatedQuizzes))
+    localStorage.setItem('chemarena-quizzes', JSON.stringify(updatedQuizzes))
   }
 
   const handleUseInGame = (quiz) => {

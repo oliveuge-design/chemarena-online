@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 console.log('\n🎓 ═══════════════════════════════════════════════════════════')
-console.log('🚀                  RAHOOT - QUIZ SYSTEM                    🚀')
+console.log('🚀                 CHEMARENA - QUIZ SYSTEM                  🚀')
 console.log('═══════════════════════════════════════════════════════════\n')
 
 console.log('📱 STUDENTI (Giocatori):')
@@ -25,7 +25,7 @@ console.log('   3. Lancia il gioco dalla Dashboard')
 console.log('   4. Gli studenti si collegano con il PIN\n')
 
 console.log('═══════════════════════════════════════════════════════════')
-console.log('🎮 Buon divertimento con Rahoot! 🎮')
+console.log('🎮 Buon divertimento con ChemArena! 🎮')
 console.log('═══════════════════════════════════════════════════════════\n')
 
 // Avvia concurrently dopo aver mostrato le info
@@ -37,12 +37,12 @@ const proc = spawn('npx', ['concurrently', '--kill-others', '"npm run dev"', '"n
 })
 
 proc.on('close', (code) => {
-  console.log(`\n🔴 Rahoot terminato con codice ${code}`)
+  console.log(`\n🔴 ChemArena terminato con codice ${code}`)
 })
 
 // Gestisci Ctrl+C
 process.on('SIGINT', () => {
-  console.log('\n\n👋 Arrivederci! Rahoot terminato dall\'utente.')
+  console.log('\n\n👋 Arrivederci! ChemArena terminato dall\'utente.')
   proc.kill('SIGINT')
   process.exit(0)
 })

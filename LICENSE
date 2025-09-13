@@ -1,6 +1,7 @@
 MIT License
 
 Copyright (c) 2024 Ralex
+Copyright (c) 2025 ChemArena - Piattaforma di quiz interattivi per la chimica
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +20,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+ACKNOWLEDGMENTS
+
+This project is derived from and builds upon the work of Ralex.
+Original project: Rahoot
+Original author: Ralex
+
+We extend our gratitude to Ralex for creating the foundational codebase
+that made ChemArena possible.
+
+The ChemArena project has been significantly modified and adapted to focus
+specifically on chemistry education and interactive learning.

@@ -32,7 +32,7 @@ export default function PrivacyPolicyPage() {
           <div className="flex items-center space-x-3">
             <Image
               src={logo}
-              alt="Chemhoot Logo"
+              alt="ChemArena Logo"
               width={80}
               height={26}
               className="cursor-pointer"
@@ -104,8 +104,8 @@ export default function PrivacyPolicyPage() {
                   📋 Informazioni Generali
                 </h2>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <p><strong>Titolare del Trattamento:</strong> Chemhoot Educational Platform</p>
-                  <p><strong>Contatti:</strong> admin@rahoot.edu</p>
+                  <p><strong>Titolare del Trattamento:</strong> ChemArena Educational Platform</p>
+                  <p><strong>Contatti:</strong> admin@chemarena.edu</p>
                   <p><strong>Finalità:</strong> Sistema educativo per quiz interattivi</p>
                 </div>
               </section>
@@ -234,7 +234,7 @@ export default function PrivacyPolicyPage() {
                   
                   <div className="mt-4 p-3 bg-purple-100 rounded">
                     <p className="font-medium text-purple-800">📧 Per esercitare i tuoi diritti:</p>
-                    <p className="text-purple-700">Contatta: <strong>admin@rahoot.edu</strong></p>
+                    <p className="text-purple-700">Contatta: <strong>admin@chemarena.edu</strong></p>
                     <p className="text-purple-700">Risposta entro: <strong>30 giorni</strong></p>
                   </div>
                 </div>
@@ -249,7 +249,7 @@ export default function PrivacyPolicyPage() {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <h4 className="font-semibold text-gray-800 mb-2">Titolare del Trattamento</h4>
-                      <p className="text-gray-600">📧 Email: admin@rahoot.edu</p>
+                      <p className="text-gray-600">📧 Email: admin@chemarena.edu</p>
                       <p className="text-gray-600">⏱️ Risposta: Entro 72 ore</p>
                     </div>
                     <div>
@@ -276,7 +276,7 @@ export default function PrivacyPolicyPage() {
             {/* Footer documento */}
             <div className="bg-gray-50 px-8 py-4 rounded-b-xl border-t">
               <div className="flex items-center justify-between text-sm text-gray-600">
-                <p>🎓 <strong>CHEMHOOT</strong> - Privacy First Education</p>
+                <p>🎓 <strong>CHEMARENA</strong> - Privacy First Education</p>
                 <p>Ultimo aggiornamento: <strong>11 settembre 2025</strong></p>
               </div>
             </div>

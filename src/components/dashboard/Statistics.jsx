@@ -14,7 +14,7 @@ export default function Statistics() {
 
   useEffect(() => {
     // Carica la cronologia dei giochi dal localStorage
-    const history = JSON.parse(localStorage.getItem('rahoot-game-history') || '[]')
+    const history = JSON.parse(localStorage.getItem('chemarena-game-history') || '[]')
     setGameHistory(history)
     calculateStats(history)
   }, [])
@@ -76,14 +76,14 @@ export default function Statistics() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `rahoot-statistics-${new Date().toISOString().split('T')[0]}.json`
+    a.download = `chemarena-statistics-${new Date().toISOString().split('T')[0]}.json`
     a.click()
     URL.revokeObjectURL(url)
   }
 
   const clearHistory = () => {
     if (confirm('Sei sicuro di voler cancellare tutta la cronologia? Questa azione non può essere annullata.')) {
-      localStorage.removeItem('rahoot-game-history')
+      localStorage.removeItem('chemarena-game-history')
       setGameHistory([])
       setStats({
         totalGames: 0,

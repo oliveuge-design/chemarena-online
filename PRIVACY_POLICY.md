@@ -1,4 +1,4 @@
-# 🔐 INFORMATIVA SULLA PRIVACY - CHEMHOOT
+# 🔐 INFORMATIVA SULLA PRIVACY - CHEMARENA
 
 **Data ultimo aggiornamento**: 11 settembre 2025  
 **Versione**: 1.0
@@ -7,8 +7,8 @@
 
 ## 📋 INFORMAZIONI GENERALI
 
-**Titolare del Trattamento**: Chemhoot Educational Platform  
-**Contatti**: admin@chemhoot.edu  
+**Titolare del Trattamento**: ChemArena Educational Platform  
+**Contatti**: admin@chemarena.edu  
 **Finalità**: Sistema educativo per quiz interattivi
 
 ---

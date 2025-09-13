@@ -49,7 +49,7 @@ export default function Manager() {
     on("game:saveStats", (gameStats) => {
       try {
         // Carica cronologia esistente
-        const existingHistory = JSON.parse(localStorage.getItem('rahoot-game-history') || '[]')
+        const existingHistory = JSON.parse(localStorage.getItem('chemarena-game-history') || '[]')
         
         // Aggiungi nuova partita
         existingHistory.push(gameStats)
@@ -58,7 +58,7 @@ export default function Manager() {
         const limitedHistory = existingHistory.slice(-50)
         
         // Salva nel localStorage
-        localStorage.setItem('rahoot-game-history', JSON.stringify(limitedHistory))
+        localStorage.setItem('chemarena-game-history', JSON.stringify(limitedHistory))
         
         console.log('📊 Statistiche salvate:', gameStats)
       } catch (error) {

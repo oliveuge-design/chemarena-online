@@ -38,8 +38,8 @@ export default function Home() {
         <header className="flex justify-between items-center p-6 z-20 relative">
           <div className="logo-container">
             <Image 
-              src="/chemhoot-logo.svg" 
-              alt="ChemHoot" 
+              src="/chemarena-logo.svg" 
+              alt="ChemArena" 
               width={300} 
               height={80}
               className="logo-glow"
@@ -164,7 +164,7 @@ export default function Home() {
         {/* Footer */}
         <footer className="text-center p-6 text-cyan-400 opacity-60">
           <p className="text-sm">
-            ChemHoot © 2024 - Piattaforma di Quiz Chimici Interattivi
+            ChemArena © 2025 - Piattaforma di Quiz Chimici Interattivi
           </p>
         </footer>
       </div>

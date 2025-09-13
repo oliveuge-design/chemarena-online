@@ -93,14 +93,14 @@ export default function TeacherDashboard() {
             <div className="flex items-center space-x-4">
               <Image
                 src={logo}
-                alt="Chemhoot Logo"
+                alt="ChemArena Logo"
                 width={100}
                 height={32}
                 className="h-8 w-auto"
               />
               <div className="hidden md:block">
                 <h1 className="text-xl font-semibold text-gray-900">
-                  Dashboard Insegnante
+                  Dashboard Insegnante ChemArena
                 </h1>
               </div>
             </div>

@@ -1,4 +1,4 @@
-# 🚀 DEPLOYMENT GUIDE - RAHOOT SU RAILWAY
+# 🚀 DEPLOYMENT GUIDE - CHEMARENA SU RAILWAY
 
 ## 📋 PREREQUISITI
 
@@ -12,7 +12,7 @@
 
 ```bash
 # Se non hai ancora un repo GitHub, crealo prima
-cd "C:\Users\linea\Downloads\Rahoot-main (1)\Rahoot-main\Rahoot"
+cd "C:\Users\linea\Downloads\ChemArena-main\ChemArena"
 
 # Inizializza git (se non già fatto)
 git init

@@ -92,13 +92,13 @@ export default function RegisterPage() {
         <div className="text-center mb-8">
           <Image
             src={logo}
-            alt="Chemhoot Logo"
+            alt="ChemArena Logo"
             width={120}
             height={40}
             className="mx-auto mb-4"
           />
           <h1 className="text-2xl font-bold text-gray-800">
-            Registrazione Insegnante
+            Registrazione Insegnante ChemArena
           </h1>
           <p className="text-gray-600 text-sm mt-2">
             Crea il tuo account per accedere ai quiz
@@ -221,7 +221,7 @@ export default function RegisterPage() {
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <h3 className="font-medium text-blue-800 mb-2">✨ Cosa potrai fare:</h3>
           <ul className="text-sm text-blue-700 space-y-1">
-            <li>• Accedere a tutti i quiz di chimica disponibili</li>
+            <li>• Accedere a tutti i quiz scientifici disponibili</li>
             <li>• Lanciare giochi per le tue classi</li>
             <li>• Gestire i giocatori in tempo reale</li>
             <li>• Visualizzare statistiche dei giochi</li>

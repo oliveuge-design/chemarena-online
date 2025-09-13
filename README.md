@@ -1,12 +1,11 @@
 <p align="center">
-  <img width="450" height="120" align="center" src="https://raw.githubusercontent.com/Ralex91/Rahoot/main/.github/logo.svg">
-  <br>
-  <img align="center" src="https://api.visitorbadge.io/api/visitors?path=https://github.com/Ralex91/Rahoot/edit/main/README.md&countColor=%2337d67a">
+  <h1 align="center">🧪 ChemArena</h1>
+  <p align="center">Piattaforma di quiz interattivi per la chimica</p>
 </p>
 
 ## 🧩 What is this project?
 
-Rahoot is a powerful, open-source Kahoot! clone with advanced features including:
+ChemArena is a powerful, open-source chemistry quiz platform with advanced features including:
 - **📚 Quiz Archive System** - Permanent storage of all quizzes with 30+ preloaded questions
 - **📸 Image Management** - Upload and manage images for questions
 - **📊 Statistics Dashboard** - Automatic game statistics and performance tracking
@@ -24,8 +23,8 @@ Rahoot is a powerful, open-source Kahoot! clone with advanced features including
 
 1.  #### Clone or download the project
     ```bash
-    git clone https://github.com/Ralex91/Rahoot.git
-    cd ./Rahoot
+    git clone https://github.com/your-username/ChemArena.git
+    cd ./ChemArena
     ```
 
 2.  #### Install dependencies
@@ -77,13 +76,13 @@ Share the generated URL that includes the PIN automatically.
 ## 👨‍🏫 Teacher Dashboard Features
 
 ### 📚 Quiz Archive
-- Browse 30+ preloaded questions across 6 categories:
-  - **Geografia** (Password: geo123)
-  - **Arte** (Password: arte123)
-  - **Scienze** (Password: scienze123)
-  - **Informatica** (Password: info123)
-  - **Sport** (Password: sport123)
-  - **Cultura** (Password: cultura123)
+- Browse 30+ preloaded chemistry questions across 6 categories:
+  - **Chimica Generale** (Password: chem123)
+  - **Chimica Organica** (Password: organica123)
+  - **Biochimica** (Password: bio123)
+  - **Chimica Analitica** (Password: analitica123)
+  - **Chimica Fisica** (Password: fisica123)
+  - **Stechiometria** (Password: stechiometria123)
 
 ### ➕ Create New Quizzes
 - Visual quiz creator with image support
@@ -220,6 +219,6 @@ export const GAME_STATE_INIT = {
 
 ## 🎉 Ready to Play!
 
-Start the application with `npm run all-dev` and visit the dashboard to begin creating engaging quiz experiences for your students!
+Start the application with `npm run all-dev` and visit the dashboard to begin creating engaging chemistry quiz experiences for your students!
 
 **Dashboard:** http://localhost:3000/dashboard (Password: admin123)

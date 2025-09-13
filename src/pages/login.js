@@ -87,13 +87,13 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <Image
             src={logo}
-            alt="Chemhoot Logo"
+            alt="ChemArena Logo"
             width={120}
             height={40}
             className="mx-auto mb-4"
           />
           <h1 className="text-2xl font-bold text-gray-800">
-            Accesso Insegnanti
+            Accesso Insegnanti ChemArena
           </h1>
           <p className="text-gray-600 text-sm mt-2">
             Entra con le tue credenziali

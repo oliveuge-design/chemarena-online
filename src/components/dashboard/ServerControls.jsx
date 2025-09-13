@@ -58,7 +58,7 @@ Per riavviare manualmente il server socket:
 1️⃣ Apri il terminale dove è in esecuzione il server
 2️⃣ Premi Ctrl+C per fermare il server
 3️⃣ Esegui il comando: npm run socket
-4️⃣ Oppure esegui: npm run rahoot
+4️⃣ Oppure esegui: npm run chemarena
 
 Il server si riavvierà con la nuova configurazione.
 `
@@ -73,7 +73,7 @@ Il server si riavvierà con la nuova configurazione.
       const script = `@echo off
 echo.
 echo ===============================================
-echo        RIAVVIO SERVER RAHOOT SOCKET
+echo        RIAVVIO SERVER CHEMARENA SOCKET
 echo ===============================================
 echo.
 echo Terminando il server esistente...
@@ -86,7 +86,7 @@ echo.
 echo Riavviando il server socket...
 echo ===============================================
 cd /d "%~dp0"
-start "Rahoot Socket Server" cmd /k "npm run socket"
+start "ChemArena Socket Server" cmd /k "npm run socket"
 
 echo.
 echo Server riavviato! Una nuova finestra dovrebbe aprirsi.
@@ -107,7 +107,7 @@ pause >nul`
 
 echo ""
 echo "==============================================="
-echo "        RIAVVIO SERVER RAHOOT SOCKET"
+echo "        RIAVVIO SERVER CHEMARENA SOCKET"
 echo "==============================================="
 echo ""
 
@@ -130,7 +130,7 @@ SERVER_PID=$!
 echo "Server avviato con PID: $SERVER_PID"
 echo ""
 echo "Per fermare il server, usa: kill $SERVER_PID"
-echo "Oppure premi Ctrl+C se stai usando npm run rahoot"
+echo "Oppure premi Ctrl+C se stai usando npm run ChemArena"
 echo ""
 echo "Riavvio completato!"`
       
