@@ -228,7 +228,11 @@ export default function Home() {
           left: 0;
           width: 100%;
           height: 100%;
-          background: url('/lab-background.jpg') center center/cover no-repeat;
+          background: 
+            url('/lab-background.jpg') center center/cover no-repeat,
+            linear-gradient(135deg, #001122 0%, #003366 25%, #002244 50%, #001133 75%, #000511 100%),
+            radial-gradient(circle at 30% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 70% 80%, rgba(255, 0, 136, 0.08) 0%, transparent 50%);
           filter: brightness(0.4) contrast(1.2) saturate(1.5);
           z-index: -3;
         }
