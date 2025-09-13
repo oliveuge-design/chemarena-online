@@ -115,6 +115,16 @@ export default function Home() {
                 </div>
                 <div className="pouring-stream stream-green"></div>
               </div>
+
+              {/* Atomi animati che fluttuano */}
+              <div className="floating-atoms">
+                <div className="atom atom-h atom-1">H</div>
+                <div className="atom atom-o atom-2">O</div>
+                <div className="atom atom-c atom-3">C</div>
+                <div className="atom atom-n atom-4">N</div>
+                <div className="atom atom-h atom-5">H</div>
+                <div className="atom atom-o atom-6">O</div>
+              </div>
             </div>
 
             {/* Banner di selezione al centro */}
@@ -580,13 +590,21 @@ export default function Home() {
           position: absolute;
           top: 0;
           left: 0;
-          width: 35px;
-          height: 50px;
+          width: 45px;
+          height: 65px;
           background: rgba(0, 255, 255, 0.08);
           border: 2px solid #00ffff;
-          border-radius: 0 0 18px 18px;
+          border-radius: 0 0 22px 22px;
           border-top: none;
           transform: rotate(-15deg);
+          clip-path: polygon(
+            30% 0%,     /* collo stretto sopra sinistra */
+            70% 0%,     /* collo stretto sopra destra */
+            85% 30%,    /* espansione verso il corpo */
+            100% 100%,  /* base larga destra */
+            0% 100%,    /* base larga sinistra */
+            15% 30%     /* espansione verso il corpo sinistra */
+          );
         }
 
         .beaker-setup-2 .pouring-beaker {
@@ -602,7 +620,7 @@ export default function Home() {
           bottom: 0;
           right: 5px;
           width: 12px;
-          height: 80px;
+          height: 110px;
           background: rgba(255, 255, 255, 0.05);
           border: 2px solid #00ffff;
           border-radius: 0 0 6px 6px;
@@ -619,10 +637,10 @@ export default function Home() {
 
         .pouring-stream {
           position: absolute;
-          top: 45px;
-          left: 30px;
+          top: 50px;
+          left: 32px;
           width: 3px;
-          height: 35px;
+          height: 45px;
           background: linear-gradient(180deg, transparent, #00ffff);
           border-radius: 2px;
           opacity: 0;
@@ -648,8 +666,14 @@ export default function Home() {
           left: 2px;
           right: 2px;
           height: 40%;
-          border-radius: 0 0 14px 14px;
+          border-radius: 0 0 18px 18px;
           animation: pourAnimation 4s ease-in-out infinite;
+          clip-path: polygon(
+            35% 0%,     /* parte superiore più stretta */
+            65% 0%,     /* parte superiore più stretta */
+            90% 100%,   /* base larga destra */
+            10% 100%    /* base larga sinistra */
+          );
         }
 
         .tube-liquid {
@@ -687,6 +711,132 @@ export default function Home() {
           40% { height: 10%; }
           90% { height: 60%; }
           100% { height: 60%; }
+        }
+
+        /* Atomi fluttuanti */
+        .floating-atoms {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        .atom {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'Courier New', monospace;
+          font-size: 12px;
+          font-weight: bold;
+          color: white;
+          text-shadow: 0 0 4px currentColor;
+          opacity: 0.8;
+        }
+
+        .atom-h {
+          background: radial-gradient(circle, #ffffff, #cccccc);
+          color: #333;
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .atom-o {
+          background: radial-gradient(circle, #ff4444, #cc2222);
+          color: white;
+          box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+
+        .atom-c {
+          background: radial-gradient(circle, #333333, #111111);
+          color: white;
+          box-shadow: 0 0 10px rgba(51, 51, 51, 0.5);
+        }
+
+        .atom-n {
+          background: radial-gradient(circle, #4488ff, #2266cc);
+          color: white;
+          box-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
+        }
+
+        .atom-1 {
+          top: 20%;
+          left: 25%;
+          animation: atomFloat1 8s ease-in-out infinite;
+        }
+
+        .atom-2 {
+          top: 60%;
+          right: 30%;
+          animation: atomFloat2 10s ease-in-out infinite 1s;
+        }
+
+        .atom-3 {
+          bottom: 30%;
+          left: 15%;
+          animation: atomFloat3 12s ease-in-out infinite 2s;
+        }
+
+        .atom-4 {
+          top: 40%;
+          left: 60%;
+          animation: atomFloat4 9s ease-in-out infinite 3s;
+        }
+
+        .atom-5 {
+          top: 10%;
+          right: 15%;
+          animation: atomFloat5 11s ease-in-out infinite 4s;
+        }
+
+        .atom-6 {
+          bottom: 15%;
+          right: 40%;
+          animation: atomFloat6 7s ease-in-out infinite 5s;
+        }
+
+        @keyframes atomFloat1 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          25% { transform: translate(15px, -10px) rotate(90deg) scale(1.1); }
+          50% { transform: translate(-10px, -20px) rotate(180deg) scale(0.9); }
+          75% { transform: translate(-15px, 5px) rotate(270deg) scale(1.05); }
+        }
+
+        @keyframes atomFloat2 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          33% { transform: translate(-20px, 10px) rotate(120deg) scale(0.95); }
+          66% { transform: translate(10px, -15px) rotate(240deg) scale(1.1); }
+        }
+
+        @keyframes atomFloat3 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          20% { transform: translate(25px, -5px) rotate(72deg) scale(1.05); }
+          40% { transform: translate(-5px, -25px) rotate(144deg) scale(0.9); }
+          60% { transform: translate(-25px, 5px) rotate(216deg) scale(1.1); }
+          80% { transform: translate(5px, 20px) rotate(288deg) scale(0.95); }
+        }
+
+        @keyframes atomFloat4 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          50% { transform: translate(-30px, -10px) rotate(180deg) scale(1.2); }
+        }
+
+        @keyframes atomFloat5 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          25% { transform: translate(-10px, 15px) rotate(-90deg) scale(0.85); }
+          50% { transform: translate(20px, -5px) rotate(-180deg) scale(1.15); }
+          75% { transform: translate(5px, -20px) rotate(-270deg) scale(0.9); }
+        }
+
+        @keyframes atomFloat6 {
+          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+          33% { transform: translate(15px, -15px) rotate(-120deg) scale(1.1); }
+          66% { transform: translate(-20px, 10px) rotate(-240deg) scale(0.9); }
         }
         
         .lab-shelf {
