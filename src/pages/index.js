@@ -127,7 +127,7 @@ export default function Home() {
                   <span className="title-bracket">]</span>
                 </h2>
                 <p className="mode-subtitle">
-                  >> Seleziona protocollo di accesso <<
+                  {">> Seleziona protocollo di accesso <<"}
                 </p>
               </div>
               
