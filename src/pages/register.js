@@ -1,7 +1,5 @@
 import { useState } from "react"
 import { useRouter } from "next/router"
-import Image from "next/image"
-import logo from "@/assets/logo.svg"
 import Button from "@/components/Button"
 import toast from 'react-hot-toast'
 
@@ -90,13 +88,11 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <Image
-            src={logo}
-            alt="ChemArena Logo"
-            width={120}
-            height={40}
-            className="mx-auto mb-4"
-          />
+          <div className="mx-auto mb-4 h-10 flex items-center justify-center">
+            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">
+              CHEMARENA
+            </span>
+          </div>
           <h1 className="text-2xl font-bold text-gray-800">
             Registrazione Insegnante ChemArena
           </h1>

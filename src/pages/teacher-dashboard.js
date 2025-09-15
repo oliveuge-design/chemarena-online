@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import { useRouter } from "next/router"
-import logo from "@/assets/logo.svg"
 import Button from "@/components/Button"
-import GameLauncher from "@/components/dashboard/GameLauncher"
+import SmartGameLauncher from "@/components/dashboard/SmartGameLauncher"
 import QuizArchiveManager from "@/components/dashboard/QuizArchiveManager"
 import Statistics from "@/components/dashboard/Statistics"
 import toast from 'react-hot-toast'
@@ -91,13 +89,11 @@ export default function TeacherDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              <Image
-                src={logo}
-                alt="ChemArena Logo"
-                width={100}
-                height={32}
-                className="h-8 w-auto"
-              />
+              <div className="h-8 flex items-center">
+                <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">
+                  CHEMARENA
+                </span>
+              </div>
               <div className="hidden md:block">
                 <h1 className="text-xl font-semibold text-gray-900">
                   Dashboard Insegnante ChemArena
@@ -170,7 +166,7 @@ export default function TeacherDashboard() {
         <div className="bg-white rounded-lg shadow-sm border">
           {activeTab === 'launch' && (
             <div className="p-6">
-              <GameLauncher />
+              <SmartGameLauncher />
             </div>
           )}
           

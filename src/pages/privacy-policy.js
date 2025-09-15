@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
-import Image from "next/image"
-import logo from "@/assets/logo.svg"
 import Button from "@/components/Button"
 
 export default function PrivacyPolicyPage() {
@@ -30,14 +28,14 @@ export default function PrivacyPolicyPage() {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <Image
-              src={logo}
-              alt="ChemArena Logo"
-              width={80}
-              height={26}
-              className="cursor-pointer"
+            <div
+              className="cursor-pointer h-6 flex items-center"
               onClick={() => router.push('/')}
-            />
+            >
+              <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-pink-400 bg-clip-text text-transparent">
+                CHEMARENA
+              </span>
+            </div>
             <div>
               <h1 className="text-xl font-bold text-gray-800">Informativa Privacy</h1>
               <p className="text-sm text-gray-600">Ultimo aggiornamento: 11 settembre 2025</p>

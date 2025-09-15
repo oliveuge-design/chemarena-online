@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import Button from "@/components/Button"
 import ConfigUpdater from "./ConfigUpdater"
+import BackgroundSelector from "./BackgroundSelector"
 import { QuizArchive } from "../../utils/quizArchive"
 import toast from "react-hot-toast"
 
@@ -18,7 +19,8 @@ export default function GameLauncher() {
     chaseMode: false,
     appearingAnswers: false,
     timedMode: true,
-    bonusForSpeed: true
+    bonusForSpeed: true,
+    backgroundTheme: 'laboratory' // Nuovo: tema sfondo
   })
   const [currentGameQuiz, setCurrentGameQuiz] = useState(null)
   const [configStatus, setConfigStatus] = useState('unknown') // 'unknown', 'updated', 'needs-update'
@@ -659,6 +661,18 @@ export default function GameLauncher() {
                 </label>
               </div>
             </div>
+
+            {/* Selezione Sfondo */}
+            <div>
+              <h4 className="font-medium text-gray-900 mb-3">🎨 Tema Visuale</h4>
+              <BackgroundSelector
+                currentTheme={gameSettings.backgroundTheme}
+                onThemeChange={(theme) => {
+                  setGameSettings(prev => ({ ...prev, backgroundTheme: theme }))
+                  setTimeout(checkConfigStatus, 100)
+                }}
+              />
+            </div>
           </div>
         </div>
       )}
@@ -704,6 +718,16 @@ export default function GameLauncher() {
                 <div className="flex justify-between">
                   <span>Durata stimata:</span>
                   <span>{previewQuiz(selectedQuiz).duration}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Tema sfondo:</span>
+                  <span className="font-medium">
+                    {gameSettings.backgroundTheme === 'laboratory' && '🧪 Laboratorio'}
+                    {gameSettings.backgroundTheme === 'gaming1' && '🎮 Gaming Tech 1'}
+                    {gameSettings.backgroundTheme === 'gaming2' && '🎮 Gaming Tech 2'}
+                    {gameSettings.backgroundTheme === 'gaming3' && '🎮 Gaming Tech 3'}
+                    {gameSettings.backgroundTheme === 'original' && '⭐ Completo'}
+                  </span>
                 </div>
               </div>
             </div>

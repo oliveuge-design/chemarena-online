@@ -43,6 +43,7 @@ next-env.d.ts
 
 # Backup files
 *.backup
+/data/backups/*.json
 
 # Windows batch files
 *.bat

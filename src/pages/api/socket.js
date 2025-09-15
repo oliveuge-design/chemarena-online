@@ -1,107 +1,42 @@
-// Socket.IO API route for Next.js
-import { Server } from 'socket.io'
-import { GAME_STATE_INIT } from '../../../config.mjs'
-import Manager from '../../../socket/roles/manager.js'
-import Player from '../../../socket/roles/player.js'
-import deepClone from '../../../socket/utils/deepClone.js'
-
-// Function to get current game state
-function getCurrentGameState() {
-  const baseState = {
-    started: false,
-    players: [],
-    playersAnswer: [],
-    manager: null,
-    room: null,
-    currentQuestion: 0,
-    roundStartTime: 0,
-  }
-  
-  // Use global config if available, otherwise fallback to file config
-  const config = global.currentQuizConfig || {
-    password: GAME_STATE_INIT.password,
-    subject: GAME_STATE_INIT.subject,
-    questions: GAME_STATE_INIT.questions
-  }
-  
-  return { ...baseState, ...config }
-}
-
-let gameState = getCurrentGameState()
-let io
+/**
+ * ⚠️ DEPRECATED: LEGACY SOCKET.IO API ROUTE
+ *
+ * Questo file è stato sostituito dal nuovo sistema multi-room
+ * in socket/index.js con supporto per quiz multipli contemporanei.
+ *
+ * CONSEGUENZE:
+ * - Sistema single-room limitato (1 quiz alla volta)
+ * - Conflitto con nuovo MultiRoomManager
+ * - Blocca funzionalità multi-insegnante
+ *
+ * SOLUZIONE:
+ * Usa socket/index.js (porta 5505) per il sistema multi-room
+ */
 
 export default function handler(req, res) {
-  if (!res.socket.server.io) {
-    console.log('🚀 Starting Socket.IO server...')
-
-    // Create Socket.IO server
-    io = new Server(res.socket.server, {
-      path: '/api/socket',
-      cors: {
-        origin: process.env.NODE_ENV === 'production' 
-          ? ["https://*.onrender.com", "https://*.render.com"] 
-          : "*",
-        credentials: true,
-      },
-    })
-
-    // Socket.IO event handlers
-    io.on("connection", (socket) => {
-      console.log(`A user connected ${socket.id}`)
-
-      socket.on("player:checkRoom", (roomId) =>
-        Player.checkRoom(gameState, io, socket, roomId),
-      )
-
-      socket.on("player:join", (player) =>
-        Player.join(gameState, io, socket, player),
-      )
-
-      socket.on("manager:createRoom", () =>
-        Manager.createRoom(gameState, io, socket),
-      )
-      
-      socket.on("manager:kickPlayer", (playerId) =>
-        Manager.kickPlayer(gameState, io, socket, playerId),
-      )
-
-      socket.on("manager:startGame", () => Manager.startGame(gameState, io, socket))
-
-      socket.on("player:selectedAnswer", (answerKey) =>
-        Player.selectedAnswer(gameState, io, socket, answerKey),
-      )
-
-      socket.on("manager:abortQuiz", () => Manager.abortQuiz(gameState, io, socket))
-
-      socket.on("manager:showLeaderboard", () =>
-        Manager.showLeaderboard(gameState, io, socket),
-      )
-
-      socket.on("manager:nextQuestion", () =>
-        Manager.nextQuestion(gameState, io, socket),
-      )
-
-      socket.on("admin:updateGameState", (newGameState) => {
-        // Update global config
-        global.currentQuizConfig = { ...global.currentQuizConfig, ...newGameState }
-        // Refresh gameState with new config
-        gameState = getCurrentGameState()
-        console.log("🔄 Game state updated via admin:", {
-          password: gameState.password,
-          subject: gameState.subject,
-          questions: gameState.questions?.length
-        })
-      })
-
-      socket.on("disconnect", () => {
-        console.log(`User disconnected ${socket.id}`)
-        Player.disconnect(gameState, io, socket)
-      })
-    })
-
-    res.socket.server.io = io
-    console.log('✅ Socket.IO server initialized')
-  }
-
-  res.end()
+  // Redirect al nuovo sistema
+  return res.status(410).json({
+    error: 'Legacy Socket.IO API deprecated',
+    message: 'Sistema migrato al Multi-Room Socket Server',
+    newEndpoint: {
+      url: 'ws://localhost:5505',
+      features: [
+        'Multi-room support',
+        'Multiple teachers concurrent',
+        'Up to 5 quizzes per teacher',
+        'Auto-cleanup inactive rooms',
+        'Smart limits & warnings'
+      ]
+    },
+    migration: {
+      from: '/api/socket (deprecated)',
+      to: 'socket/index.js:5505 (active)'
+    },
+    instructions: [
+      '1. Assicurati che socket/index.js sia in esecuzione',
+      '2. Frontend deve connettersi a localhost:5505',
+      '3. Eventi Socket.IO rimangono gli stessi',
+      '4. Nuovo: sistema multi-room automatico'
+    ]
+  });
 }

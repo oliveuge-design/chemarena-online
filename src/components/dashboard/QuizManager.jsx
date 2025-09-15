@@ -116,7 +116,7 @@ export default function QuizManager({ onEditQuiz }) {
                     </button>
                     <button
                       onClick={() => handleDuplicate(quiz)}
-                      className="flex-1 px-3 py-2 text-sm font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
+                      className="flex-1 px-3 py-2 text-sm font-medium text-gray-800 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
                     >
                       📋 Duplica
                     </button>

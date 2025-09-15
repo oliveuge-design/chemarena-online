@@ -1,4 +1,5 @@
 import Toaster from "@/components/Toaster"
+import NavigationControls from "@/components/NavigationControls"
 import { PlayerContextProvider } from "@/context/player"
 import { SocketContextProvider } from "@/context/socket"
 import "@/styles/globals.css"
@@ -24,6 +25,7 @@ export default function App({ Component, pageProps }) {
             )}
           >
             <Component {...pageProps} />
+            <NavigationControls />
           </main>
         </PlayerContextProvider>
       </SocketContextProvider>

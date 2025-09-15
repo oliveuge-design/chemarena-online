@@ -8,7 +8,7 @@
       "subject": "Amministrazione",
       "role": "admin",
       "active": true,
-      "lastLogin": "2025-09-12T18:00:10.220Z",
+      "lastLogin": "2025-09-15T22:21:27.506Z",
       "createdAt": "2024-01-15",
       "acceptedPrivacy": true,
       "privacyDate": "2025-09-11"
@@ -77,12 +77,25 @@
       "createdAt": "2024-01-15",
       "acceptedPrivacy": true,
       "privacyDate": "2025-09-11"
+    },
+    {
+      "id": "teacher_876114",
+      "name": "prova",
+      "email": "mario@gmail.com",
+      "password": "Testina1",
+      "subject": "chimica",
+      "role": "teacher",
+      "active": true,
+      "lastLogin": "2025-09-14T21:50:55.610Z",
+      "createdAt": "2025-09-14",
+      "acceptedPrivacy": true,
+      "privacyDate": "2025-09-14"
     }
   ],
   "metadata": {
     "version": "1.0",
-    "lastUpdate": "2025-09-12",
-    "totalTeachers": 6,
-    "activeTeachers": 6
+    "lastUpdate": "2025-09-15",
+    "totalTeachers": 7,
+    "activeTeachers": 7
   }
 }

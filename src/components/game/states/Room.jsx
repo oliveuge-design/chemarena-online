@@ -28,7 +28,7 @@ export default function Room({ data: { text, inviteCode }, manager = false }) {
 
   if (manager) {
     return (
-      <section className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-2">
+      <section className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-start pt-16 px-2">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
           {/* Colonna sinistra - Informazioni tradizionali */}
           <div className="flex flex-col items-center justify-center space-y-6">
@@ -63,9 +63,9 @@ export default function Room({ data: { text, inviteCode }, manager = false }) {
           </div>
 
           {/* Colonna destra - QR Code */}
-          <div className="flex items-center justify-center">
-            <QRCodeDisplay 
-              inviteCode={inviteCode} 
+          <div className="flex items-start justify-center pt-4">
+            <QRCodeDisplay
+              inviteCode={inviteCode}
               gameUrl={typeof window !== 'undefined' ? `${window.location.protocol}//${window.location.host}` : 'http://localhost:3000'}
             />
           </div>

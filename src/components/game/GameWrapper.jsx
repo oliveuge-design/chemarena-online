@@ -1,18 +1,18 @@
-import Image from "next/image"
 import Button from "@/components/Button"
 import SystemRestart from "@/components/SystemRestart"
-import background from "@/assets/background.webp"
+import BackgroundManager from "@/components/BackgroundManager"
 import { usePlayerContext } from "@/context/player"
 import { useSocketContext } from "@/context/socket"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
 
-export default function GameWrapper({ children, textNext, onNext, manager }) {
+export default function GameWrapper({ children, textNext, onNext, manager, backgroundTheme = "laboratory" }) {
   const { socket, emit, on, off } = useSocketContext()
   const { player, dispatch } = usePlayerContext()
   const router = useRouter()
 
   const [questionState, setQuestionState] = useState()
+  const [currentQuizId, setCurrentQuizId] = useState(null)
 
   useEffect(() => {
     on("game:kick", () => {
@@ -36,15 +36,28 @@ export default function GameWrapper({ children, textNext, onNext, manager }) {
     }
   }, [on, off, dispatch, router])
 
+  // Carica il quiz corrente per determinare il tema
+  useEffect(() => {
+    try {
+      const savedQuiz = localStorage.getItem('current-game-quiz')
+      if (savedQuiz) {
+        const quiz = JSON.parse(savedQuiz)
+        setCurrentQuizId(quiz.id)
+        console.log(`🎮 Quiz corrente rilevato: ${quiz.title} (ID: ${quiz.id})`)
+      }
+    } catch (error) {
+      console.error('Errore caricamento quiz corrente:', error)
+    }
+  }, [])
+
   return (
-    <section className="relative flex min-h-screen w-full flex-col justify-between">
-      <div className="fixed left-0 top-0 -z-10 h-full w-full bg-orange-600 opacity-70">
-        <Image
-          className="pointer-events-none h-full w-full object-cover opacity-60"
-          src={background}
-          alt="background"
-        />
-      </div>
+    <BackgroundManager
+      theme={backgroundTheme}
+      quizId={currentQuizId}
+      opacity={75}
+      className="min-h-screen"
+    >
+      <section className="relative flex min-h-screen w-full flex-col justify-between">
 
       <div className="flex w-full justify-between p-4">
         {questionState && (
@@ -112,6 +125,7 @@ export default function GameWrapper({ children, textNext, onNext, manager }) {
           </div>
         </div>
       )}
-    </section>
+      </section>
+    </BackgroundManager>
   )
 }

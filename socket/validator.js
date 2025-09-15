@@ -9,4 +9,5 @@ export const usernameValidator = yup
 export const inviteCodeValidator = yup
   .string()
   .required("Invite code is required")
-  .length(6, "Invalid invite code")
+  .length(4, "Invalid invite code")
+  .matches(/^[0-9]{4}$/, "PIN must be 4 digits")

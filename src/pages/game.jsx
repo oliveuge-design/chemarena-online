@@ -43,19 +43,34 @@ export default function Game() {
         dispatch({ type: "LOGIN", payload: name })
       }
       
-      // Ascolta per errori
+      // Ascolta per errori (sia vecchio che nuovo formato)
       const handleError = (error) => {
         console.log(`❌ Game error: ${error}`)
+        toast.error(`Errore join: ${error}`)
       }
-      
+
+      const handleJoinError = (errorData) => {
+        console.log(`❌ Join error: ${errorData.error}`)
+        toast.error(`Errore join: ${errorData.error}`)
+      }
+
+      const handleRoomNotFound = (data) => {
+        console.log(`❌ Room not found: ${data.room}`)
+        toast.error(`Room ${data.room} non trovata`)
+      }
+
       on("game:successRoom", handleRoomSuccess)
       on("game:successJoin", handleJoinSuccess)
       on("game:errorMessage", handleError)
+      on("player:joinError", handleJoinError)
+      on("player:roomNotFound", handleRoomNotFound)
       
       return () => {
         off("game:successRoom", handleRoomSuccess)
         off("game:successJoin", handleJoinSuccess)
         off("game:errorMessage", handleError)
+        off("player:joinError", handleJoinError)
+        off("player:roomNotFound", handleRoomNotFound)
       }
     }
   }, [pin, name, player, socket, emit, on, off, dispatch])
@@ -67,6 +82,22 @@ export default function Game() {
   }, [player, pin, name, router])
 
   const [state, setState] = useState(GAME_STATES)
+  const [backgroundTheme, setBackgroundTheme] = useState("laboratory")
+
+  // Load background theme from localStorage
+  useEffect(() => {
+    const savedSettings = localStorage.getItem('game-settings')
+    if (savedSettings) {
+      try {
+        const settings = JSON.parse(savedSettings)
+        if (settings.backgroundTheme) {
+          setBackgroundTheme(settings.backgroundTheme)
+        }
+      } catch (error) {
+        console.warn('Error loading game settings:', error)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     on("game:status", (status) => {
@@ -96,7 +127,7 @@ export default function Game() {
   }, [state, on, off])
 
   return (
-    <GameWrapper>
+    <GameWrapper backgroundTheme={backgroundTheme}>
       {GAME_STATE_COMPONENTS[state.status.name] &&
         createElement(GAME_STATE_COMPONENTS[state.status.name], {
           data: state.status.data,

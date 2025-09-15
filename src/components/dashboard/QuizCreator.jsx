@@ -344,7 +344,7 @@ export default function QuizCreator({ editingQuiz, onClearEdit }) {
                             className={`text-sm px-2 py-1 rounded ${
                               q.solution === ansIndex 
                                 ? 'bg-green-100 text-green-800 font-medium' 
-                                : 'bg-gray-100 text-gray-600'
+                                : 'bg-gray-100 text-gray-800'
                             }`}
                           >
                             {String.fromCharCode(65 + ansIndex)}. {answer}

@@ -54,7 +54,7 @@ export default async function handler(req, res) {
   switch (method) {
     case 'POST':
       try {
-        const { quizId, password } = req.body;
+        const { quizId } = req.body;
         
         if (!quizId) {
           return res.status(400).json({ error: 'ID quiz mancante' });
@@ -62,13 +62,19 @@ export default async function handler(req, res) {
 
         const archive = readQuizArchive();
         const quiz = archive.quizzes.find(q => q.id === quizId);
-        
+
         if (!quiz) {
+          console.error(`❌ Quiz ID "${quizId}" non trovato nell'archivio`);
           return res.status(404).json({ error: 'Quiz non trovato nell\'archivio' });
         }
 
+        console.log(`✅ Caricamento quiz: "${quiz.title}" (ID: ${quiz.id})`);
+        console.log(`   Materia: ${quiz.subject}`);
+        console.log(`   Domande: ${quiz.questions.length}`);
+        console.log(`   Prima domanda: ${quiz.questions[0]?.question?.substring(0, 50)}...`);
+
         const configData = {
-          password: password || quiz.password || 'QUIZ123',
+          password: 'CHEMARENA',
           subject: quiz.subject,
           questions: quiz.questions
         };
@@ -101,7 +107,6 @@ export default async function handler(req, res) {
             quiz: quiz.title,
             subject: quiz.subject,
             questionsCount: quiz.questions.length,
-            password: configData.password,
             autoUpdate: true
           });
         } else {

@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import Image from 'next/image'
 import Form from '@/components/Form'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import toast from 'react-hot-toast'
-import logo from '@/assets/logo.svg'
 
 export default function TeacherAuth({ onAuthSuccess }) {
   const [formData, setFormData] = useState({
@@ -78,7 +76,9 @@ export default function TeacherAuth({ onAuthSuccess }) {
         <div className="absolute -bottom-[15vmin] -right-[15vmin] min-h-[75vmin] min-w-[75vmin] rotate-45 bg-primary/15"></div>
       </div>
 
-      <Image src={logo} className="mb-6 h-32" alt="logo" />
+      <div className="mb-6 h-32 flex items-center justify-center">
+        <h1 className="text-4xl font-bold text-white">CHEMARENA</h1>
+      </div>
       
       <div className="mb-6 text-center">
         <h1 className="text-2xl font-bold text-gray-800 mb-2">🎓 Accesso Insegnanti</h1>

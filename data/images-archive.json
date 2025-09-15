@@ -9,11 +9,15 @@
       "uploadDate": "2025-01-09",
       "size": 245760,
       "mimetype": "image/jpeg",
-      "tags": ["geografia", "mondo", "mappa"],
+      "tags": [
+        "geografia",
+        "mondo",
+        "mappa"
+      ],
       "usedInQuestions": []
     },
     {
-      "id": "img_2", 
+      "id": "img_2",
       "filename": "arte_monalisa.jpg",
       "originalName": "monna-lisa.jpg",
       "path": "/uploads/images/arte_monalisa.jpg",
@@ -21,16 +25,39 @@
       "uploadDate": "2025-01-09",
       "size": 189432,
       "mimetype": "image/jpeg",
-      "tags": ["arte", "leonardo", "pittura"],
+      "tags": [
+        "arte",
+        "leonardo",
+        "pittura"
+      ],
+      "usedInQuestions": []
+    },
+    {
+      "id": "img_1757954358885",
+      "filename": "img_1757954358885_s-l960.png",
+      "originalName": "s-l960.png",
+      "path": "/uploads/images/img_1757954358885_s-l960.png",
+      "url": "/uploads/images/img_1757954358885_s-l960.png",
+      "uploadDate": "2025-09-15",
+      "size": 105109,
+      "mimetype": "image/png",
+      "tags": [
+        "quiz"
+      ],
       "usedInQuestions": []
     }
   ],
   "metadata": {
     "version": "1.0",
-    "lastUpdate": "2025-01-09",
-    "totalImages": 2,
+    "lastUpdate": "2025-09-15",
+    "totalImages": 3,
     "uploadPath": "./public/uploads/images/",
     "maxFileSize": 5242880,
-    "allowedTypes": ["image/jpeg", "image/png", "image/gif", "image/webp"]
+    "allowedTypes": [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/webp"
+    ]
   }
 }

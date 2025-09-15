@@ -89,7 +89,41 @@ export default function Manager() {
 
   const handleCreate = () => {
     console.log('🔌 Attempting to create room...')
-    
+
+    // 1. Carica quiz selezionato dal localStorage
+    let quizData = {}
+    try {
+      const currentQuiz = localStorage.getItem('current-game-quiz')
+      const authenticatedTeacher = JSON.parse(localStorage.getItem('teacher-auth') || '{}')
+
+      if (currentQuiz) {
+        const quiz = JSON.parse(currentQuiz)
+        console.log('📝 QUIZ SELEZIONATO RILEVATO:', quiz.title)
+        console.log('📚 Materia:', quiz.subject)
+        console.log('🔢 Domande:', quiz.questions?.length || 0)
+        console.log('🔑 Password:', quiz.password || 'CHEMARENA')
+
+        quizData = {
+          teacherId: authenticatedTeacher.id || `teacher_${socket.id}`,
+          password: quiz.password || 'CHEMARENA',
+          subject: quiz.subject || 'Quiz',
+          questions: quiz.questions || [],
+          quizTitle: quiz.title,
+          quizId: quiz.id
+        }
+      } else {
+        console.warn('⚠️ Nessun quiz selezionato, uso configurazione default')
+        quizData = {
+          teacherId: authenticatedTeacher.id || `teacher_${socket.id}`
+        }
+      }
+    } catch (error) {
+      console.error('❌ Errore lettura quiz:', error)
+      quizData = {
+        teacherId: `teacher_${socket.id}`
+      }
+    }
+
     // Listener per errori di creazione room
     const handleRoomError = (error) => {
       console.log('❌ Room creation error:', error)
@@ -99,21 +133,23 @@ export default function Manager() {
           console.log('🚨 Forcing server reset...')
           emit("manager:forceReset")
           setTimeout(() => {
-            emit("manager:createRoom")
-          }, 500) // Retry dopo il reset
+            emit("manager:createRoom", quizData)
+          }, 500) // Retry dopo il reset CON quiz data
         }
       }
     }
-    
+
     // Ascolta per errori
     on("game:errorMessage", handleRoomError)
-    
+
     // Cleanup del listener dopo 5 secondi
     setTimeout(() => {
       off("game:errorMessage", handleRoomError)
     }, 5000)
-    
-    emit("manager:createRoom")
+
+    // 2. Emetti creazione room CON i dati del quiz
+    console.log('🚀 Creazione room con quiz data:', quizData)
+    emit("manager:createRoom", quizData)
   }
 
   const handleSkip = () => {
@@ -128,6 +164,11 @@ export default function Manager() {
     switch (state.status.name) {
       case "SHOW_ROOM":
         if (socket && emit) emit("manager:startGame")
+        break
+
+      case "SHOW_QUESTION":
+        // Skip direttamente alla fase di selezione delle risposte
+        if (socket && emit) emit("manager:abortQuiz")
         break
 
       case "SELECT_ANSWER":
@@ -251,21 +292,24 @@ export default function Manager() {
         </div>
       ) : (
         <>
-          <GameWrapper textNext={nextText} onNext={handleSkip} manager>
-            {GAME_STATE_COMPONENTS_MANAGER[state.status.name] &&
-              createElement(GAME_STATE_COMPONENTS_MANAGER[state.status.name], {
-                data: state.status.data,
-                manager: true
-              })}
+          <GameWrapper textNext={nextText} onNext={handleSkip} manager backgroundTheme="gaming1">
+            {GAME_STATE_COMPONENTS_MANAGER[state.status.name] && (
+              <div key={`game-state-${state.status.name}`}>
+                {createElement(GAME_STATE_COMPONENTS_MANAGER[state.status.name], {
+                  data: state.status.data,
+                  manager: true
+                })}
+              </div>
+            )}
           </GameWrapper>
           
           {/* Pulsante per creare nuova room - Sempre disponibile */}
-          <div className="fixed bottom-4 left-4 z-50">
-            <Button 
+          <div className="fixed bottom-4 left-4 z-50" key="new-room-button">
+            <Button
               onClick={handleCreateNewRoom}
               className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 text-lg font-medium rounded-lg shadow-lg"
             >
-              🆕 Nuova Room
+              Nuova Room
             </Button>
           </div>
         </>

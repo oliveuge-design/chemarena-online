@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import { useRouter } from "next/router"
-import logo from "@/assets/logo.svg"
 import Button from "@/components/Button"
 import QuizManager from "@/components/dashboard/QuizManager"
 import QuizCreator from "@/components/dashboard/QuizCreator"
 import QuizArchiveManager from "@/components/dashboard/QuizArchiveManager"
 import Statistics from "@/components/dashboard/Statistics"
-import GameLauncher from "@/components/dashboard/GameLauncher"
+import SmartGameLauncher from "@/components/dashboard/SmartGameLauncher"
 import ServerControls from "@/components/dashboard/ServerControls"
 import SystemRestart from "@/components/SystemRestart"
 import TeachersList from "@/components/dashboard/TeachersList"
+import ThemeCustomizer from "@/components/dashboard/ThemeCustomizer"
 
 export default function Dashboard() {
   const router = useRouter()
@@ -51,7 +50,7 @@ export default function Dashboard() {
     // Controlla se c'è un tab specificato nella query string
     const urlParams = new URLSearchParams(window.location.search)
     const tabParam = urlParams.get('tab')
-    if (tabParam && ['archive', 'quizzes', 'create', 'launch', 'statistics', 'teachers', 'server'].includes(tabParam)) {
+    if (tabParam && ['archive', 'quizzes', 'create', 'launch', 'statistics', 'teachers', 'server', 'themes'].includes(tabParam)) {
       setActiveTab(tabParam)
     }
 
@@ -156,6 +155,7 @@ export default function Dashboard() {
     { id: 'quizzes', name: 'I Miei Quiz', icon: '📝' },
     { id: 'create', name: 'Crea Quiz', icon: '➕' },
     { id: 'launch', name: 'Lancia Gioco', icon: '🚀' },
+    { id: 'themes', name: 'Personalizzazione', icon: '🎨' },
     { id: 'statistics', name: 'Statistiche', icon: '📊' },
     { id: 'teachers', name: 'Insegnanti', icon: '👥' },
     { id: 'server', name: 'Server', icon: '⚙️' }
@@ -163,14 +163,16 @@ export default function Dashboard() {
 
   if (!isAuthenticated) {
     return (
-      <section className="relative flex min-h-screen flex-col items-center justify-center">
+      <section className="relative flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800">
         <div className="absolute h-full w-full overflow-hidden">
-          <div className="absolute -left-[15vmin] -top-[15vmin] min-h-[75vmin] min-w-[75vmin] rounded-full bg-primary/15"></div>
-          <div className="absolute -bottom-[15vmin] -right-[15vmin] min-h-[75vmin] min-w-[75vmin] rotate-45 bg-primary/15"></div>
+          <div className="absolute -left-[15vmin] -top-[15vmin] min-h-[75vmin] min-w-[75vmin] rounded-full bg-cyan-500/10"></div>
+          <div className="absolute -bottom-[15vmin] -right-[15vmin] min-h-[75vmin] min-w-[75vmin] rotate-45 bg-pink-500/10"></div>
         </div>
 
-        <Image src={logo} className="mb-6 h-32" alt="logo" />
-        <h1 className="mb-8 text-3xl font-bold text-gray-800">Dashboard Admin</h1>
+        <div className="mb-6 h-32 flex items-center justify-center">
+          <h1 className="text-4xl font-bold text-white">CHEMARENA</h1>
+        </div>
+        <h1 className="mb-8 text-3xl font-bold text-white">Dashboard Admin</h1>
         
         <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md relative z-10">
           <h2 className="text-xl font-semibold mb-4 text-gray-700">Accesso Admin</h2>
@@ -226,7 +228,9 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Image src={logo} className="h-8 w-8 mr-3" alt="logo" />
+              <div className="h-8 w-8 mr-3 flex items-center justify-center bg-gradient-to-r from-cyan-400 to-pink-400 rounded text-white font-bold text-sm">
+                CA
+              </div>
               <h1 className="text-xl font-semibold text-gray-900">Dashboard ChemArena</h1>
             </div>
             <div className="flex items-center space-x-3">
@@ -288,7 +292,8 @@ export default function Dashboard() {
           {activeTab === 'archive' && <QuizArchiveManager />}
           {activeTab === 'quizzes' && <QuizManager onEditQuiz={handleEditQuiz} />}
           {activeTab === 'create' && <QuizCreator editingQuiz={editingQuiz} onClearEdit={handleClearEdit} />}
-          {activeTab === 'launch' && <GameLauncher />}
+          {activeTab === 'launch' && <SmartGameLauncher />}
+          {activeTab === 'themes' && <ThemeCustomizer />}
           {activeTab === 'statistics' && <Statistics />}
           {activeTab === 'teachers' && <TeachersList />}
           {activeTab === 'server' && (

@@ -6,8 +6,13 @@ import { startRound } from "../utils/round.js"
 
 const Manager = {
   createRoom: (game, io, socket, data = {}) => {
-    console.log(`🔍 CreateRoom attempt by ${socket.id} - Current manager: ${game.manager}, Current room: ${game.room}`)
-    
+    console.log(`🔍 LEGACY CreateRoom attempt by ${socket.id} - Current manager: ${game.manager}, Current room: ${game.room}`)
+
+    // NOTA: Questo metodo è ora gestito dal MultiRoomManager nel socket/index.js
+    // Mantenuto solo per backward compatibility temporanea
+
+    console.log(`⚠️ WARNING: Using legacy createRoom method. Should use MultiRoomManager instead.`)
+
     if (game.manager || game.room) {
       console.log(`❌ Already manager error - manager: ${game.manager}, room: ${game.room}`)
       io.to(socket.id).emit("game:errorMessage", "Already manager")
@@ -17,7 +22,7 @@ const Manager = {
     let roomInvite = generateRoomId()
     game.room = roomInvite
     game.manager = socket.id
-    
+
     if (data.teacherId) {
       game.teacherId = data.teacherId
     }
@@ -41,7 +46,7 @@ const Manager = {
     io.to(game.manager).emit("manager:playerKicked", player.id)
   },
 
-  startGame: async (game, io, socket) => {
+  startGame: async (game, io, socket, multiRoomManager = null) => {
     if (game.started || !game.room) {
       return
     }
@@ -61,10 +66,10 @@ const Manager = {
     io.to(game.room).emit("game:startCooldown")
 
     await cooldown(3, io, game.room)
-    startRound(game, io, socket)
+    startRound(game, io, socket, multiRoomManager)
   },
 
-  nextQuestion: (game, io, socket) => {
+  nextQuestion: (game, io, socket, multiRoomManager = null) => {
     if (!game.started) {
       return
     }
@@ -78,7 +83,7 @@ const Manager = {
     }
 
     game.currentQuestion++
-    startRound(game, io, socket)
+    startRound(game, io, socket, multiRoomManager)
   },
 
   abortQuiz: (game, io, socket) => {
@@ -151,11 +156,21 @@ const Manager = {
       // Invia evento speciale per salvare le statistiche lato client
       socket.emit("game:saveStats", gameStats)
       
+      // SOLUZIONE SEMPLICE per classifica finale: Usa Map
+      const finishMap = new Map()
+      game.players.forEach(player => {
+        const existing = finishMap.get(player.username)
+        if (!existing || (player.points || 0) > (existing.points || 0)) {
+          finishMap.set(player.username, player) // Player ORIGINALE
+        }
+      })
+      const uniquePlayersFinish = Array.from(finishMap.values())
+
       socket.emit("game:status", {
         name: "FINISH",
         data: {
           subject: game.subject,
-          top: game.players.slice(0, 3).sort((a, b) => b.points - a.points),
+          top: uniquePlayersFinish.sort((a, b) => b.points - a.points).slice(0, 3),
         },
       })
 
@@ -164,10 +179,25 @@ const Manager = {
       return
     }
 
+    // SOLUZIONE SEMPLICE: Usa Map per deduplicare mantenendo i riferimenti originali
+    const playerMap = new Map()
+
+    // Aggiungi ogni player, mantenendo quello con il punteggio più alto per username
+    game.players.forEach(player => {
+      const existing = playerMap.get(player.username)
+      if (!existing || (player.points || 0) > (existing.points || 0)) {
+        playerMap.set(player.username, player) // Usa il player ORIGINALE
+        console.log(`🏆 Player: ${player.username} = ${player.points || 0} punti`)
+      }
+    })
+
+    const uniquePlayers = Array.from(playerMap.values())
+    console.log(`🏆 Final leaderboard: ${uniquePlayers.length} unique players from ${game.players.length} total`)
+
     socket.emit("game:status", {
       name: "SHOW_LEADERBOARD",
       data: {
-        leaderboard: game.players
+        leaderboard: uniquePlayers
           .sort((a, b) => b.points - a.points)
           .slice(0, 5),
       },

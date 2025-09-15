@@ -170,5 +170,50 @@ Le 6 modalità sono attualmente solo UI. Potrebbero richiedere:
 
 ---
 
-*Ultimo aggiornamento: 2025-01-13*
+## 📋 REGOLE DI LAVORO AD OGNI SESSIONE
+
+### ⚠️ REGOLE CRITICHE DA RISPETTARE SEMPRE:
+
+1. **🎨 NON MODIFICARE ELEMENTI GRAFICI APPROVATI**
+   - Homepage cyberpunk laboratorio (765 righe CSS)
+   - Logo CHEMARENA con effetti glow
+   - Animazioni particelle e circuiti
+   - Sistema responsive completo
+   - **CONSEGUENZA**: Perdita di design elaborato già perfezionato
+
+2. **👀 MOSTRA PREVIEW PRIMA DI MODIFICARE**
+   - Ogni modifica UI deve essere mostrata in anteprima in VSCode
+   - Confronto prima/dopo per cambiamenti visivi
+   - **CONSEGUENZA**: Evita modifiche non volute all'interfaccia
+
+3. **🔒 NON COMPROMETTERE MAI IL LAVORO FUNZIONANTE**
+   - Sistema QR Code (checkRoom → join → successJoin)
+   - Student login flow completo
+   - Game engine socket.io
+   - API endpoints attivi
+   - **CONSEGUENZA**: Rottura di funzionalità critiche del sistema
+
+4. **📝 SPIEGA SEMPRE LE CONSEGUENZE**
+   - Prima di ogni azione, descrivi impatti potenziali
+   - Evidenzia rischi per sistemi esistenti
+   - Proponi alternative sicure
+   - **CONSEGUENZA**: Decisioni informate ed evitare errori
+
+5. **🔍 VALUTA SEMPRE PIÙ SOLUZIONI PRIMA DI AGIRE**
+   - Analizza se esistono approcci alternativi al problema
+   - Confronta vantaggi/svantaggi di ogni soluzione
+   - Scegli l'approccio più funzionale ed efficace
+   - Spiega cosa migliora la soluzione scelta rispetto alle alternative
+   - **CONSEGUENZA**: Implementazioni ottimali e decisioni ponderate
+
+### 🛡️ CHECKLIST SICUREZZA PRE-MODIFICA:
+- [ ] La modifica tocca componenti critici?
+- [ ] Esistono funzionalità che potrebbero rompersi?
+- [ ] È necessario un backup?
+- [ ] La modifica è reversibile?
+- [ ] Ci sono test da eseguire dopo?
+
+---
+
+*Ultimo aggiornamento: 2025-01-14*
 *Prossima sessione: Focus su aggiornamento quiz*

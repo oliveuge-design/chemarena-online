@@ -41,11 +41,7 @@ const Player = {
       return
     }
 
-    if (game.players.find((p) => p.username === player.username)) {
-      console.log(`❌ Username already exists: ${player.username}`)
-      socket.emit("game:errorMessage", "Username already exists")
-      return
-    }
+    // Controllo username duplicati spostato in socket/index.js PRIMA di addPlayerToRoom
 
     if (game.started) {
       console.log(`❌ Game already started, cannot join`)
@@ -68,7 +64,14 @@ const Player = {
     }
     socket.to(player.room).emit("manager:newPlayer", { ...playerData })
 
-    game.players.push(playerData)
+    // Verifica se il player è già presente (evita duplicazione dal multiRoomManager)
+    const existingPlayer = game.players.find(p => p.id === socket.id)
+    if (!existingPlayer) {
+      game.players.push(playerData)
+      console.log(`👤 Player ${playerData.username} aggiunto alla game.players (totale: ${game.players.length})`)
+    } else {
+      console.log(`⚠️ Player ${playerData.username} già presente, skip duplicazione`)
+    }
 
     socket.emit("game:successJoin")
   },
@@ -98,7 +101,7 @@ const Player = {
     socket.to(game.room).emit("game:playerAnswer", game.playersAnswer.length)
 
     if (game.playersAnswer.length === game.players.length) {
-      abortCooldown()
+      abortCooldown(game, io, game.room)
     }
   },
 }

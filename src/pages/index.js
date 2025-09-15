@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import TronButton from '@/components/TronButton'
@@ -14,10 +13,9 @@ export default function Home() {
   useEffect(() => {
     const { pin, qr } = router.query
     if (pin && qr === '1') {
-      console.log('🔍 Accesso via QR code rilevato - PIN:', pin)
       setIsQRAccess(true)
       setGamePin(pin)
-      setShowQuickJoin(true) // Mostra automaticamente il form di join
+      setShowQuickJoin(true)
     }
   }, [router.query])
 
@@ -83,48 +81,54 @@ export default function Home() {
         <main className="flex-1 flex items-center justify-center px-6">
           <div className="w-full max-w-6xl mx-auto">
             
-            {/* Elementi decorativi laboratorio */}
-            <div className="lab-elements">
-              {/* Setup beute che versano in provette */}
-              <div className="beaker-setup beaker-setup-1">
-                <div className="pouring-beaker">
-                  <div className="beaker-liquid liquid-cyan"></div>
+            {/* Modelli Atomici Centrali */}
+            <div className="atomic-center">
+              {/* Atomo Principale - Idrogeno */}
+              <div className="atom atom-hydrogen">
+                <div className="nucleus nucleus-hydrogen">H</div>
+                <div className="electron-orbit orbit-1">
+                  <div className="electron electron-1"></div>
                 </div>
-                <div className="test-tube">
-                  <div className="tube-liquid liquid-cyan"></div>
-                </div>
-                <div className="pouring-stream stream-cyan"></div>
               </div>
 
-              <div className="beaker-setup beaker-setup-2">
-                <div className="pouring-beaker">
-                  <div className="beaker-liquid liquid-red"></div>
+              {/* Atomo Secondario - Carbonio */}
+              <div className="atom atom-carbon">
+                <div className="nucleus nucleus-carbon">C</div>
+                <div className="electron-orbit orbit-inner">
+                  <div className="electron electron-1"></div>
+                  <div className="electron electron-2"></div>
                 </div>
-                <div className="test-tube">
-                  <div className="tube-liquid liquid-red"></div>
+                <div className="electron-orbit orbit-outer">
+                  <div className="electron electron-3"></div>
+                  <div className="electron electron-4"></div>
+                  <div className="electron electron-5"></div>
+                  <div className="electron electron-6"></div>
                 </div>
-                <div className="pouring-stream stream-red"></div>
               </div>
 
-              <div className="beaker-setup beaker-setup-3">
-                <div className="pouring-beaker">
-                  <div className="beaker-liquid liquid-green"></div>
+              {/* Atomo Terziario - Ossigeno */}
+              <div className="atom atom-oxygen">
+                <div className="nucleus nucleus-oxygen">O</div>
+                <div className="electron-orbit orbit-inner">
+                  <div className="electron electron-1"></div>
+                  <div className="electron electron-2"></div>
                 </div>
-                <div className="test-tube">
-                  <div className="tube-liquid liquid-green"></div>
+                <div className="electron-orbit orbit-outer">
+                  <div className="electron electron-3"></div>
+                  <div className="electron electron-4"></div>
+                  <div className="electron electron-5"></div>
+                  <div className="electron electron-6"></div>
+                  <div className="electron electron-7"></div>
+                  <div className="electron electron-8"></div>
                 </div>
-                <div className="pouring-stream stream-green"></div>
               </div>
+            </div>
 
-              {/* Atomi animati che fluttuano */}
-              <div className="floating-atoms">
-                <div className="atom atom-h atom-1">H</div>
-                <div className="atom atom-o atom-2">O</div>
-                <div className="atom atom-c atom-3">C</div>
-                <div className="atom atom-n atom-4">N</div>
-                <div className="atom atom-h atom-5">H</div>
-                <div className="atom atom-o atom-6">O</div>
-              </div>
+            {/* Effetto Pulviscolo Particelle Cadenti */}
+            <div className="particle-dust">
+              {Array.from({length: 10}, (_, i) => (
+                <div key={i} className={`dust-particle dust-${i + 1}`}></div>
+              ))}
             </div>
 
             {/* Banner di selezione al centro */}
@@ -140,7 +144,7 @@ export default function Home() {
                 </p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto justify-items-center">
                 <TronButton
                   title="INSEGNANTE"
                   subtitle="Crea e gestisci quiz"
@@ -420,17 +424,17 @@ export default function Home() {
         
         .chem-part {
           color: #00ffff;
-          -webkit-text-stroke: 2px #003333;
+          -webkit-text-stroke: 2px #00ff88;
           text-shadow:
             0 0 20px #00ffff,
             0 0 40px #00ffff,
             0 0 60px #00ffff;
           animation: chemGlow 3s ease-in-out infinite;
         }
-        
+
         .arena-part {
           color: #ff0088;
-          -webkit-text-stroke: 2px #330022;
+          -webkit-text-stroke: 2px #00ff88;
           text-shadow:
             0 0 20px #ff0088,
             0 0 40px #ff0088,
@@ -439,35 +443,13 @@ export default function Home() {
         }
         
         @keyframes chemGlow {
-          0%, 100% { 
-            text-shadow: 
-              0 0 20px #00ffff,
-              0 0 40px #00ffff,
-              0 0 60px #00ffff;
-          }
-          50% { 
-            text-shadow: 
-              0 0 30px #00ffff,
-              0 0 60px #00ffff,
-              0 0 90px #00ffff,
-              0 0 120px #00ffff;
-          }
+          0%, 100% { text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 60px #00ffff; }
+          50% { text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff, 0 0 90px #00ffff, 0 0 120px #00ffff; }
         }
-        
+
         @keyframes arenaGlow {
-          0%, 100% { 
-            text-shadow: 
-              0 0 20px #ff0088,
-              0 0 40px #ff0088,
-              0 0 60px #ff0088;
-          }
-          50% { 
-            text-shadow: 
-              0 0 30px #ff0088,
-              0 0 60px #ff0088,
-              0 0 90px #ff0088,
-              0 0 120px #ff0088;
-          }
+          0%, 100% { text-shadow: 0 0 20px #ff0088, 0 0 40px #ff0088, 0 0 60px #ff0088; }
+          50% { text-shadow: 0 0 30px #ff0088, 0 0 60px #ff0088, 0 0 90px #ff0088, 0 0 120px #ff0088; }
         }
         
         .logo-circuit-frame {
@@ -547,174 +529,258 @@ export default function Home() {
           5%, 85% { opacity: 0.3; }
         }
 
-        /* === ELEMENTI LABORATORIO ANIMATI === */
-        .lab-elements {
+        /* === MODELLI ATOMICI CENTRALI === */
+        .atomic-center {
           position: relative;
           width: 100%;
-          height: 300px;
+          height: 350px;
           margin: 2rem 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 120px;
           pointer-events: none;
         }
-        
-        /* Setup beute che versano in provette */
-        .beaker-setup {
+
+        .atom {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .atom-hydrogen {
+          transform: scale(1.56);
+          animation: atomFloat 8s ease-in-out infinite;
+        }
+
+        .atom-carbon {
+          transform: scale(1.3);
+          animation: atomFloat 10s ease-in-out infinite 2s;
+        }
+
+        .atom-oxygen {
+          transform: scale(1.43);
+          animation: atomFloat 9s ease-in-out infinite 4s;
+        }
+
+        @keyframes atomFloat {
+          0%, 100% {
+            transform: translateY(0px) scale(var(--scale, 1));
+          }
+          50% {
+            transform: translateY(-15px) scale(var(--scale, 1));
+          }
+        }
+
+        .nucleus {
+          position: relative;
+          width: 52px;
+          height: 52px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: 'Orbitron', monospace;
+          font-weight: bold;
+          font-size: 20px;
+          z-index: 10;
+        }
+
+        .nucleus-hydrogen {
+          background: radial-gradient(circle, #ff6b6b, #ee5a24);
+          color: white;
+          box-shadow:
+            0 0 20px #ff6b6b,
+            inset 0 0 10px rgba(255, 255, 255, 0.3);
+          animation: nucleusGlow 3s ease-in-out infinite;
+        }
+
+        .nucleus-carbon {
+          background: radial-gradient(circle, #4ecdc4, #00d2d3);
+          color: white;
+          box-shadow:
+            0 0 20px #4ecdc4,
+            inset 0 0 10px rgba(255, 255, 255, 0.3);
+          animation: nucleusGlow 3s ease-in-out infinite 1s;
+        }
+
+        .nucleus-oxygen {
+          background: radial-gradient(circle, #45b7d1, #3867d6);
+          color: white;
+          box-shadow:
+            0 0 20px #45b7d1,
+            inset 0 0 10px rgba(255, 255, 255, 0.3);
+          animation: nucleusGlow 3s ease-in-out infinite 2s;
+        }
+
+        @keyframes nucleusGlow {
+          0%, 100% {
+            box-shadow:
+              0 0 20px currentColor,
+              inset 0 0 10px rgba(255, 255, 255, 0.3);
+          }
+          50% {
+            box-shadow:
+              0 0 35px currentColor,
+              0 0 50px currentColor,
+              inset 0 0 15px rgba(255, 255, 255, 0.5);
+          }
+        }
+
+        .electron-orbit {
           position: absolute;
-          width: 80px;
-          height: 120px;
+          border: 2px solid rgba(0, 255, 255, 0.4);
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          animation: orbitRotate linear infinite;
         }
 
-        .beaker-setup-1 {
-          top: 30%;
-          left: 10%;
-          animation: setupFloat 5s ease-in-out infinite;
+        /* Orbita idrogeno - circolare */
+        .atom-hydrogen .orbit-1 {
+          border-radius: 50%;
+          width: 104px;
+          height: 104px;
+          animation-duration: 4s;
         }
 
-        .beaker-setup-2 {
-          top: 15%;
-          right: 15%;
-          animation: setupFloat 6s ease-in-out infinite 1.5s;
+        /* Orbite ellittiche per carbonio e ossigeno */
+        .orbit-inner {
+          border-radius: 50% 50% 50% 50% / 35% 35% 65% 65%;
+          width: 117px;
+          height: 78px;
+          animation: orbitRotateInner 3s linear infinite;
+          border-color: rgba(0, 255, 136, 0.6);
         }
 
-        .beaker-setup-3 {
-          bottom: 25%;
-          left: 65%;
-          animation: setupFloat 7s ease-in-out infinite 3s;
+        .orbit-outer {
+          border-radius: 50% 50% 50% 50% / 25% 25% 75% 75%;
+          width: 182px;
+          height: 130px;
+          animation: orbitRotateOuter 5s linear infinite;
+          border-color: rgba(255, 136, 0, 0.6);
         }
 
-        @keyframes setupFloat {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-8px) rotate(1deg); }
+        @keyframes orbitRotate {
+          0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+          }
+          100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+          }
         }
 
-        .pouring-beaker {
+        @keyframes orbitRotateInner {
+          0% {
+            transform: translate(-50%, -50%) rotateZ(15deg) rotate(0deg);
+          }
+          100% {
+            transform: translate(-50%, -50%) rotateZ(15deg) rotate(360deg);
+          }
+        }
+
+        @keyframes orbitRotateOuter {
+          0% {
+            transform: translate(-50%, -50%) rotateZ(-20deg) rotate(0deg);
+          }
+          100% {
+            transform: translate(-50%, -50%) rotateZ(-20deg) rotate(360deg);
+          }
+        }
+
+        .electron {
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 45px;
-          height: 65px;
-          background: rgba(0, 255, 255, 0.08);
-          border: 2px solid #00ffff;
-          border-radius: 0 0 22px 22px;
-          border-top: none;
-          transform: rotate(-15deg);
-          clip-path: polygon(
-            30% 0%,     /* collo stretto sopra sinistra */
-            70% 0%,     /* collo stretto sopra destra */
-            85% 30%,    /* espansione verso il corpo */
-            100% 100%,  /* base larga destra */
-            0% 100%,    /* base larga sinistra */
-            15% 30%     /* espansione verso il corpo sinistra */
-          );
+          width: 8px;
+          height: 8px;
+          background: #00ffff;
+          border-radius: 50%;
+          box-shadow: 0 0 16px #00ffff;
+          animation: electronPulse 2s ease-in-out infinite;
         }
 
-        .beaker-setup-2 .pouring-beaker {
-          border-color: #ff0088;
+        /* Elettrone idrogeno */
+        .atom-hydrogen .orbit-1 .electron {
+          top: -4px;
+          right: 52px;
+          background: #ff6b6b;
+          box-shadow: 0 0 16px #ff6b6b;
         }
 
-        .beaker-setup-3 .pouring-beaker {
-          border-color: #00ff88;
+        /* Elettroni guscio interno (K) - 2 elettroni distribuiti a 180° */
+        .orbit-inner .electron-1 {
+          top: -3px;
+          left: calc(50% - 3px);
+          background: #00ff88;
+          box-shadow: 0 0 12px #00ff88;
         }
 
-        .test-tube {
-          position: absolute;
-          bottom: 0;
-          right: 5px;
-          width: 12px;
-          height: 110px;
-          background: rgba(255, 255, 255, 0.05);
-          border: 2px solid #00ffff;
-          border-radius: 0 0 6px 6px;
-          border-top: none;
+        .orbit-inner .electron-2 {
+          bottom: -3px;
+          left: calc(50% - 3px);
+          background: #00ff88;
+          box-shadow: 0 0 12px #00ff88;
         }
 
-        .beaker-setup-2 .test-tube {
-          border-color: #ff0088;
+        /* Elettroni guscio esterno (L) - distribuiti a coppie a 180° */
+        /* Prima coppia: su-giù */
+        .orbit-outer .electron-3 {
+          top: -3px;
+          left: calc(50% - 3px);
+          background: #ffff00;
+          box-shadow: 0 0 12px #ffff00;
         }
 
-        .beaker-setup-3 .test-tube {
-          border-color: #00ff88;
+        .orbit-outer .electron-4 {
+          bottom: -3px;
+          left: calc(50% - 3px);
+          background: #ffff00;
+          box-shadow: 0 0 12px #ffff00;
         }
 
-        .pouring-stream {
-          position: absolute;
-          top: 50px;
-          left: 32px;
-          width: 3px;
-          height: 45px;
-          background: linear-gradient(180deg, transparent, #00ffff);
-          border-radius: 2px;
-          opacity: 0;
-          animation: streamPour 4s ease-in-out infinite;
+        /* Seconda coppia: sinistra-destra */
+        .orbit-outer .electron-5 {
+          top: calc(50% - 3px);
+          left: -3px;
+          background: #ffff00;
+          box-shadow: 0 0 12px #ffff00;
         }
 
-        .stream-red {
-          background: linear-gradient(180deg, transparent, #ff0088);
+        .orbit-outer .electron-6 {
+          top: calc(50% - 3px);
+          right: -3px;
+          background: #ffff00;
+          box-shadow: 0 0 12px #ffff00;
         }
 
-        .stream-green {
-          background: linear-gradient(180deg, transparent, #00ff88);
+        /* Elettroni extra per ossigeno - terza coppia diagonale a 180° */
+        .orbit-outer .electron-7 {
+          top: calc(25% - 3px);
+          right: calc(15% - 3px);
+          background: #ff8800;
+          box-shadow: 0 0 12px #ff8800;
         }
 
-        @keyframes streamPour {
-          0%, 30%, 100% { opacity: 0; transform: scaleY(0); }
-          40%, 90% { opacity: 0.8; transform: scaleY(1); }
+        .orbit-outer .electron-8 {
+          bottom: calc(25% - 3px);
+          left: calc(15% - 3px);
+          background: #ff8800;
+          box-shadow: 0 0 12px #ff8800;
         }
 
-        .beaker-liquid {
-          position: absolute;
-          bottom: 2px;
-          left: 2px;
-          right: 2px;
-          height: 40%;
-          border-radius: 0 0 18px 18px;
-          animation: pourAnimation 4s ease-in-out infinite;
-          clip-path: polygon(
-            35% 0%,     /* parte superiore più stretta */
-            65% 0%,     /* parte superiore più stretta */
-            90% 100%,   /* base larga destra */
-            10% 100%    /* base larga sinistra */
-          );
+        @keyframes electronPulse {
+          0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.3);
+            opacity: 0.7;
+          }
         }
 
-        .tube-liquid {
-          position: absolute;
-          bottom: 2px;
-          left: 2px;
-          right: 2px;
-          height: 0%;
-          border-radius: 0 0 4px 4px;
-          animation: fillTube 4s ease-in-out infinite;
-        }
-
-        .liquid-cyan {
-          background: linear-gradient(180deg, #00ffff, #0088aa);
-          box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
-        }
-
-        .liquid-red {
-          background: linear-gradient(180deg, #ff0088, #aa0055);
-          box-shadow: 0 0 15px rgba(255, 0, 136, 0.4);
-        }
-
-        .liquid-green {
-          background: linear-gradient(180deg, #00ff88, #00aa55);
-          box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
-        }
-
-        @keyframes pourAnimation {
-          0%, 30%, 100% { height: 40%; }
-          40%, 90% { height: 25%; }
-        }
-
-        @keyframes fillTube {
-          0%, 30% { height: 0%; }
-          40% { height: 10%; }
-          90% { height: 60%; }
-          100% { height: 60%; }
-        }
-
-        /* Atomi fluttuanti */
-        .floating-atoms {
+        /* === EFFETTO PULVISCOLO CADENTE === */
+        .particle-dust {
           position: absolute;
           top: 0;
           left: 0;
@@ -724,171 +790,128 @@ export default function Home() {
           z-index: 1;
         }
 
-        .atom {
+        .dust-particle {
           position: absolute;
-          width: 20px;
-          height: 20px;
+          width: 2px;
+          height: 2px;
+          background: #00ffff;
           border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-family: 'Courier New', monospace;
-          font-size: 12px;
-          font-weight: bold;
-          color: white;
-          text-shadow: 0 0 4px currentColor;
-          opacity: 0.8;
+          opacity: 0;
+          animation: dustFall linear infinite;
         }
 
-        .atom-h {
-          background: radial-gradient(circle, #ffffff, #cccccc);
-          color: #333;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        .dust-1 {
+          left: 10%;
+          animation-duration: 8s;
+          animation-delay: 0s;
+          background: #00ffff;
+          box-shadow: 0 0 4px #00ffff;
         }
 
-        .atom-o {
-          background: radial-gradient(circle, #ff4444, #cc2222);
-          color: white;
-          box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
-        }
-
-        .atom-c {
-          background: radial-gradient(circle, #333333, #111111);
-          color: white;
-          box-shadow: 0 0 10px rgba(51, 51, 51, 0.5);
-        }
-
-        .atom-n {
-          background: radial-gradient(circle, #4488ff, #2266cc);
-          color: white;
-          box-shadow: 0 0 10px rgba(68, 136, 255, 0.5);
-        }
-
-        .atom-1 {
-          top: 20%;
+        .dust-2 {
           left: 25%;
-          animation: atomFloat1 8s ease-in-out infinite;
+          animation-duration: 12s;
+          animation-delay: 2s;
+          background: #ff0088;
+          box-shadow: 0 0 4px #ff0088;
         }
 
-        .atom-2 {
-          top: 60%;
-          right: 30%;
-          animation: atomFloat2 10s ease-in-out infinite 1s;
+        .dust-3 {
+          left: 40%;
+          animation-duration: 10s;
+          animation-delay: 1s;
+          background: #00ff88;
+          box-shadow: 0 0 4px #00ff88;
         }
 
-        .atom-3 {
-          bottom: 30%;
+        .dust-4 {
+          left: 55%;
+          animation-duration: 15s;
+          animation-delay: 3s;
+          background: #ffff00;
+          box-shadow: 0 0 4px #ffff00;
+        }
+
+        .dust-5 {
+          left: 70%;
+          animation-duration: 9s;
+          animation-delay: 0.5s;
+          background: #ff6b6b;
+          box-shadow: 0 0 4px #ff6b6b;
+        }
+
+        .dust-6 {
+          left: 85%;
+          animation-duration: 13s;
+          animation-delay: 4s;
+          background: #4ecdc4;
+          box-shadow: 0 0 4px #4ecdc4;
+        }
+
+        .dust-7 {
           left: 15%;
-          animation: atomFloat3 12s ease-in-out infinite 2s;
+          animation-duration: 11s;
+          animation-delay: 2.5s;
+          background: #45b7d1;
+          box-shadow: 0 0 4px #45b7d1;
         }
 
-        .atom-4 {
-          top: 40%;
-          left: 60%;
-          animation: atomFloat4 9s ease-in-out infinite 3s;
+        .dust-8 {
+          left: 65%;
+          animation-duration: 14s;
+          animation-delay: 1.5s;
+          background: #fd79a8;
+          box-shadow: 0 0 4px #fd79a8;
         }
 
-        .atom-5 {
-          top: 10%;
-          right: 15%;
-          animation: atomFloat5 11s ease-in-out infinite 4s;
+        .dust-9 {
+          left: 35%;
+          animation-duration: 7s;
+          animation-delay: 3.5s;
+          background: #a29bfe;
+          box-shadow: 0 0 4px #a29bfe;
         }
 
-        .atom-6 {
-          bottom: 15%;
-          right: 40%;
-          animation: atomFloat6 7s ease-in-out infinite 5s;
+        .dust-10 {
+          left: 80%;
+          animation-duration: 16s;
+          animation-delay: 0.8s;
+          background: #fd63a3;
+          box-shadow: 0 0 4px #fd63a3;
         }
 
-        @keyframes atomFloat1 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-          25% { transform: translate(15px, -10px) rotate(90deg) scale(1.1); }
-          50% { transform: translate(-10px, -20px) rotate(180deg) scale(0.9); }
-          75% { transform: translate(-15px, 5px) rotate(270deg) scale(1.05); }
-        }
-
-        @keyframes atomFloat2 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-          33% { transform: translate(-20px, 10px) rotate(120deg) scale(0.95); }
-          66% { transform: translate(10px, -15px) rotate(240deg) scale(1.1); }
-        }
-
-        @keyframes atomFloat3 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-          20% { transform: translate(25px, -5px) rotate(72deg) scale(1.05); }
-          40% { transform: translate(-5px, -25px) rotate(144deg) scale(0.9); }
-          60% { transform: translate(-25px, 5px) rotate(216deg) scale(1.1); }
-          80% { transform: translate(5px, 20px) rotate(288deg) scale(0.95); }
-        }
-
-        @keyframes atomFloat4 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-          50% { transform: translate(-30px, -10px) rotate(180deg) scale(1.2); }
-        }
-
-        @keyframes atomFloat5 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-          25% { transform: translate(-10px, 15px) rotate(-90deg) scale(0.85); }
-          50% { transform: translate(20px, -5px) rotate(-180deg) scale(1.15); }
-          75% { transform: translate(5px, -20px) rotate(-270deg) scale(0.9); }
-        }
-
-        @keyframes atomFloat6 {
-          0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-          33% { transform: translate(15px, -15px) rotate(-120deg) scale(1.1); }
-          66% { transform: translate(-20px, 10px) rotate(-240deg) scale(0.9); }
-        }
-        
-        .lab-shelf {
-          position: absolute;
-          width: 100px;
-          height: 8px;
-          background: linear-gradient(90deg, #00ffff, #0088aa);
-          box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-        }
-        
-        .lab-shelf-left {
-          top: 40%;
-          left: 5%;
-          animation: shelfGlow 6s ease-in-out infinite;
-        }
-        
-        .lab-shelf-right {
-          top: 60%;
-          right: 10%;
-          animation: shelfGlow 6s ease-in-out infinite 3s;
-        }
-        
-        @keyframes shelfGlow {
-          0%, 100% { 
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); 
-            opacity: 0.6;
+        @keyframes dustFall {
+          0% {
+            top: -10px;
+            opacity: 0;
+            transform: translateX(0px);
           }
-          50% { 
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6); 
+          10% {
             opacity: 1;
           }
+          20% {
+            opacity: 0.8;
+            transform: translateX(5px);
+          }
+          40% {
+            opacity: 0.6;
+            transform: translateX(-3px);
+          }
+          60% {
+            opacity: 1;
+            transform: translateX(2px);
+          }
+          80% {
+            opacity: 0.4;
+            transform: translateX(-1px);
+          }
+          100% {
+            top: calc(100vh + 10px);
+            opacity: 0;
+            transform: translateX(0px);
+          }
         }
-        
-        .shelf-item {
-          position: absolute;
-          top: -15px;
-          width: 12px;
-          height: 15px;
-          background: rgba(255, 0, 136, 0.6);
-          border: 1px solid #ff0088;
-          animation: itemFlicker 4s ease-in-out infinite;
-        }
-        
-        .shelf-item:nth-child(1) { left: 10px; animation-delay: 0s; }
-        .shelf-item:nth-child(2) { left: 35px; animation-delay: 1.3s; }
-        .shelf-item:nth-child(3) { left: 60px; animation-delay: 2.6s; }
-        
-        @keyframes itemFlicker {
-          0%, 90%, 100% { opacity: 0.6; }
-          5%, 85% { opacity: 0.2; }
-          50% { opacity: 1; }
-        }
+
 
         /* === TITOLI SELEZIONE MODALITÀ === */
         .selection-area {
@@ -987,12 +1010,7 @@ export default function Home() {
           font-size: 16px;
         }
 
-        .tron-text {
-          font-family: 'Orbitron', 'Courier New', monospace;
-          text-shadow: 0 0 10px currentColor;
-          letter-spacing: 2px;
-        }
-
+        /* === COMPONENTI TRON === */
         .tron-panel {
           background: rgba(0, 255, 255, 0.05);
           border: 1px solid #00ffff;
@@ -1019,9 +1037,7 @@ export default function Home() {
           border-color: #39ff14;
         }
 
-        .tron-input::placeholder {
-          color: rgba(0, 255, 255, 0.5);
-        }
+        .tron-input::placeholder { color: rgba(0, 255, 255, 0.5); }
 
         .tron-join-btn {
           background: rgba(0, 255, 136, 0.2);
@@ -1041,36 +1057,7 @@ export default function Home() {
           transform: translateX(2px);
         }
 
-        .tron-join-btn:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-
-        .animate-pulse-glow {
-          animation: pulseGlow 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0px);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-
-        @keyframes pulseGlow {
-          0%, 100% {
-            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.3));
-          }
-          50% {
-            filter: drop-shadow(0 0 25px rgba(0, 255, 255, 0.6));
-          }
-        }
+        .tron-join-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .quick-join-panel {
           animation: slideDown 0.3s ease-out;
@@ -1094,41 +1081,69 @@ export default function Home() {
             left: 20px;
             padding: 10px 16px;
           }
-          
+
           .admin-icon {
             font-size: 14px;
           }
-          
+
           .admin-text {
             font-size: 10px;
           }
-          
+
           .chemarena-title {
             font-size: clamp(2rem, 10vw, 4rem);
             letter-spacing: 0.2em;
           }
-          
-          .lab-elements {
-            height: 200px;
+
+          .atomic-center {
+            height: 250px;
+            gap: 60px;
+            flex-direction: row;
+            justify-content: space-around;
           }
-          
-          .lab-beaker {
-            width: 30px;
-            height: 45px;
+
+          .atom-hydrogen, .atom-carbon, .atom-oxygen {
+            transform: scale(1.04);
           }
-          
-          .circuit-corner {
-            width: 40px;
-            height: 40px;
+
+          .nucleus {
+            width: 39px;
+            height: 39px;
+            font-size: 16px;
           }
-          
+
+          .atom-hydrogen .orbit-1 { width: 78px; height: 78px; }
+          .orbit-inner { width: 91px; height: 58px; }
+          .orbit-outer { width: 143px; height: 97px; }
+
+          .electron {
+            width: 5px;
+            height: 5px;
+          }
+
+          .atom-hydrogen .orbit-1 .electron { right: 39px; }
+          .orbit-inner .electron-1 { left: calc(50% - 2px); top: -2px; }
+          .orbit-inner .electron-2 { left: calc(50% - 2px); bottom: -2px; }
+          .orbit-outer .electron-3 { left: calc(50% - 2px); top: -2px; }
+          .orbit-outer .electron-4 { left: calc(50% - 2px); bottom: -2px; }
+          .orbit-outer .electron-5 { left: -2px; top: calc(50% - 2px); }
+          .orbit-outer .electron-6 { right: -2px; top: calc(50% - 2px); }
+          .orbit-outer .electron-7 { right: calc(15% - 2px); top: calc(25% - 2px); }
+          .orbit-outer .electron-8 { left: calc(15% - 2px); bottom: calc(25% - 2px); }
+
+          .circuit-corner { width: 40px; height: 40px; }
+
           .selection-area {
             padding: 1.5rem;
             margin: 1rem;
           }
-          
+
           .particles-container {
             display: none; /* Nascondi particelle su mobile per performance */
+          }
+
+          .particle-dust .dust-particle {
+            display: none; /* Nascondi pulviscolo su tablet per performance */
           }
         }
         
@@ -1137,31 +1152,70 @@ export default function Home() {
             font-size: clamp(1.5rem, 12vw, 3rem);
             letter-spacing: 0.1em;
           }
-          
+
           .lab-subtitle {
             font-size: 0.8rem;
           }
-          
+
           .mode-selection-title {
             font-size: clamp(1rem, 6vw, 1.8rem);
           }
-          
+
           .mode-subtitle {
             font-size: 0.8rem;
           }
-          
-          .lab-elements {
-            height: 150px;
+
+          .atomic-center {
+            height: 200px;
+            gap: 40px;
+            flex-direction: column;
+            align-items: center;
           }
-          
-          .lab-beaker {
-            width: 25px;
-            height: 35px;
+
+          .atom-hydrogen {
+            transform: scale(1.17);
+            order: 1;
           }
-          
-          .lab-shelf {
-            width: 60px;
-            height: 6px;
+
+          .atom-carbon {
+            transform: scale(0.78);
+            order: 2;
+          }
+
+          .atom-oxygen {
+            transform: scale(0.91);
+            order: 3;
+            display: none; /* Nascondi il terzo atomo su mobile molto piccolo */
+          }
+
+          .nucleus {
+            width: 32px;
+            height: 32px;
+            font-size: 13px;
+          }
+
+          .atom-hydrogen .orbit-1 { width: 65px; height: 65px; }
+          .orbit-inner { width: 78px; height: 45px; }
+          .orbit-outer { width: 117px; height: 78px; }
+
+          .electron {
+            width: 4px;
+            height: 4px;
+          }
+
+          .atom-hydrogen .orbit-1 .electron { right: 32px; }
+          .orbit-inner .electron-1 { left: calc(50% - 1.5px); top: -1.5px; }
+          .orbit-inner .electron-2 { left: calc(50% - 1.5px); bottom: -1.5px; }
+          .orbit-outer .electron-3 { left: calc(50% - 1.5px); top: -1.5px; }
+          .orbit-outer .electron-4 { left: calc(50% - 1.5px); bottom: -1.5px; }
+          .orbit-outer .electron-5 { left: -1.5px; top: calc(50% - 1.5px); }
+          .orbit-outer .electron-6 { right: -1.5px; top: calc(50% - 1.5px); }
+          .orbit-outer .electron-7 { right: calc(15% - 1.5px); top: calc(25% - 1.5px); }
+          .orbit-outer .electron-8 { left: calc(15% - 1.5px); bottom: calc(25% - 1.5px); }
+
+
+          .particle-dust {
+            display: none; /* Nascondi completamente il pulviscolo su mobile piccolo */
           }
         }
         

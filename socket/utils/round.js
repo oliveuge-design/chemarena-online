@@ -1,9 +1,27 @@
 import { cooldown, sleep } from "./cooldown.js"
 
-export const startRound = async (game, io, socket) => {
+export const startRound = async (game, io, socket, multiRoomManager = null) => {
   const question = game.questions[game.currentQuestion]
 
-  if (!game.started) return
+  console.log(`🔍 StartRound: questionIndex=${game.currentQuestion}, started=${game.started}, room=${game.room}`)
+
+  // Funzione helper per verificare se la room esiste ancora
+  const isRoomValid = () => {
+    if (!game.started || !game.room) {
+      return false;
+    }
+    // Se multiRoomManager è disponibile, verifica l'esistenza della room
+    if (multiRoomManager && !multiRoomManager.getRoomState(game.room)) {
+      console.log(`❌ Room ${game.room} no longer exists in multiRoomManager`)
+      return false;
+    }
+    return true;
+  }
+
+  if (!isRoomValid()) {
+    console.log(`❌ StartRound aborted: game not started, no room, or room removed`)
+    return
+  }
 
   io.to(game.room).emit("game:updateQuestion", {
     current: game.currentQuestion + 1,
@@ -19,8 +37,12 @@ export const startRound = async (game, io, socket) => {
   })
 
   await sleep(2)
+  console.log(`🔍 After first sleep, game.started=${game.started}, room=${game.room}`)
 
-  if (!game.started) return
+  if (!isRoomValid()) {
+    console.log(`❌ StartRound aborted after first sleep: room no longer valid`)
+    return
+  }
 
   io.to(game.room).emit("game:status", {
     name: "SHOW_QUESTION",
@@ -32,8 +54,12 @@ export const startRound = async (game, io, socket) => {
   })
 
   await sleep(question.cooldown)
+  console.log(`🔍 After cooldown sleep, game.started=${game.started}, room=${game.room}`)
 
-  if (!game.started) return
+  if (!isRoomValid()) {
+    console.log(`❌ StartRound aborted after cooldown: room no longer valid`)
+    return
+  }
 
   game.roundStartTime = Date.now()
 
@@ -48,9 +74,14 @@ export const startRound = async (game, io, socket) => {
     },
   })
 
+  console.log(`🔍 Starting question cooldown for ${question.time} seconds...`)
   await cooldown(question.time, io, game.room)
+  console.log(`🔍 After question cooldown, game.started=${game.started}, room=${game.room}`)
 
-  if (!game.started) return
+  if (!isRoomValid()) {
+    console.log(`❌ StartRound aborted after question timeout: room no longer valid`)
+    return
+  }
 
   game.players.map(async (player) => {
     let playerAnswer = await game.playersAnswer.find((p) => p.id === player.id)
