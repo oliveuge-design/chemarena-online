@@ -101,12 +101,13 @@ export default function Game() {
 
   useEffect(() => {
     on("game:status", (status) => {
+      console.log(`🎮 Game status received:`, status)
       setState({
         ...state,
         status: status,
         question: {
           ...state.question,
-          current: status.question,
+          current: state.question.current, // Mantieni il valore corrente
         },
       })
     })
@@ -124,7 +125,7 @@ export default function Game() {
       off("game:status")
       off("game:reset")
     }
-  }, [state, on, off])
+  }, [on, off, dispatch, router])
 
   return (
     <GameWrapper backgroundTheme={backgroundTheme}>
