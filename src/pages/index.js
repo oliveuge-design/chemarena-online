@@ -13,11 +13,11 @@ export default function Home() {
   useEffect(() => {
     const { pin, qr } = router.query
     if (pin && qr === '1') {
-      setIsQRAccess(true)
-      setGamePin(pin)
-      setShowQuickJoin(true)
+      console.log('🎯 QR Access detected, redirecting to game with PIN:', pin)
+      // Redirect diretto alla pagina game per accesso QR
+      router.push(`/game?pin=${pin}&qr=1`)
     }
-  }, [router.query])
+  }, [router.query, router])
 
   const handleQuickJoin = () => {
     if (gamePin.trim() && playerName.trim()) {

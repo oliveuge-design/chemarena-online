@@ -8,10 +8,41 @@ import toast from "react-hot-toast"
 
 export default function Game() {
   const router = useRouter()
-  const { pin, name } = router.query
+  const { pin, name, qr } = router.query
 
   const { socket, emit, on, off } = useSocketContext()
   const { player, dispatch } = usePlayerContext()
+
+  // Auto-checkRoom per accesso QR (solo PIN)
+  useEffect(() => {
+    if (pin && qr === '1' && !name && !player && socket) {
+      console.log(`🎯 QR Auto-checkRoom: PIN=${pin}`)
+
+      // Verifica la stanza automaticamente
+      emit("player:checkRoom", pin)
+
+      // Ascolta per il successo
+      const handleRoomSuccess = (roomId) => {
+        console.log(`✅ QR Room check successful: ${roomId}`)
+        dispatch({ type: "JOIN", payload: roomId })
+        // Ora l'utente può inserire username normalmente
+      }
+
+      const handleError = (error) => {
+        console.log(`❌ QR Room check error: ${error}`)
+        toast.error(`Room non trovata: ${error}`)
+        router.push('/') // Torna alla home se room non valida
+      }
+
+      on("game:successRoom", handleRoomSuccess)
+      on("game:errorMessage", handleError)
+
+      return () => {
+        off("game:successRoom", handleRoomSuccess)
+        off("game:errorMessage", handleError)
+      }
+    }
+  }, [pin, qr, name, player, socket, emit, on, off, dispatch, router])
 
   // Auto-join se PIN e nome sono forniti nella query
   useEffect(() => {
