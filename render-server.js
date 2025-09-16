@@ -57,6 +57,35 @@ class SimpleRoomManager {
     return this.rooms.get(roomId)
   }
 
+  addPlayerToRoom(roomId, player) {
+    const room = this.rooms.get(roomId)
+    if (!room) return { success: false, error: 'Room not found' }
+
+    // Check for duplicate username
+    if (room.players.find(p => p.username === player.username)) {
+      return { success: false, error: 'Username already taken' }
+    }
+
+    // Add player
+    const playerData = {
+      id: player.id,
+      username: player.username,
+      socketId: player.socketId,
+      score: 0,
+      answers: []
+    }
+
+    room.players.push(playerData)
+    console.log(`👋 Player ${player.username} joined room ${roomId} (${room.players.length} total)`)
+
+    return {
+      success: true,
+      room: room,
+      playerData: playerData,
+      playersCount: room.players.length
+    }
+  }
+
   removeRoom(roomId) {
     const room = this.rooms.get(roomId)
     if (room) {
@@ -142,6 +171,68 @@ app.prepare().then(() => {
         })
 
         console.log(`❌ Room creation failed for ${teacherId}: ${result.error}`)
+      }
+    })
+
+    // ============================================
+    // PLAYER EVENTS - Student Login
+    // ============================================
+    socket.on("player:checkRoom", (roomId) => {
+      console.log(`🔍 Player checking room: ${roomId}`)
+
+      const room = simpleRoomManager.getRoomById(roomId)
+      if (room) {
+        socket.emit("player:roomFound", {
+          room: roomId,
+          password: room.password,
+          subject: room.subject,
+          quizTitle: room.quizTitle
+        })
+        console.log(`✅ Room ${roomId} found for player`)
+      } else {
+        socket.emit("player:roomNotFound", { roomId })
+        console.log(`❌ Room ${roomId} not found`)
+      }
+    })
+
+    socket.on("player:join", (playerData) => {
+      console.log(`👋 Player ${playerData.username} attempting to join room ${playerData.room}`)
+
+      const result = simpleRoomManager.addPlayerToRoom(playerData.room, {
+        id: socket.id,
+        username: playerData.username,
+        socketId: socket.id
+      })
+
+      if (result.success) {
+        // Join socket to room
+        socket.join(playerData.room)
+
+        // Notify player success
+        socket.emit("player:successJoin", {
+          username: playerData.username,
+          room: playerData.room,
+          roomState: {
+            started: result.room.started,
+            status: { name: result.room.started ? "GAME_STARTED" : "SHOW_ROOM" }
+          }
+        })
+
+        // Notify manager about new player
+        socket.to(playerData.room).emit("game:status", {
+          name: "SHOW_ROOM",
+          data: {
+            players: result.room.players,
+            playersCount: result.playersCount
+          }
+        })
+
+        console.log(`✅ Player ${playerData.username} successfully joined room ${playerData.room}`)
+      } else {
+        socket.emit("player:joinError", {
+          error: result.error
+        })
+        console.log(`❌ Player ${playerData.username} join failed: ${result.error}`)
       }
     })
 
