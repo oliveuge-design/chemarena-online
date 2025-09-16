@@ -11,42 +11,37 @@ const socketRef = { current: null }
 // Function to create socket connection
 const createSocket = async () => {
   if (typeof window !== 'undefined' && !socket) {
-    console.log('🏢 Inizializzazione Multi-Room Socket Client...')
-    console.log('🔍 WEBSOCKET_PUBLIC_URL from config:', WEBSOCKET_PUBLIC_URL)
-
-    // SIMPLIFIED: Force specific URL based on environment
-    let socketURL
-    let socketPath = '/socket.io/'
-
-    if (window.location.hostname === 'localhost') {
-      // Development: separate socket server
-      socketURL = WEBSOCKET_PUBLIC_URL || 'http://localhost:5505/'
-      console.log('🔧 Development mode - separate socket server:', socketURL)
-    } else {
-      // Production: try to connect to socket on same domain (standard port)
-      console.log('🌐 Production mode detected')
-      console.log('📍 Hostname:', window.location.hostname)
-      console.log('🌐 Protocol:', window.location.protocol)
-
-      // For Render: socket integrated with Next.js (same port)
-      const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:'
-      socketURL = `${protocol}//${window.location.hostname}/`
-      console.log('🔍 Production socket URL (integrated):', socketURL)
+    // Initialize the socket server first with multiple attempts
+    try {
+      console.log('🔧 Initializing socket server...')
+      
+      // Try to wake up the socket API
+      const initResponse = await fetch('/api/socket-init', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      
+      if (initResponse.ok) {
+        console.log('✅ Socket server initialized')
+      }
+      
+      // Also try the status endpoint to ensure it's active
+      await fetch('/api/socket-status')
+      
+    } catch (error) {
+      console.log('⚠️ Socket init warning:', error)
     }
-
-    console.log('🏢 Connecting to Multi-Room Server:', socketURL)
-    console.log('🔍 Socket will connect to:', socketURL)
-
-    // Force disconnect any existing socket
-    if (socket) {
-      console.log('🚨 Forcing disconnect of existing socket')
-      socket.disconnect()
-      socket = null
-      socketRef.current = null
-    }
-
+    
+    // Wait a moment for server initialization
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    
+    // Use current hostname for production
+    const socketURL = window.location.origin
+    
+    console.log('🌐 Connecting to:', socketURL)
+    
     socket = io(socketURL, {
-      path: socketPath,
+      path: '/api/socket',
       transports: ["polling", "websocket"],
       timeout: 10000,
       autoConnect: true,
@@ -56,31 +51,18 @@ const createSocket = async () => {
     socketRef.current = socket
     
     socket.on('connect', () => {
-      console.log('✅ Socket connected successfully!')
-      console.log('🔍 Connected to URL:', socketURL)
-      console.log('🔍 Socket ID:', socket.id)
-      console.log('🔍 Multi-Room Server detected!')
+      console.log('🚀 Socket connected:', socket.id)
     })
-
+    
     socket.on('disconnect', () => {
-      console.log('❌ Socket disconnected from:', socketURL)
+      console.log('❌ Socket disconnected')
     })
-
+    
     socket.on('connect_error', (error) => {
-      console.error('❌ Socket connection error to:', socketURL)
-      console.error('❌ Error details:', error)
+      // Only log connection errors in development or if it's a persistent issue
       if (process.env.NODE_ENV === 'development' || socket.connected === false) {
-        console.log('🔄 Connection error, will retry...')
+        console.log('❌ Socket connection error:', error)
       }
-    })
-
-    // Debug: Log multi-room events
-    socket.on('manager:roomCreated', (data) => {
-      console.log('✅ Multi-Room: Room created!', data)
-    })
-
-    socket.on('manager:createRoomError', (data) => {
-      console.log('❌ Multi-Room: Room creation failed!', data)
     })
   }
   

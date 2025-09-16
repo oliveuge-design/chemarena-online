@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node render-server.js",
+    "start": "next start",
     "start-production": "concurrently --kill-others \"next start\" \"node ./socket/index.js\"",
     "socket": "node ./socket/index.js",
     "all": "npm run build && npm run start-production",
