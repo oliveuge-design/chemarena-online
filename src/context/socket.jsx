@@ -16,15 +16,18 @@ const createSocket = async () => {
 
     // Smart URL detection for different environments
     let socketURL
+    let socketPath = '/socket.io/'
 
     if (window.location.hostname === 'localhost') {
-      // Development: separate socket server
+      // Development: separate socket server on port 5505
       socketURL = WEBSOCKET_PUBLIC_URL || 'http://localhost:5505/'
+      socketPath = '/socket.io/'
     } else {
-      // Production: same domain/port as main app
+      // Production (Render): use Next.js API route
       const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:'
-      socketURL = `${protocol}//${window.location.hostname}/`
-      console.log('🎯 Production mode - using same domain:', socketURL)
+      socketURL = `${protocol}//${window.location.hostname}`
+      socketPath = '/api/socket'
+      console.log('🎯 Production mode - using Next.js API route:', socketURL + socketPath)
     }
 
     console.log('🏢 Connecting to Multi-Room Server:', socketURL)
@@ -39,7 +42,7 @@ const createSocket = async () => {
     }
 
     socket = io(socketURL, {
-      // Rimuovi path - usiamo connessione diretta al server dedicato
+      path: socketPath,
       transports: ["polling", "websocket"],
       timeout: 10000,
       autoConnect: true,
