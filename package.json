@@ -9,6 +9,7 @@
     "socket": "node ./socket/index.js",
     "all": "npm run build && concurrently --kill-others \"npm run start\" \"npm run socket\"",
     "all-dev": "concurrently --kill-others \"npm run dev\" \"npm run socket\"",
+    "render": "npm run build && concurrently --kill-others \"npm run start\" \"npm run socket\"",
     "chemarena": "node start.js",
     "lint": "next lint"
   },

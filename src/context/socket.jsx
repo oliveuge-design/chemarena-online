@@ -14,8 +14,18 @@ const createSocket = async () => {
     console.log('🏢 Inizializzazione Multi-Room Socket Client...')
     console.log('🔍 WEBSOCKET_PUBLIC_URL from config:', WEBSOCKET_PUBLIC_URL)
 
-    // Use Multi-Room Socket Server
-    const socketURL = WEBSOCKET_PUBLIC_URL || 'http://localhost:5557'
+    // Smart URL detection for different environments
+    let socketURL
+
+    if (window.location.hostname === 'localhost') {
+      // Development: separate socket server
+      socketURL = WEBSOCKET_PUBLIC_URL || 'http://localhost:5505/'
+    } else {
+      // Production: same domain/port as main app
+      const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:'
+      socketURL = `${protocol}//${window.location.hostname}/`
+      console.log('🎯 Production mode - using same domain:', socketURL)
+    }
 
     console.log('🏢 Connecting to Multi-Room Server:', socketURL)
     console.log('🔍 Socket will connect to:', socketURL)
