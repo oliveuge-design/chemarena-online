@@ -191,8 +191,10 @@ export default function Home() {
                           placeholder="PIN..."
                           value={gamePin}
                           onChange={(e) => setGamePin(e.target.value.toUpperCase())}
-                          className="tron-input w-full"
+                          className="tron-input w-full text-lg md:text-base"
                           maxLength={6}
+                          autoComplete="off"
+                          inputMode="numeric"
                         />
                       )}
                       <input
@@ -200,10 +202,12 @@ export default function Home() {
                         placeholder="Il tuo nome..."
                         value={playerName}
                         onChange={(e) => setPlayerName(e.target.value)}
-                        className="tron-input w-full"
+                        className="tron-input w-full text-lg md:text-base"
                         maxLength={20}
                         onKeyDown={(e) => e.key === 'Enter' && handleQuickJoin()}
                         autoFocus={isQRAccess} // Focus automatico se via QR
+                        autoComplete="off"
+                        autoCapitalize="words"
                       />
                       <button
                         onClick={handleQuickJoin}

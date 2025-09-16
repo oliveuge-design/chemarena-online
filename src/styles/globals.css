@@ -603,3 +603,78 @@ body {
     transform: none;
   }
 }
+
+/* Mobile Touch Optimizations */
+@media (max-width: 768px) {
+  /* Touch-friendly input styling */
+  .tron-input {
+    min-height: 50px;
+    font-size: 18px;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .tron-join-btn {
+    min-height: 60px;
+    font-size: 18px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Disable zoom on input focus for iOS */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
+  /* Prevent accidental zoom */
+  input:focus, textarea:focus, select:focus {
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .tron-input {
+    min-height: 56px;
+    font-size: 20px;
+    padding: 16px 20px;
+  }
+
+  .tron-join-btn {
+    min-height: 64px;
+    font-size: 20px;
+    padding: 18px 24px;
+  }
+
+  /* Larger touch targets for small screens */
+  button, input[type="button"], input[type="submit"] {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  /* Reduce particle effects on mobile for better performance */
+  .particle-effect {
+    display: none;
+  }
+
+  .floating-particles {
+    display: none;
+  }
+
+  /* Simplify animations on mobile */
+  .animate-float {
+    animation-duration: 8s;
+  }
+
+  .animate-spin-slow {
+    animation-duration: 30s;
+  }
+
+  /* Reduce blur effects on mobile */
+  .glass-card, .glass-card-strong {
+    backdrop-filter: blur(5px);
+  }
+}

@@ -55,6 +55,8 @@ export default function TronButton({
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
       disabled={disabled}
       className={`tron-button ${className} ${disabled ? 'disabled' : ''}`}
     >
@@ -96,6 +98,66 @@ export default function TronButton({
           overflow: hidden;
           clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
           font-family: 'Orbitron', 'Courier New', monospace;
+
+          /* Touch-friendly sizing */
+          min-height: 44px;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+          .tron-button {
+            height: 90px;
+            max-width: 100%;
+            border-width: 3px;
+          }
+
+          .button-content {
+            padding: 0 24px;
+          }
+
+          .title {
+            font-size: 20px;
+          }
+
+          .subtitle {
+            font-size: 14px;
+          }
+
+          .icon {
+            font-size: 28px;
+            margin-right: 18px;
+          }
+
+          .arrow {
+            font-size: 18px;
+            margin-left: 18px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .tron-button {
+            height: 100px;
+            border-width: 4px;
+          }
+
+          .button-content {
+            padding: 0 28px;
+          }
+
+          .title {
+            font-size: 22px;
+          }
+
+          .subtitle {
+            font-size: 16px;
+          }
+
+          .icon {
+            font-size: 32px;
+            margin-right: 20px;
+          }
         }
 
         .tron-button:hover {

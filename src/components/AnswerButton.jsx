@@ -13,6 +13,12 @@ export default function AnswerButton({
       className={clsx(
         "relative overflow-hidden rounded-xl px-6 py-8 text-left font-bold text-white transform transition-all duration-300 hover:scale-105 active:scale-95",
         "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:translate-x-[-100%] hover:before:translate-x-[100%] before:transition-transform before:duration-700",
+        // Mobile optimizations
+        "min-h-[60px] md:min-h-[70px] lg:min-h-[80px]",
+        "touch-manipulation select-none",
+        "-webkit-tap-highlight-color-transparent",
+        "text-lg md:text-xl lg:text-2xl",
+        "px-4 py-6 md:px-6 md:py-8",
         className,
       )}
       {...otherProps}
