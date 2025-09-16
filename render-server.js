@@ -10,8 +10,9 @@ const { parse } = require('url')
 const next = require('next')
 const { Server } = require('socket.io')
 
-// Import socket logic
-const setupSocketHandlers = require('./socket/index.js')
+// Import socket logic - we'll implement inline
+const fs = require('fs')
+const path = require('path')
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'
@@ -50,13 +51,18 @@ app.prepare().then(() => {
 
   console.log('🔌 Setting up Socket.io handlers...')
 
-  // Setup socket handlers (adapt existing logic)
+  // Basic socket setup - just connection for now
   io.on('connection', (socket) => {
     console.log('👋 Client connected:', socket.id)
 
-    // Import and setup existing socket logic
-    // Note: This might need adaptation from ./socket/index.js
-    setupSocketHandlers(socket, io)
+    socket.emit('connected', {
+      message: 'ChemArena Socket.io Ready',
+      timestamp: new Date().toISOString()
+    })
+
+    socket.on('disconnect', () => {
+      console.log('👋 Client disconnected:', socket.id)
+    })
   })
 
   server.listen(port, (err) => {

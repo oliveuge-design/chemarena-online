@@ -14,20 +14,24 @@ const createSocket = async () => {
     console.log('🏢 Inizializzazione Multi-Room Socket Client...')
     console.log('🔍 WEBSOCKET_PUBLIC_URL from config:', WEBSOCKET_PUBLIC_URL)
 
-    // Smart URL detection for different environments
+    // SIMPLIFIED: Force specific URL based on environment
     let socketURL
     let socketPath = '/socket.io/'
 
     if (window.location.hostname === 'localhost') {
-      // Development: separate socket server on port 5505
+      // Development: separate socket server
       socketURL = WEBSOCKET_PUBLIC_URL || 'http://localhost:5505/'
-      socketPath = '/socket.io/'
+      console.log('🔧 Development mode - separate socket server:', socketURL)
     } else {
-      // Production (Render): use Next.js API route
+      // Production: try to connect to socket on same domain (standard port)
+      console.log('🌐 Production mode detected')
+      console.log('📍 Hostname:', window.location.hostname)
+      console.log('🌐 Protocol:', window.location.protocol)
+
+      // For Render: socket integrated with Next.js (same port)
       const protocol = window.location.protocol === 'https:' ? 'https:' : 'http:'
-      socketURL = `${protocol}//${window.location.hostname}`
-      socketPath = '/api/socket'
-      console.log('🎯 Production mode - using Next.js API route:', socketURL + socketPath)
+      socketURL = `${protocol}//${window.location.hostname}/`
+      console.log('🔍 Production socket URL (integrated):', socketURL)
     }
 
     console.log('🏢 Connecting to Multi-Room Server:', socketURL)

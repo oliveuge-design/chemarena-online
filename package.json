@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "node render-server.js",
+    "start-production": "concurrently --kill-others \"next start\" \"node ./socket/index.js\"",
     "socket": "node ./socket/index.js",
-    "all": "npm run build && concurrently --kill-others \"npm run start\" \"npm run socket\"",
+    "all": "npm run build && npm run start-production",
     "all-dev": "concurrently --kill-others \"npm run dev\" \"npm run socket\"",
     "render": "npm run build && concurrently --kill-others \"npm run start\" \"npm run socket\"",
     "chemarena": "node start.js",
