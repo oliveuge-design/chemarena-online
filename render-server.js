@@ -182,15 +182,10 @@ app.prepare().then(() => {
 
       const room = simpleRoomManager.getRoomById(roomId)
       if (room) {
-        socket.emit("player:roomFound", {
-          room: roomId,
-          password: room.password,
-          subject: room.subject,
-          quizTitle: room.quizTitle
-        })
+        socket.emit("game:successRoom", roomId)
         console.log(`✅ Room ${roomId} found for player`)
       } else {
-        socket.emit("player:roomNotFound", { roomId })
+        socket.emit("game:errorMessage", "Room not found")
         console.log(`❌ Room ${roomId} not found`)
       }
     })
@@ -209,13 +204,9 @@ app.prepare().then(() => {
         socket.join(playerData.room)
 
         // Notify player success
-        socket.emit("player:successJoin", {
+        socket.emit("game:successJoin", {
           username: playerData.username,
-          room: playerData.room,
-          roomState: {
-            started: result.room.started,
-            status: { name: result.room.started ? "GAME_STARTED" : "SHOW_ROOM" }
-          }
+          room: playerData.room
         })
 
         // Notify manager about new player
@@ -229,9 +220,7 @@ app.prepare().then(() => {
 
         console.log(`✅ Player ${playerData.username} successfully joined room ${playerData.room}`)
       } else {
-        socket.emit("player:joinError", {
-          error: result.error
-        })
+        socket.emit("game:errorMessage", result.error)
         console.log(`❌ Player ${playerData.username} join failed: ${result.error}`)
       }
     })
