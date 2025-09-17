@@ -104,6 +104,22 @@ const Player = {
       abortCooldown(game, io, game.room)
     }
   },
+
+  disconnect: (game, io, socket) => {
+    const playerIndex = game.players.findIndex(player => player.id === socket.id)
+    if (playerIndex !== -1) {
+      const disconnectedPlayer = game.players[playerIndex]
+      game.players.splice(playerIndex, 1)
+      game.playersAnswer = game.playersAnswer.filter(answer => answer.id !== socket.id)
+      if (game.room) {
+        socket.to(game.room).emit("game:playerLeft", {
+          playerId: socket.id,
+          username: disconnectedPlayer.username,
+          remainingPlayers: game.players.length
+        })
+      }
+    }
+  },
 }
 
 export default Player

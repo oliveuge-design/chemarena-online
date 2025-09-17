@@ -1,11 +1,14 @@
 import clsx from "clsx"
 import Triangle from "./icons/Triangle"
+import SciFiImageLoader from "./SciFiImageLoader"
 
 export default function AnswerButton({
   className,
   icon: Icon,
   children,
   answerImage,
+  autoImage = false,
+  imageQuery,
   ...otherProps
 }) {
   return (
@@ -42,14 +45,27 @@ export default function AnswerButton({
         </div>
 
         <div className="flex-1 flex items-center gap-3">
-          {answerImage && (
+          {/* Immagine statica o auto-generata */}
+          {(answerImage || autoImage) && (
             <div className="relative">
-              <img
-                src={answerImage}
-                alt="Risposta"
-                className="h-16 w-16 object-cover rounded-lg border-2 border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.3)]"
-              />
-              <div className="absolute inset-0 rounded-lg bg-gradient-to-tr from-transparent to-white/20"></div>
+              {autoImage && imageQuery ? (
+                <SciFiImageLoader
+                  query={imageQuery}
+                  category="science"
+                  className="h-16 w-16 border-2 border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                  width={64}
+                  height={64}
+                />
+              ) : answerImage ? (
+                <div className="relative">
+                  <img
+                    src={answerImage}
+                    alt="Risposta"
+                    className="h-16 w-16 object-cover rounded-lg border-2 border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                  />
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-tr from-transparent to-white/20"></div>
+                </div>
+              ) : null}
             </div>
           )}
           <span className="text-xl font-bold drop-shadow-[0_0_8px_rgba(0,0,0,0.8)] filter brightness-110">

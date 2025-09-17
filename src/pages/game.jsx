@@ -13,98 +13,53 @@ export default function Game() {
   const { socket, emit, on, off } = useSocketContext()
   const { player, dispatch } = usePlayerContext()
 
-  // Auto-checkRoom per accesso QR (solo PIN)
+  // Gestione QR e normal join semplificata
   useEffect(() => {
-    if (pin && qr === '1' && !name && !player && socket) {
-      console.log(`🎯 QR Auto-checkRoom: PIN=${pin}`)
+    if (!socket) return
 
-      // Verifica la stanza automaticamente
+    // QR access - solo PIN, mostra form username
+    if (pin && qr === '1' && !name && !player) {
       emit("player:checkRoom", pin)
 
-      // Ascolta per il successo
-      const handleRoomSuccess = (roomId) => {
-        console.log(`✅ QR Room check successful: ${roomId}`)
+      const handleSuccess = (roomId) => {
         dispatch({ type: "JOIN", payload: roomId })
-        // Ora l'utente può inserire username normalmente
+        setState(prev => ({ ...prev, status: { name: "ENTER_USERNAME", data: {} } }))
       }
 
       const handleError = (error) => {
-        console.log(`❌ QR Room check error: ${error}`)
         toast.error(`Room non trovata: ${error}`)
-        router.push('/') // Torna alla home se room non valida
+        router.push('/')
       }
 
-      on("game:successRoom", handleRoomSuccess)
+      on("game:successRoom", handleSuccess)
       on("game:errorMessage", handleError)
-
       return () => {
-        off("game:successRoom", handleRoomSuccess)
+        off("game:successRoom", handleSuccess)
         off("game:errorMessage", handleError)
       }
     }
-  }, [pin, qr, name, player, socket, emit, on, off, dispatch, router])
 
-  // Auto-join se PIN e nome sono forniti nella query
-  useEffect(() => {
-    if (pin && name && !player && socket) {
-      console.log(`🎮 Auto-join attempt: PIN=${pin}, name=${name}`)
-      
-      // Prima verifica la stanza
+    // Normal join - PIN + nome
+    if (pin && name && !player) {
       emit("player:checkRoom", pin)
-      
-      // Ascolta per il successo della verifica stanza
-      const handleRoomSuccess = (roomId) => {
-        console.log(`✅ Room check successful: ${roomId}`)
+
+      const handleRoomOk = (roomId) => {
         dispatch({ type: "JOIN", payload: roomId })
-        
-        // Poi prova a unirsi
-        const playerData = {
-          username: name,
-          room: roomId,
-          displayName: name
-        }
-        
-        console.log(`🚀 Attempting to join with data:`, playerData)
-        emit("player:join", playerData)
+        emit("player:join", { username: name, room: roomId, displayName: name })
       }
-      
-      // Ascolta per il successo del join
-      const handleJoinSuccess = () => {
-        console.log(`✅ Player join successful: ${name}`)
+
+      const handleJoinOk = () => {
         dispatch({ type: "LOGIN", payload: name })
       }
-      
-      // Ascolta per errori (sia vecchio che nuovo formato)
-      const handleError = (error) => {
-        console.log(`❌ Game error: ${error}`)
-        toast.error(`Errore join: ${error}`)
-      }
 
-      const handleJoinError = (errorData) => {
-        console.log(`❌ Join error: ${errorData.error}`)
-        toast.error(`Errore join: ${errorData.error}`)
-      }
-
-      const handleRoomNotFound = (data) => {
-        console.log(`❌ Room not found: ${data.room}`)
-        toast.error(`Room ${data.room} non trovata`)
-      }
-
-      on("game:successRoom", handleRoomSuccess)
-      on("game:successJoin", handleJoinSuccess)
-      on("game:errorMessage", handleError)
-      on("player:joinError", handleJoinError)
-      on("player:roomNotFound", handleRoomNotFound)
-      
+      on("game:successRoom", handleRoomOk)
+      on("game:successJoin", handleJoinOk)
       return () => {
-        off("game:successRoom", handleRoomSuccess)
-        off("game:successJoin", handleJoinSuccess)
-        off("game:errorMessage", handleError)
-        off("player:joinError", handleJoinError)
-        off("player:roomNotFound", handleRoomNotFound)
+        off("game:successRoom", handleRoomOk)
+        off("game:successJoin", handleJoinOk)
       }
     }
-  }, [pin, name, player, socket, emit, on, off, dispatch])
+  }, [pin, qr, name, player, socket])
 
   useEffect(() => {
     if (!player && !pin && !name) {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import Button from "@/components/Button"
+import QuizTemplateManager from "./QuizTemplateManager"
 
 export default function QuizCreator({ editingQuiz, onClearEdit }) {
   const [quiz, setQuiz] = useState({
@@ -21,6 +22,7 @@ export default function QuizCreator({ editingQuiz, onClearEdit }) {
   const [editingIndex, setEditingIndex] = useState(-1)
   const [showPreview, setShowPreview] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
+  const [showTemplates, setShowTemplates] = useState(false)
 
   // Carica il quiz in modifica quando viene passato
   useEffect(() => {
@@ -79,6 +81,22 @@ export default function QuizCreator({ editingQuiz, onClearEdit }) {
     const newAnswers = [...currentQuestion.answers]
     newAnswers[index] = value
     setCurrentQuestion(prev => ({ ...prev, answers: newAnswers }))
+  }
+
+  const handleSelectTemplate = (template) => {
+    // Carica il template selezionato
+    setQuiz({
+      id: template.id,
+      subject: template.title,
+      password: template.password || 'QUIZ123',
+      questions: template.questions || []
+    })
+
+    // Nascondi i template dopo la selezione
+    setShowTemplates(false)
+
+    // Mostra messaggio di conferma
+    alert(`✅ Template "${template.title}" caricato con successo!\n\n📊 ${template.questionCount} domande incluse\n⏱️ Tempo stimato: ${template.estimatedTime} minuti`)
   }
 
   const addQuestion = () => {
@@ -173,6 +191,28 @@ export default function QuizCreator({ editingQuiz, onClearEdit }) {
           )}
         </div>
       </div>
+
+      {/* Template Manager */}
+      {!isEditMode && (
+        <div className="bg-gradient-to-r from-cyan-50 to-purple-50 rounded-lg border-2 border-cyan-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900">🧬 Template Sci-Fi</h3>
+              <p className="text-gray-600 text-sm">Inizia da template predefiniti per accelerare la creazione</p>
+            </div>
+            <button
+              onClick={() => setShowTemplates(!showTemplates)}
+              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white rounded-lg hover:from-cyan-400 hover:to-purple-500 transition-all duration-300 font-medium"
+            >
+              {showTemplates ? '🔼 Nascondi Template' : '🔽 Mostra Template'}
+            </button>
+          </div>
+
+          {showTemplates && (
+            <QuizTemplateManager onSelectTemplate={handleSelectTemplate} />
+          )}
+        </div>
+      )}
 
       {/* Informazioni Quiz */}
       <div className="bg-white rounded-lg shadow-md p-6">

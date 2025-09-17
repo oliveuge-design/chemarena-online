@@ -9,12 +9,10 @@ export default function Home() {
   const [playerName, setPlayerName] = useState('')
   const [isQRAccess, setIsQRAccess] = useState(false)
   
-  // Rileva accesso via QR code
+  // QR access detection - mantenuto semplice
   useEffect(() => {
     const { pin, qr } = router.query
     if (pin && qr === '1') {
-      console.log('🎯 QR Access detected, redirecting to game with PIN:', pin)
-      // Redirect diretto alla pagina game per accesso QR
       router.push(`/game?pin=${pin}&qr=1`)
     }
   }, [router.query, router])

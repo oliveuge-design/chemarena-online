@@ -1,18 +1,19 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-export default function TronButton({ 
-  title, 
-  subtitle, 
-  icon, 
-  href, 
-  onClick, 
-  variant = "primary", 
+export default function TronButton({
+  title,
+  subtitle,
+  icon,
+  href,
+  onClick,
+  variant = "primary",
   className = "",
   disabled = false
 }) {
   const router = useRouter()
   const [isHovered, setIsHovered] = useState(false)
+  const [isPressed, setIsPressed] = useState(false)
 
   const handleClick = () => {
     if (disabled) return
@@ -50,15 +51,46 @@ export default function TronButton({
 
   const style = variants[variant]
 
+  // Gestione eventi touch avanzati
+  const handleTouchStart = (e) => {
+    if (disabled) return
+    setIsHovered(true)
+    setIsPressed(true)
+
+    // Impedisce lo scrolling durante il touch
+    e.preventDefault()
+
+    // Vibrazione feedback (se supportata)
+    if (navigator.vibrate) {
+      navigator.vibrate(50)
+    }
+  }
+
+  const handleTouchEnd = () => {
+    setIsHovered(false)
+    setIsPressed(false)
+  }
+
+  const handleMouseDown = () => {
+    if (disabled) return
+    setIsPressed(true)
+  }
+
+  const handleMouseUp = () => {
+    setIsPressed(false)
+  }
+
   return (
     <button
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={() => setIsHovered(true)}
-      onTouchEnd={() => setIsHovered(false)}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       disabled={disabled}
-      className={`tron-button ${className} ${disabled ? 'disabled' : ''}`}
+      className={`tron-button ${className} ${disabled ? 'disabled' : ''} ${isPressed ? 'pressed' : ''}`}
     >
       <div className="button-content">
         {icon && <div className="icon">{icon}</div>}
@@ -169,14 +201,50 @@ export default function TronButton({
           border-color: ${style.text};
         }
 
-        .tron-button:active {
+        .tron-button:active,
+        .tron-button.pressed {
           transform: translateY(0) scale(0.98);
+          background: ${style.hover};
+          box-shadow:
+            0 0 30px ${style.glow},
+            inset 0 0 30px rgba(255, 255, 255, 0.1);
         }
 
         .tron-button.disabled {
           opacity: 0.5;
           cursor: not-allowed;
           transform: none !important;
+        }
+
+        /* Ottimizzazioni performance mobile */
+        .tron-button {
+          will-change: transform, background-color, box-shadow;
+          -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+        }
+
+        /* Migliore feedback tattile */
+        @media (hover: none) and (pointer: coarse) {
+          .tron-button:hover {
+            transform: none;
+            background: ${style.bg};
+            box-shadow: none;
+          }
+
+          .tron-button.pressed {
+            transform: scale(0.95);
+            background: ${style.hover};
+            box-shadow:
+              0 0 20px ${style.glow},
+              inset 0 0 20px rgba(255, 255, 255, 0.1);
+          }
+
+          .particle-effect,
+          .circuit-lines {
+            display: none; /* Disabilita effetti su mobile per performance */
+          }
         }
 
         .button-content {

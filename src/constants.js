@@ -7,6 +7,7 @@ import Start from "@/components/game/states/Start"
 import Wait from "@/components/game/states/Wait"
 import Podium from "./components/game/states/Podium"
 import Room from "./components/game/states/Room"
+import Username from "./components/game/join/Username"
 
 import Circle from "@/components/icons/Circle"
 import Rhombus from "@/components/icons/Rhombus"
@@ -40,6 +41,7 @@ export const GAME_STATE_COMPONENTS = {
   SHOW_START: Start,
   SHOW_RESULT: Result,
   SHOW_PREPARED: Prepared,
+  ENTER_USERNAME: Username,
 }
 
 export const GAME_STATE_COMPONENTS_MANAGER = {
