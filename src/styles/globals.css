@@ -534,48 +534,59 @@ body {
   letter-spacing: 0.8px;
 }
 
-/* Responsive Design */
+/* Responsive Design - FIXED: Hide navigation controls on mobile for better UX */
 @media (max-width: 768px) {
   .navigation-controls {
+    display: none; /* Hidden on mobile to avoid UI interference */
+  }
+
+  /* Force show navigation on mobile if needed (add class 'show-mobile-nav' to body) */
+  body.show-mobile-nav .navigation-controls {
+    display: flex;
     bottom: 15px;
     right: 15px;
     gap: 10px;
   }
 
-  .nav-btn {
-    padding: 10px 14px;
-    min-width: 100px;
-    font-size: 13px;
+  body.show-mobile-nav .nav-btn {
+    padding: 8px 12px;
+    min-width: 80px;
+    font-size: 12px;
   }
 
-  .nav-text {
-    font-size: 11px;
+  body.show-mobile-nav .nav-text {
+    font-size: 10px;
   }
 
-  .nav-icon {
-    font-size: 14px;
+  body.show-mobile-nav .nav-icon {
+    font-size: 12px;
   }
 }
 
 @media (max-width: 480px) {
   .navigation-controls {
+    display: none; /* Also hidden on small mobile devices */
+  }
+
+  /* Force show for very small screens with even more compact design */
+  body.show-mobile-nav .navigation-controls {
     bottom: 10px;
     right: 10px;
-    gap: 8px;
+    gap: 6px;
   }
 
-  .nav-btn {
-    padding: 8px 12px;
-    min-width: 90px;
-    font-size: 12px;
+  body.show-mobile-nav .nav-btn {
+    padding: 6px 10px;
+    min-width: 70px;
+    font-size: 11px;
   }
 
-  .nav-text {
-    font-size: 10px;
+  body.show-mobile-nav .nav-text {
+    font-size: 9px;
   }
 
-  .nav-icon {
-    font-size: 13px;
+  body.show-mobile-nav .nav-icon {
+    font-size: 11px;
   }
 }
 

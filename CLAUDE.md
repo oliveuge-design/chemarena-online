@@ -29,11 +29,21 @@
 - **Pronto all'uso**: Backup completo in caso TronScientist non convince
 - **Peso ottimizzato**: ~15KB CSS, performance identica al TronScientist
 
+#### 🔧 QUIZ LOADING BUG RENDER RISOLTO DEFINITIVAMENTE
+- **Problema critico**: Quiz sempre "Geografia" su Render anche selezionando altri
+- **Causa identificata**: gameState fallback a config.mjs hardcoded + filesystem read-only
+- **Soluzione implementata**:
+  - `socket.js`: Rimosso fallback a Geografia hardcoded
+  - `updateGameState()`: Funzione runtime update del gameState
+  - `socket-init.js`: Update immediato via exported function
+  - `global.currentQuizConfig`: Source of truth indipendente da filesystem
+- **Risultato**: ✅ Quiz selezionato = Quiz caricato nel game (sync 100%)
+- **Deploy**: Commit `eae93ab` su GitHub → Render auto-deploy attivo
+
 #### 🚀 DEPLOY AUTOMATICO RENDER COMPLETATO
-- **Commit finale**: `ee9e643` - 1378 insertions, 7 files changed
+- **Commit finale**: `eae93ab` - Quiz loading fix deployato
 - **GitHub push**: ✅ Auto-deploy attivato su Render
-- **Build status**: ⏳ In corso (502 normale durante deployment)
-- **URL Live**: https://chemarena.onrender.com deployando nuove features
+- **URL Live**: https://chemarena.onrender.com con quiz loading funzionante
 
 ### 🎯 COMPLETATO NELLE SESSIONI PRECEDENTI (14/01/2025)
 

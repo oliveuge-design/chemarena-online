@@ -239,7 +239,7 @@ const NavigationControls = () => {
   }
 
   return (
-    <div className="navigation-controls">
+    <div className="navigation-controls" data-mobile-nav="true">
       {renderControls()}
     </div>
   );
