@@ -3,7 +3,7 @@ import { GAME_STATE_INIT } from '../../../config.mjs'
 import Manager from '../../../socket/roles/manager.js'
 import Player from '../../../socket/roles/player.js'
 
-// Simplified game state - FIXED: No fallback to hardcoded Geografia quiz
+// Simplified game state - FIXED: Proper fallback for quiz startup
 let gameState = {
   started: false,
   players: [],
@@ -12,9 +12,9 @@ let gameState = {
   room: null,
   currentQuestion: 0,
   roundStartTime: 0,
-  password: global.currentQuizConfig?.password || 'CHEMARENA',
-  subject: global.currentQuizConfig?.subject || 'Quiz',
-  questions: global.currentQuizConfig?.questions || []
+  password: global.currentQuizConfig?.password || GAME_STATE_INIT.password,
+  subject: global.currentQuizConfig?.subject || GAME_STATE_INIT.subject,
+  questions: global.currentQuizConfig?.questions || GAME_STATE_INIT.questions
 }
 
 let io
