@@ -12,9 +12,9 @@ let gameState = {
   room: null,
   currentQuestion: 0,
   roundStartTime: 0,
-  password: GAME_STATE_INIT.password,
-  subject: GAME_STATE_INIT.subject,
-  questions: GAME_STATE_INIT.questions
+  password: global.currentQuizConfig?.password || GAME_STATE_INIT.password,
+  subject: global.currentQuizConfig?.subject || GAME_STATE_INIT.subject,
+  questions: global.currentQuizConfig?.questions || GAME_STATE_INIT.questions
 }
 
 let io
