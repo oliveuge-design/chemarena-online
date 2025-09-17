@@ -1,3 +1,5 @@
+import TronScientist from "@/components/TronScientist"
+
 const ELITE_SCIENTISTS = [
   { type: 'female', suit: '#00ffff', visor: '#0066ff', glow: '#00ff88', circuits: '#00ccff', energy: '#80ff80', name: 'Dr. Cyra Nova' },
   { type: 'male', suit: '#ff6b00', visor: '#ff0040', glow: '#ffff00', circuits: '#ff8800', energy: '#ffcc00', name: 'Prof. Zex Prime' },
@@ -263,13 +265,12 @@ export default function Leaderboard({ data: { leaderboard } }) {
                 </div>
               </div>
 
-              {/* SCIENZIATO AL CENTRO */}
+              {/* SCIENZIATO TRON AL CENTRO */}
               <div className="flex-1 flex justify-center items-center relative">
-                <EliteScientist
-                  scientist={scientist}
+                <TronScientist
+                  position={index + 1}
                   isWinner={isWinner}
                   isLoser={isLoser}
-                  position={index + 1}
                 />
 
                 {/* EFFETTI ESULTANZA ESPLOSIVA per il vincitore */}

@@ -79,6 +79,15 @@ export default function handler(req, res) {
         })
       })
 
+      socket.on("manager:forceReset", () => {
+        console.log(`🚨 Force reset requested by ${socket.id} - Current state:`, {
+          manager: gameState.manager,
+          room: gameState.room
+        })
+        Manager.forceReset(gameState, io, socket)
+        console.log("✅ Legacy game state force reset completed")
+      })
+
       socket.on("disconnect", () => {
         console.log(`User disconnected ${socket.id}`)
         Player.disconnect(gameState, io, socket)

@@ -15,8 +15,19 @@ const Manager = {
 
     if (game.manager || game.room) {
       console.log(`❌ Already manager error - manager: ${game.manager}, room: ${game.room}`)
-      io.to(socket.id).emit("game:errorMessage", "Already manager")
-      return
+
+      // GHOST MANAGER CLEANUP: Se il manager precedente non è più connesso, forza reset
+      const managerSocket = io.sockets.sockets.get(game.manager)
+      if (!managerSocket) {
+        console.log(`🧹 Ghost manager detected (${game.manager} not connected), forcing cleanup...`)
+        Object.assign(game, deepClone(GAME_STATE_INIT))
+        console.log(`✅ Ghost manager cleaned, proceeding with room creation`)
+        // Procedi con la creazione normale
+      } else {
+        console.log(`⚠️ Manager ${game.manager} is still connected, cannot create new room`)
+        io.to(socket.id).emit("game:errorMessage", "Already manager")
+        return
+      }
     }
 
     let roomInvite = generateRoomId()
