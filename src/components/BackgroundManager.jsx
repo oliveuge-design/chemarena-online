@@ -58,7 +58,7 @@ const BACKGROUND_THEMES = {
 }
 
 export default function BackgroundManager({
-  theme = "laboratory",
+  theme = "original",
   quizId = null,
   className = "",
   children,
