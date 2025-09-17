@@ -22,6 +22,11 @@ export default function handler(req, res) {
       gameStats = JSON.parse(statsContent);
     }
 
+    // Assicura che quizData sia un array
+    if (!Array.isArray(quizData)) {
+      quizData = [];
+    }
+
     // Calcola analytics
     const analytics = calculateAnalytics(quizData, gameStats);
 
