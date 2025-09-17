@@ -3,7 +3,7 @@ import { GAME_STATE_INIT } from '../../../config.mjs'
 import Manager from '../../../socket/roles/manager.js'
 import Player from '../../../socket/roles/player.js'
 
-// Simplified game state
+// Simplified game state - FIXED: No fallback to hardcoded Geografia quiz
 let gameState = {
   started: false,
   players: [],
@@ -12,12 +12,36 @@ let gameState = {
   room: null,
   currentQuestion: 0,
   roundStartTime: 0,
-  password: global.currentQuizConfig?.password || GAME_STATE_INIT.password,
-  subject: global.currentQuizConfig?.subject || GAME_STATE_INIT.subject,
-  questions: global.currentQuizConfig?.questions || GAME_STATE_INIT.questions
+  password: global.currentQuizConfig?.password || 'CHEMARENA',
+  subject: global.currentQuizConfig?.subject || 'Quiz',
+  questions: global.currentQuizConfig?.questions || []
 }
 
 let io
+
+// FIXED: Function to update gameState from external APIs
+export function updateGameState(newConfig) {
+  if (newConfig) {
+    gameState.password = newConfig.password || 'CHEMARENA'
+    gameState.subject = newConfig.subject || 'Quiz'
+    gameState.questions = newConfig.questions || []
+
+    console.log('🔄 GameState updated programmatically:', {
+      password: gameState.password,
+      subject: gameState.subject,
+      questions: gameState.questions?.length || 0
+    })
+
+    // Notify all connected sockets of the update
+    if (io) {
+      io.emit('gameState:updated', {
+        password: gameState.password,
+        subject: gameState.subject,
+        questionsCount: gameState.questions?.length || 0
+      })
+    }
+  }
+}
 
 export default function handler(req, res) {
   if (!res.socket.server.io) {
