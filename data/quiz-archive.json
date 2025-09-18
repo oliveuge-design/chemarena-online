@@ -1835,13 +1835,623 @@
           "image": ""
         }
       ]
+    },
+    {
+      "id": "sensori_temperatura_industriali",
+      "title": "Sensori di Temperatura per Impianti Chimici Industriali",
+      "subject": "Tecnologie Chimiche",
+      "created": "2025-09-18",
+      "author": "Sistema Didattico",
+      "password": "sensori123",
+      "questions": [
+        {
+          "id": "st_q1",
+          "question": "Quale principio fisico sfruttano le termocoppie per misurare la temperatura?",
+          "answers": [
+            "Variazione di resistenza elettrica",
+            "Effetto termoelettrico (Seebeck)",
+            "Dilatazione termica",
+            "Emissione di radiazione infrarossa"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "st_q2",
+          "question": "Quale tipo di termocoppia è più utilizzato negli impianti chimici per temperature fino a 1000°C?",
+          "answers": [
+            "Tipo J (Fe-CuNi)",
+            "Tipo K (NiCr-NiAl)",
+            "Tipo T (Cu-CuNi)",
+            "Tipo S (Pt-PtRh)"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "st_q3",
+          "question": "Nel caso delle termoresistenze PT100, cosa indica il valore '100'?",
+          "answers": [
+            "La temperatura massima misurabile (100°C)",
+            "La resistenza in ohm a 0°C",
+            "La sensibilità del sensore",
+            "Il diametro del sensore in mm"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "st_q4",
+          "question": "Quale vantaggio hanno le termoresistenze rispetto alle termocoppie?",
+          "answers": [
+            "Costo inferiore",
+            "Maggiore velocità di risposta",
+            "Maggiore precisione e stabilità",
+            "Non richiedono alimentazione"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "st_q5",
+          "question": "In un impianto chimico con fluidi corrosivi, quale tipo di protezione è essenziale per i sensori di temperatura?",
+          "answers": [
+            "Guaine in acciaio inossidabile o materiali resistenti",
+            "Isolamento termico",
+            "Raffreddamento ad aria",
+            "Lubrificazione periodica"
+          ],
+          "solution": 0,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "st_q6",
+          "question": "Per misurare temperature elevate (>1200°C) in processi di combustione, quale sensore è più appropriato?",
+          "answers": [
+            "Termoresistenza PT100",
+            "Termocoppia tipo K",
+            "Pirometro ottico/infrarosso",
+            "Termometro a dilatazione"
+          ],
+          "solution": 2,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "st_q7",
+          "question": "Il fenomeno della 'compensazione del giunto freddo' nelle termocoppie serve a:",
+          "answers": [
+            "Aumentare la sensibilità",
+            "Compensare la temperatura ambiente ai morsetti",
+            "Ridurre i tempi di risposta",
+            "Proteggere dalla corrosione"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "st_q8",
+          "question": "In un reattore chimico con agitazione, come deve essere posizionato il sensore di temperatura?",
+          "answers": [
+            "Nella parte superiore del reattore",
+            "Immerso nella massa reagente, lontano dalle pale dell'agitatore",
+            "Sulla parete esterna del reattore",
+            "Nel tubo di uscita dei prodotti"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "sensori_pressione_industriali",
+      "title": "Sensori di Pressione per Impianti Chimici Industriali",
+      "subject": "Tecnologie Chimiche",
+      "created": "2025-09-18",
+      "author": "Sistema Didattico",
+      "password": "sensori123",
+      "questions": [
+        {
+          "id": "sp_q1",
+          "question": "Qual è il principio di funzionamento dei trasduttori di pressione estensimetrici?",
+          "answers": [
+            "Variazione di capacità elettrica",
+            "Deformazione di una membrana con strain gauge",
+            "Variazione di induttanza",
+            "Effetto piezoelettrico"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sp_q2",
+          "question": "In quale unità di misura viene tipicamente espressa la pressione negli impianti chimici industriali?",
+          "answers": [
+            "mmHg",
+            "atm",
+            "bar o Pa (Pascal)",
+            "psi"
+          ],
+          "solution": 2,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sp_q3",
+          "question": "Quale tipo di pressione misura un manometro collegato a un serbatoio?",
+          "answers": [
+            "Pressione assoluta",
+            "Pressione relativa (manometrica)",
+            "Pressione differenziale",
+            "Pressione barometrica"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sp_q4",
+          "question": "Per misurare piccole differenze di pressione tra due punti di un circuito, si utilizza:",
+          "answers": [
+            "Manometro assoluto",
+            "Barometro",
+            "Trasduttore differenziale",
+            "Vacuometro"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sp_q5",
+          "question": "In presenza di fluidi corrosivi o ad alta temperatura, quale accorgimento è necessario per i sensori di pressione?",
+          "answers": [
+            "Raffreddamento con ventole",
+            "Diaframmi di separazione e capillari riempiti",
+            "Aumento della portata del fluido",
+            "Isolamento elettrico"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sp_q6",
+          "question": "Quale range di pressione è tipico per i trasduttori utilizzati nei serbatoi di stoccaggio di liquidi?",
+          "answers": [
+            "0-10 mbar",
+            "0-1 bar",
+            "0-10 bar",
+            "0-100 bar"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sp_q7",
+          "question": "Il fenomeno del 'drift termico' nei sensori di pressione si riferisce a:",
+          "answers": [
+            "Variazione del segnale dovuta a temperature elevate",
+            "Perdita di calibrazione nel tempo",
+            "Interferenze elettromagnetiche",
+            "Usura meccanica del sensore"
+          ],
+          "solution": 0,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sp_q8",
+          "question": "Per il controllo della pressione in un reattore chimico ad alta pressione (>50 bar), quale caratteristica è prioritaria?",
+          "answers": [
+            "Costo contenuto",
+            "Elevata precisione e affidabilità con sistemi di sicurezza",
+            "Facilità di installazione",
+            "Dimensioni compatte"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "sensori_livello_industriali",
+      "title": "Sensori di Livello per Impianti Chimici Industriali",
+      "subject": "Tecnologie Chimiche",
+      "created": "2025-09-18",
+      "author": "Sistema Didattico",
+      "password": "sensori123",
+      "questions": [
+        {
+          "id": "sl_q1",
+          "question": "Quale principio fisico sfruttano i sensori di livello ultrasonici?",
+          "answers": [
+            "Riflessione di onde sonore",
+            "Pressione idrostatica",
+            "Variazione di conducibilità",
+            "Effetto Doppler"
+          ],
+          "solution": 0,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sl_q2",
+          "question": "Per misurare il livello di liquidi conduttivi come soluzioni saline, quale sensore è più appropriato?",
+          "answers": [
+            "Sensore capacitivo",
+            "Sensore conduttivo con elettrodi",
+            "Sensore ottico",
+            "Sensore magnetostrittivo"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sl_q3",
+          "question": "Il principio di funzionamento dei sensori radar per la misura di livello si basa su:",
+          "answers": [
+            "Riflessione di onde elettromagnetiche",
+            "Pressione differenziale",
+            "Galleggiamento",
+            "Resistenza elettrica"
+          ],
+          "solution": 0,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sl_q4",
+          "question": "Quale vantaggio presenta la misura di livello tramite pressione idrostatica?",
+          "answers": [
+            "Non richiede contatto con il fluido",
+            "È economica e affidabile per liquidi densi",
+            "Funziona solo con liquidi trasparenti",
+            "Ha alta risoluzione solo per bassi livelli"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sl_q5",
+          "question": "In un serbatoio contenente acidi concentrati, quale tipo di sensore di livello è sconsigliato?",
+          "answers": [
+            "Sensore radar senza contatto",
+            "Sensore ultrasonico",
+            "Sensore a contatto con parti metalliche non protette",
+            "Sensore radiometrico"
+          ],
+          "solution": 2,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sl_q6",
+          "question": "I sensori di livello capacitivi misurano variazioni di:",
+          "answers": [
+            "Resistenza elettrica",
+            "Capacità elettrica tra elettrodi",
+            "Induttanza",
+            "Frequenza di risonanza"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sl_q7",
+          "question": "Per serbatoi con agitazione intensa, quale sensore di livello offre maggiore affidabilità?",
+          "answers": [
+            "Galleggiante meccanico",
+            "Sensore radar o ultrasonico senza contatto",
+            "Sonda conduttiva",
+            "Tubo di livello"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "sl_q8",
+          "question": "Quale tipo di misura fornisce un sensore di livello continuo rispetto a uno a soglia?",
+          "answers": [
+            "Segnale on/off",
+            "Valore analogico proporzionale al livello",
+            "Impulsi digitali",
+            "Solo allarmi di livello"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "sensori_portata_industriali",
+      "title": "Sensori di Portata per Impianti Chimici Industriali",
+      "subject": "Tecnologie Chimiche",
+      "created": "2025-09-18",
+      "author": "Sistema Didattico",
+      "password": "sensori123",
+      "questions": [
+        {
+          "id": "spo_q1",
+          "question": "Quale principio fisico sfruttano i flussimetri elettromagnetici per misurare la portata?",
+          "answers": [
+            "Principio di Bernoulli",
+            "Legge di Faraday sull'induzione elettromagnetica",
+            "Effetto Venturi",
+            "Conservazione della massa"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "spo_q2",
+          "question": "Per misurare la portata di fluidi conduttivi come soluzioni ioniche, quale misuratore è più appropriato?",
+          "answers": [
+            "Flussimetro elettromagnetico",
+            "Rotametro",
+            "Flussimetro ultrasonico",
+            "Turbina"
+          ],
+          "solution": 0,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "spo_q3",
+          "question": "Il principio di funzionamento del flussimetro a ultrasuoni si basa su:",
+          "answers": [
+            "Variazione di pressione",
+            "Riflessione o trasmissione di onde ultrasoniche",
+            "Rotazione di una turbina",
+            "Campo magnetico"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "spo_q4",
+          "question": "Quale vantaggio presenta il flussimetro a effetto Coriolis?",
+          "answers": [
+            "Costo molto contenuto",
+            "Misura contemporaneamente portata massica e densità",
+            "Funziona solo con gas",
+            "Non richiede alimentazione elettrica"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "spo_q5",
+          "question": "In una tubazione contenente fluidi abrasivi o contenenti particelle solide, quale flussimetro è sconsigliato?",
+          "answers": [
+            "Flussimetro elettromagnetico",
+            "Flussimetro ultrasonico clamp-on",
+            "Flussimetro a turbina con parti mobili",
+            "Flussimetro a vortex"
+          ],
+          "solution": 2,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "spo_q6",
+          "question": "Il flussimetro a diaframma (orifizio) misura la portata tramite:",
+          "answers": [
+            "Differenza di pressione creata da una restrizione",
+            "Velocità di rotazione",
+            "Frequenza di vortici",
+            "Tempo di transito ultrasonico"
+          ],
+          "solution": 0,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "spo_q7",
+          "question": "Per installazioni temporanee o retrofit, quale tipo di flussimetro è più pratico?",
+          "answers": [
+            "Flussimetro elettromagnetico",
+            "Flussimetro a turbina",
+            "Flussimetro ultrasonico clamp-on (esterno)",
+            "Diaframma"
+          ],
+          "solution": 2,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "spo_q8",
+          "question": "Quale parametro è fondamentale per la calibrazione di un flussimetro elettromagnetico?",
+          "answers": [
+            "Viscosità del fluido",
+            "Conducibilità elettrica del fluido",
+            "Colore del fluido",
+            "Temperatura ambiente"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
+    },
+    {
+      "id": "trasduttori_generali_industriali",
+      "title": "Trasduttori e Strumentazione Generale - Impianti Chimici",
+      "subject": "Tecnologie Chimiche",
+      "created": "2025-09-18",
+      "author": "Sistema Didattico",
+      "password": "sensori123",
+      "questions": [
+        {
+          "id": "tgi_q1",
+          "question": "Qual è la funzione principale di un trasduttore in un sistema di controllo industriale?",
+          "answers": [
+            "Amplificare il segnale elettrico",
+            "Convertire una grandezza fisica in un segnale elettrico",
+            "Filtrare i disturbi elettromagnetici",
+            "Memorizzare i dati di processo"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "tgi_q2",
+          "question": "Quale range di corrente è standard per la trasmissione analogica industriale?",
+          "answers": [
+            "0-5 mA",
+            "0-10 mA",
+            "4-20 mA",
+            "0-1 A"
+          ],
+          "solution": 2,
+          "time": 20,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "tgi_q3",
+          "question": "Quale vantaggio offre il segnale 4-20 mA rispetto al segnale 0-10V in ambiente industriale?",
+          "answers": [
+            "Maggiore velocità di trasmissione",
+            "Immunità ai disturbi e possibilità di rilevare rotture del loop",
+            "Costo inferiore dei cavi",
+            "Maggiore precisione"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "tgi_q4",
+          "question": "In un sistema di controllo distribuito (DCS), quale protocollo di comunicazione è più utilizzato?",
+          "answers": [
+            "RS-232",
+            "Fieldbus (HART, Profibus, Foundation)",
+            "Wi-Fi",
+            "Bluetooth"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "tgi_q5",
+          "question": "Quale caratteristica è fondamentale per la sicurezza intrinseca in aree a rischio esplosione?",
+          "answers": [
+            "Alta potenza elettrica",
+            "Limitazione dell'energia elettrica per prevenire innesco",
+            "Isolamento termico",
+            "Alta velocità di risposta"
+          ],
+          "solution": 1,
+          "time": 30,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "tgi_q6",
+          "question": "Cosa indica la classe di precisione di uno strumento di misura?",
+          "answers": [
+            "La velocità di risposta",
+            "L'errore massimo espresso in % del fondo scala",
+            "La temperatura massima di utilizzo",
+            "Il consumo energetico"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "tgi_q7",
+          "question": "Per ridurre l'influenza delle interferenze elettromagnetiche sui segnali, si utilizza:",
+          "answers": [
+            "Cavi coassiali e schermature",
+            "Amplificatori di potenza",
+            "Frequenze più elevate",
+            "Tensioni maggiori"
+          ],
+          "solution": 0,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        },
+        {
+          "id": "tgi_q8",
+          "question": "Quale operazione è fondamentale per mantenere l'accuratezza degli strumenti nel tempo?",
+          "answers": [
+            "Pulizia quotidiana",
+            "Calibrazione periodica con standard certificati",
+            "Aumento della frequenza di misura",
+            "Sostituzione annuale"
+          ],
+          "solution": 1,
+          "time": 25,
+          "cooldown": 5,
+          "image": ""
+        }
+      ]
     }
   ],
   "images": [],
   "metadata": {
-    "version": "1.0",
-    "lastUpdate": "2025-09-16",
-    "totalQuizzes": 22,
-    "totalQuestions": 116
+    "version": "1.5",
+    "lastUpdate": "2025-09-18",
+    "totalQuizzes": 27,
+    "totalQuestions": 156
   }
 }
